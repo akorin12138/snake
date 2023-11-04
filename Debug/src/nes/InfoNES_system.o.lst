@@ -1,0 +1,1192 @@
+   1              		.file	"InfoNES_system.c"
+   2              		.option nopic
+   3              		.text
+   4              	.Ltext0:
+   5              		.cfi_sections	.debug_frame
+   6              		.section	.text.InfoNES_Menu,"ax",@progbits
+   7              		.align	1
+   8              		.globl	InfoNES_Menu
+  10              	InfoNES_Menu:
+  11              	.LFB2:
+  12              		.file 1 "../src/nes/InfoNES_system.c"
+   1:../src/nes/InfoNES_system.c **** /*-------------------------------------------------------------------*/
+   2:../src/nes/InfoNES_system.c **** /*  InfoNES_system.c                                                 */
+   3:../src/nes/InfoNES_system.c **** /*-------------------------------------------------------------------*/
+   4:../src/nes/InfoNES_system.c **** #include "InfoNES.h"
+   5:../src/nes/InfoNES_system.c **** 
+   6:../src/nes/InfoNES_system.c **** #include <string.h>
+   7:../src/nes/InfoNES_system.c **** #include <stdio.h>
+   8:../src/nes/InfoNES_system.c **** 
+   9:../src/nes/InfoNES_system.c **** //系统时钟↓
+  10:../src/nes/InfoNES_system.c **** #define SYSTEM_CNT_M			125			//系统时钟单位：MHz
+  11:../src/nes/InfoNES_system.c **** 
+  12:../src/nes/InfoNES_system.c **** #define SYSTEM_CLOCK			SYSTEM_CNT_M*1000000UL
+  13:../src/nes/InfoNES_system.c **** #define BAUND_9600				((SYSTEM_CLOCK)/9600)
+  14:../src/nes/InfoNES_system.c **** #define BAUND_115200			(SYSTEM_CLOCK/115200)
+  15:../src/nes/InfoNES_system.c **** 
+  16:../src/nes/InfoNES_system.c **** unsigned int FrameCount=0;
+  17:../src/nes/InfoNES_system.c **** 
+  18:../src/nes/InfoNES_system.c **** //*****************************************************************************
+  19:../src/nes/InfoNES_system.c **** //
+  20:../src/nes/InfoNES_system.c **** // The interrupt handler for the for Systick interrupt.
+  21:../src/nes/InfoNES_system.c **** //
+  22:../src/nes/InfoNES_system.c **** //*****************************************************************************
+  23:../src/nes/InfoNES_system.c **** 
+  24:../src/nes/InfoNES_system.c **** 
+  25:../src/nes/InfoNES_system.c **** 
+  26:../src/nes/InfoNES_system.c **** //*****************************************************************************
+  27:../src/nes/InfoNES_system.c **** //
+  28:../src/nes/InfoNES_system.c **** // Operation of Joy
+  29:../src/nes/InfoNES_system.c **** //
+  30:../src/nes/InfoNES_system.c **** //*****************************************************************************
+  31:../src/nes/InfoNES_system.c **** 
+  32:../src/nes/InfoNES_system.c **** 
+  33:../src/nes/InfoNES_system.c **** 
+  34:../src/nes/InfoNES_system.c **** /*-------------------------------------------------------------------*/
+  35:../src/nes/InfoNES_system.c **** /*  Palette data                                                     */
+  36:../src/nes/InfoNES_system.c **** /*-------------------------------------------------------------------*/
+  37:../src/nes/InfoNES_system.c **** WORD NesPalette[64]={
+  38:../src/nes/InfoNES_system.c **** #if 0
+  39:../src/nes/InfoNES_system.c ****   0x738E,0x88C4,0xA800,0x9808,0x7011,0x1015,0x0014,0x004F,
+  40:../src/nes/InfoNES_system.c ****   0x0148,0x0200,0x0280,0x11C0,0x59C3,0x0000,0x0000,0x0000,
+  41:../src/nes/InfoNES_system.c ****   0xBDD7,0xEB80,0xE9C4,0xF010,0xB817,0x581C,0x015B,0x0A59,
+  42:../src/nes/InfoNES_system.c ****   0x0391,0x0480,0x0540,0x3C80,0x8C00,0x0000,0x0000,0x0000,
+  43:../src/nes/InfoNES_system.c ****   0xFFDF,0xFDC7,0xFC8B,0xFC48,0xFBDE,0xB39F,0x639F,0x3CDF,
+  44:../src/nes/InfoNES_system.c ****   0x3DDE,0x1690,0x4EC9,0x9FCB,0xDF40,0x0000,0x0000,0x0000,
+  45:../src/nes/InfoNES_system.c ****   0xFFDF,0xFF15,0xFE98,0xFE5A,0xFE1F,0xDE1F,0xB5DF,0xAEDF,
+  46:../src/nes/InfoNES_system.c ****   0xA71F,0xA7DC,0xBF95,0xCFD6,0xF7D3,0x0000,0x0000,0x0000,
+  47:../src/nes/InfoNES_system.c **** //#else
+  48:../src/nes/InfoNES_system.c ****   0x738E,0x20D1,0x0015,0x4013,0x880E,0xA802,0xA000,0x7840,
+  49:../src/nes/InfoNES_system.c ****   0x4140,0x0200,0x0280,0x01C2,0x19CB,0x0000,0x0000,0x0000,
+  50:../src/nes/InfoNES_system.c ****   0xBDD7,0x039D,0x21DD,0x801E,0xB817,0xE00B,0xD940,0xCA41,
+  51:../src/nes/InfoNES_system.c ****   0x8B80,0x0480,0x0540,0x0487,0x0411,0x0000,0x0000,0x0000,
+  52:../src/nes/InfoNES_system.c ****   0xFFDF,0x3DDF,0x5C9F,0x445F,0xF3DF,0xFB96,0xFB8C,0xFCC7,
+  53:../src/nes/InfoNES_system.c ****   0xF5C7,0x8682,0x4EC9,0x5FD3,0x075B,0x0000,0x0000,0x0000,
+  54:../src/nes/InfoNES_system.c ****   0xFFDF,0xAF1F,0xC69F,0xD65F,0xFE1F,0xFE1B,0xFDD6,0xFED5,
+  55:../src/nes/InfoNES_system.c ****   0xFF14,0xE7D4,0xAF97,0xB7D9,0x9FDE,0x0000,0x0000,0x0000,
+  56:../src/nes/InfoNES_system.c **** #endif
+  57:../src/nes/InfoNES_system.c **** 
+  58:../src/nes/InfoNES_system.c **** 	0x8E73,0xD120,0x1500,0x1340,0x0E88,0x02A8,0x00A0,0x4078,
+  59:../src/nes/InfoNES_system.c **** 	0x4041,0x0002,0x8002,0xC201,0xCB19,0x0000,0x0000,0x0000,
+  60:../src/nes/InfoNES_system.c **** 	0xD7BD,0x9D03,0xDD21,0x1E80,0x17B8,0x0BE0,0x40D9,0x41CA,
+  61:../src/nes/InfoNES_system.c **** 	0x808B,0x8004,0x4005,0x8704,0x1104,0x0000,0x0000,0x0000,
+  62:../src/nes/InfoNES_system.c **** 	0xDFFF,0xDF3D,0x9F5C,0x5F44,0xDFF3,0x96FB,0x8CFB,0xC7FC,
+  63:../src/nes/InfoNES_system.c **** 	0xC7F5,0x8286,0xC94E,0xD35F,0x5B07,0x0000,0x0000,0x0000,
+  64:../src/nes/InfoNES_system.c **** 	0xDFFF,0x1FAF,0x9FC6,0x5FD6,0x1FFE,0x1BFE,0xD6FD,0xD5FE,
+  65:../src/nes/InfoNES_system.c **** 	0x14FF,0xD4E7,0x97AF,0xD9B7,0xDE9F,0x0000,0x0000,0x0000,
+  66:../src/nes/InfoNES_system.c **** 
+  67:../src/nes/InfoNES_system.c **** };
+  68:../src/nes/InfoNES_system.c **** 
+  69:../src/nes/InfoNES_system.c **** 
+  70:../src/nes/InfoNES_system.c **** 
+  71:../src/nes/InfoNES_system.c **** /*-------------------------------------------------------------------*/
+  72:../src/nes/InfoNES_system.c **** /*  Function prototypes                                              */
+  73:../src/nes/InfoNES_system.c **** /*-------------------------------------------------------------------*/
+  74:../src/nes/InfoNES_system.c **** 
+  75:../src/nes/InfoNES_system.c **** /* Menu screen */
+  76:../src/nes/InfoNES_system.c **** int InfoNES_Menu()
+  77:../src/nes/InfoNES_system.c **** {
+  13              		.loc 1 77 0
+  14              		.cfi_startproc
+  78:../src/nes/InfoNES_system.c **** 	return 0;
+  79:../src/nes/InfoNES_system.c **** }
+  15              		.loc 1 79 0
+  16 0000 0145     		li	a0,0
+  17 0002 8280     		ret
+  18              		.cfi_endproc
+  19              	.LFE2:
+  21              		.section	.text.InfoNES_ReadRom,"ax",@progbits
+  22              		.align	1
+  23              		.globl	InfoNES_ReadRom
+  25              	InfoNES_ReadRom:
+  26              	.LFB3:
+  80:../src/nes/InfoNES_system.c **** 
+  81:../src/nes/InfoNES_system.c **** /* Read ROM image file */
+  82:../src/nes/InfoNES_system.c **** extern const BYTE nes_rom[];
+  83:../src/nes/InfoNES_system.c **** int InfoNES_ReadRom( const char *pszFileName )
+  84:../src/nes/InfoNES_system.c **** {
+  27              		.loc 1 84 0
+  28              		.cfi_startproc
+  29              	.LVL0:
+  30 0000 4111     		addi	sp,sp,-16
+  31              		.cfi_def_cfa_offset 16
+  32 0002 22C4     		sw	s0,8(sp)
+  85:../src/nes/InfoNES_system.c **** /*
+  86:../src/nes/InfoNES_system.c ****  *  Read ROM image file
+  87:../src/nes/InfoNES_system.c ****  *
+  88:../src/nes/InfoNES_system.c ****  *  Parameters
+  89:../src/nes/InfoNES_system.c ****  *    const char *pszFileName          (Read)
+  90:../src/nes/InfoNES_system.c ****  *
+  91:../src/nes/InfoNES_system.c ****  *  Return values
+  92:../src/nes/InfoNES_system.c ****  *     0 : Normally
+  93:../src/nes/InfoNES_system.c ****  *    -1 : Error
+  94:../src/nes/InfoNES_system.c ****  */
+  95:../src/nes/InfoNES_system.c **** 
+  96:../src/nes/InfoNES_system.c ****   
+  97:../src/nes/InfoNES_system.c ****   /* Read ROM Header */
+  98:../src/nes/InfoNES_system.c ****   BYTE * rom = (BYTE*)nes_rom;
+  99:../src/nes/InfoNES_system.c ****   memcpy( &NesHeader, rom, sizeof(NesHeader));
+  33              		.loc 1 99 0
+  34 0004 B7050000 		lui	a1,%hi(nes_rom)
+  35              		.cfi_offset 8, -8
+  36 0008 37040000 		lui	s0,%hi(NesHeader)
+  37 000c 4146     		li	a2,16
+  38 000e 93850500 		addi	a1,a1,%lo(nes_rom)
+  39 0012 13050400 		addi	a0,s0,%lo(NesHeader)
+  40              	.LVL1:
+  84:../src/nes/InfoNES_system.c **** /*
+  41              		.loc 1 84 0
+  42 0016 06C6     		sw	ra,12(sp)
+  43              		.cfi_offset 1, -4
+  44              		.loc 1 99 0
+  45 0018 97000000 		call	memcpy
+  45      E7800000 
+  46              	.LVL2:
+ 100:../src/nes/InfoNES_system.c ****   if ( memcmp( NesHeader.byID, "NES\x1a", 4 ) != 0 )
+  47              		.loc 1 100 0
+  48 0020 03470400 		lbu	a4,%lo(NesHeader)(s0)
+  49 0024 9307E004 		li	a5,78
+  50 0028 6307F700 		beq	a4,a5,.L15
+  51              	.L4:
+ 101:../src/nes/InfoNES_system.c ****   {
+ 102:../src/nes/InfoNES_system.c ****     /* not .nes file */
+ 103:../src/nes/InfoNES_system.c ****     return -1;
+  52              		.loc 1 103 0
+  53 002c 7D55     		li	a0,-1
+  54              	.LVL3:
+  55              	.L3:
+ 104:../src/nes/InfoNES_system.c ****   }
+ 105:../src/nes/InfoNES_system.c ****   rom += sizeof(NesHeader);
+ 106:../src/nes/InfoNES_system.c **** 
+ 107:../src/nes/InfoNES_system.c ****   /* Clear SRAM */
+ 108:../src/nes/InfoNES_system.c ****   memset( SRAM, 0, SRAM_SIZE );
+ 109:../src/nes/InfoNES_system.c **** 
+ 110:../src/nes/InfoNES_system.c ****   /* If trainer presents Read Triner at 0x7000-0x71ff */
+ 111:../src/nes/InfoNES_system.c ****   if ( NesHeader.byInfo1 & 4 )
+ 112:../src/nes/InfoNES_system.c ****   {
+ 113:../src/nes/InfoNES_system.c ****     //memcpy( &SRAM[ 0x1000 ], rom, 512);
+ 114:../src/nes/InfoNES_system.c **** 	rom += 512;
+ 115:../src/nes/InfoNES_system.c ****   }
+ 116:../src/nes/InfoNES_system.c **** 
+ 117:../src/nes/InfoNES_system.c ****   /* Allocate Memory for ROM Image */
+ 118:../src/nes/InfoNES_system.c ****   ROM = rom;
+ 119:../src/nes/InfoNES_system.c ****   rom += NesHeader.byRomSize * 0x4000;
+ 120:../src/nes/InfoNES_system.c **** 
+ 121:../src/nes/InfoNES_system.c ****   if ( NesHeader.byVRomSize > 0 )
+ 122:../src/nes/InfoNES_system.c ****   {
+ 123:../src/nes/InfoNES_system.c ****     /* Allocate Memory for VROM Image */
+ 124:../src/nes/InfoNES_system.c **** 	VROM = (BYTE*)rom;
+ 125:../src/nes/InfoNES_system.c **** 	rom += NesHeader.byVRomSize * 0x2000;
+ 126:../src/nes/InfoNES_system.c ****   }
+ 127:../src/nes/InfoNES_system.c **** 
+ 128:../src/nes/InfoNES_system.c **** 
+ 129:../src/nes/InfoNES_system.c ****   /* Successful */
+ 130:../src/nes/InfoNES_system.c ****   return 0;
+ 131:../src/nes/InfoNES_system.c **** }
+  56              		.loc 1 131 0
+  57 002e B240     		lw	ra,12(sp)
+  58              		.cfi_remember_state
+  59              		.cfi_restore 1
+  60 0030 2244     		lw	s0,8(sp)
+  61              		.cfi_restore 8
+  62 0032 4101     		addi	sp,sp,16
+  63              		.cfi_def_cfa_offset 0
+  64 0034 8280     		jr	ra
+  65              	.LVL4:
+  66              	.L15:
+  67              		.cfi_restore_state
+  68 0036 13040400 		addi	s0,s0,%lo(NesHeader)
+ 100:../src/nes/InfoNES_system.c ****   {
+  69              		.loc 1 100 0
+  70 003a 03471400 		lbu	a4,1(s0)
+  71 003e 93075004 		li	a5,69
+  72 0042 E315F7FE 		bne	a4,a5,.L4
+  73 0046 03472400 		lbu	a4,2(s0)
+  74 004a 93073005 		li	a5,83
+  75 004e E31FF7FC 		bne	a4,a5,.L4
+  76 0052 03473400 		lbu	a4,3(s0)
+  77 0056 E947     		li	a5,26
+  78 0058 E31AF7FC 		bne	a4,a5,.L4
+ 108:../src/nes/InfoNES_system.c **** 
+  79              		.loc 1 108 0
+  80 005c 37050000 		lui	a0,%hi(SRAM)
+  81 0060 0966     		li	a2,8192
+  82 0062 8145     		li	a1,0
+  83 0064 13050500 		addi	a0,a0,%lo(SRAM)
+  84 0068 97000000 		call	memset
+  84      E7800000 
+  85              	.LVL5:
+ 111:../src/nes/InfoNES_system.c ****   {
+  86              		.loc 1 111 0
+  87 0070 83476400 		lbu	a5,6(s0)
+ 100:../src/nes/InfoNES_system.c ****   {
+  88              		.loc 1 100 0
+  89 0074 0145     		li	a0,0
+  90              	.LVL6:
+ 111:../src/nes/InfoNES_system.c ****   {
+  91              		.loc 1 111 0
+  92 0076 918B     		andi	a5,a5,4
+  93 0078 85CB     		beqz	a5,.L9
+ 114:../src/nes/InfoNES_system.c ****   }
+  94              		.loc 1 114 0
+  95 007a B7070000 		lui	a5,%hi(nes_rom+528)
+  96 007e 93870721 		addi	a5,a5,%lo(nes_rom+528)
+  97              	.L7:
+  98              	.LVL7:
+ 121:../src/nes/InfoNES_system.c ****   {
+  99              		.loc 1 121 0
+ 100 0082 03475400 		lbu	a4,5(s0)
+ 118:../src/nes/InfoNES_system.c ****   rom += NesHeader.byRomSize * 0x4000;
+ 101              		.loc 1 118 0
+ 102 0086 B7060000 		lui	a3,%hi(ROM)
+ 103 008a 23A0F600 		sw	a5,%lo(ROM)(a3)
+ 104              	.LVL8:
+ 121:../src/nes/InfoNES_system.c ****   {
+ 105              		.loc 1 121 0
+ 106 008e 45D3     		beqz	a4,.L3
+ 119:../src/nes/InfoNES_system.c **** 
+ 107              		.loc 1 119 0
+ 108 0090 03474400 		lbu	a4,4(s0)
+ 109              		.loc 1 131 0
+ 110 0094 B240     		lw	ra,12(sp)
+ 111              		.cfi_remember_state
+ 112              		.cfi_restore 1
+ 113 0096 2244     		lw	s0,8(sp)
+ 114              		.cfi_restore 8
+ 119:../src/nes/InfoNES_system.c **** 
+ 115              		.loc 1 119 0
+ 116 0098 3A07     		slli	a4,a4,14
+ 117 009a BA97     		add	a5,a5,a4
+ 118              	.LVL9:
+ 124:../src/nes/InfoNES_system.c **** 	rom += NesHeader.byVRomSize * 0x2000;
+ 119              		.loc 1 124 0
+ 120 009c 37070000 		lui	a4,%hi(VROM)
+ 121 00a0 2320F700 		sw	a5,%lo(VROM)(a4)
+ 122              	.LVL10:
+ 123              		.loc 1 131 0
+ 124 00a4 4101     		addi	sp,sp,16
+ 125              		.cfi_def_cfa_offset 0
+ 126 00a6 8280     		jr	ra
+ 127              	.LVL11:
+ 128              	.L9:
+ 129              		.cfi_restore_state
+ 105:../src/nes/InfoNES_system.c **** 
+ 130              		.loc 1 105 0
+ 131 00a8 B7070000 		lui	a5,%hi(nes_rom+16)
+ 132 00ac 93870701 		addi	a5,a5,%lo(nes_rom+16)
+ 133 00b0 C9BF     		j	.L7
+ 134              		.cfi_endproc
+ 135              	.LFE3:
+ 137              		.section	.text.InfoNES_ReleaseRom,"ax",@progbits
+ 138              		.align	1
+ 139              		.globl	InfoNES_ReleaseRom
+ 141              	InfoNES_ReleaseRom:
+ 142              	.LFB4:
+ 132:../src/nes/InfoNES_system.c **** 
+ 133:../src/nes/InfoNES_system.c **** /* Release a memory for ROM */
+ 134:../src/nes/InfoNES_system.c **** void InfoNES_ReleaseRom()
+ 135:../src/nes/InfoNES_system.c **** {
+ 143              		.loc 1 135 0
+ 144              		.cfi_startproc
+ 136:../src/nes/InfoNES_system.c **** }
+ 145              		.loc 1 136 0
+ 146 0000 8280     		ret
+ 147              		.cfi_endproc
+ 148              	.LFE4:
+ 150              		.section	.text.InfoNES_LoadFrame,"ax",@progbits
+ 151              		.align	1
+ 152              		.globl	InfoNES_LoadFrame
+ 154              	InfoNES_LoadFrame:
+ 155              	.LFB18:
+ 156              		.cfi_startproc
+ 157 0000 8280     		ret
+ 158              		.cfi_endproc
+ 159              	.LFE18:
+ 161              		.section	.text.InfoNES_LoadLine,"ax",@progbits
+ 162              		.align	1
+ 163              		.globl	InfoNES_LoadLine
+ 165              	InfoNES_LoadLine:
+ 166              	.LFB6:
+ 137:../src/nes/InfoNES_system.c **** 
+ 138:../src/nes/InfoNES_system.c **** /* Transfer the contents of work frame on the screen */
+ 139:../src/nes/InfoNES_system.c **** void InfoNES_LoadFrame()
+ 140:../src/nes/InfoNES_system.c **** {
+ 141:../src/nes/InfoNES_system.c **** 	//char buf[20];
+ 142:../src/nes/InfoNES_system.c **** 	//printf( "%02d fps\n",FrameCount);
+ 143:../src/nes/InfoNES_system.c **** 	//LCD_DisplayStringLine(0x110,buf);
+ 144:../src/nes/InfoNES_system.c **** }
+ 145:../src/nes/InfoNES_system.c **** 
+ 146:../src/nes/InfoNES_system.c **** /* Transfer the contents of work line on the screen */
+ 147:../src/nes/InfoNES_system.c **** //void InfoNES_LoadLine()
+ 148:../src/nes/InfoNES_system.c **** //{
+ 149:../src/nes/InfoNES_system.c **** //	//int i;
+ 150:../src/nes/InfoNES_system.c **** //	if(PPU_Scanline==100)
+ 151:../src/nes/InfoNES_system.c **** //	{
+ 152:../src/nes/InfoNES_system.c **** //		FrameCount++;
+ 153:../src/nes/InfoNES_system.c **** //	}
+ 154:../src/nes/InfoNES_system.c **** //	//InfoNES_LoadFrame();
+ 155:../src/nes/InfoNES_system.c **** //	//ILI9341_DrawLineOne(PPU_Scanline,WorkLine);
+ 156:../src/nes/InfoNES_system.c **** //	ILI9341_DrawLine(PPU_Scanline,WorkLine);
+ 157:../src/nes/InfoNES_system.c **** //	//printf("PPU_Scanline:%d\n",PPU_Scanline);
+ 158:../src/nes/InfoNES_system.c **** //
+ 159:../src/nes/InfoNES_system.c **** //}
+ 160:../src/nes/InfoNES_system.c **** /* Transfer the contents of work line on the screen */
+ 161:../src/nes/InfoNES_system.c **** void InfoNES_LoadLine()
+ 162:../src/nes/InfoNES_system.c **** {
+ 167              		.loc 1 162 0
+ 168              		.cfi_startproc
+ 169              	.LVL12:
+ 170              		.loc 1 162 0
+ 171 0000 0111     		addi	sp,sp,-32
+ 172              		.cfi_def_cfa_offset 32
+ 173 0002 26CA     		sw	s1,20(sp)
+ 174              		.cfi_offset 9, -12
+ 175 0004 B7040000 		lui	s1,%hi(WorkLine)
+ 176 0008 22CC     		sw	s0,24(sp)
+ 177 000a 4AC8     		sw	s2,16(sp)
+ 178 000c 4EC6     		sw	s3,12(sp)
+ 179 000e 06CE     		sw	ra,28(sp)
+ 180              		.cfi_offset 8, -8
+ 181              		.cfi_offset 18, -16
+ 182              		.cfi_offset 19, -20
+ 183              		.cfi_offset 1, -4
+ 184 0010 93840400 		addi	s1,s1,%lo(WorkLine)
+ 163:../src/nes/InfoNES_system.c ****   int i;
+ 164:../src/nes/InfoNES_system.c ****   for(i=0;i<256;i++)
+ 185              		.loc 1 164 0
+ 186 0014 0144     		li	s0,0
+ 187 0016 B7090000 		lui	s3,%hi(.LC1)
+ 188 001a 13090010 		li	s2,256
+ 189              	.LVL13:
+ 190              	.L19:
+ 165:../src/nes/InfoNES_system.c ****   {
+ 166:../src/nes/InfoNES_system.c **** 	  printk("WorkLine[%d]:%d\n",i,WorkLine[i]);
+ 191              		.loc 1 166 0 discriminator 3
+ 192 001e 03D60400 		lhu	a2,0(s1)
+ 193 0022 A285     		mv	a1,s0
+ 194 0024 13850900 		addi	a0,s3,%lo(.LC1)
+ 164:../src/nes/InfoNES_system.c ****   {
+ 195              		.loc 1 164 0 discriminator 3
+ 196 0028 0504     		addi	s0,s0,1
+ 197              	.LVL14:
+ 198              		.loc 1 166 0 discriminator 3
+ 199 002a 97000000 		call	printk
+ 199      E7800000 
+ 200              	.LVL15:
+ 201 0032 8904     		addi	s1,s1,2
+ 164:../src/nes/InfoNES_system.c ****   {
+ 202              		.loc 1 164 0 discriminator 3
+ 203 0034 E31524FF 		bne	s0,s2,.L19
+ 167:../src/nes/InfoNES_system.c **** //    GrContextForegroundSet(&sContext, WorkLine[i]);
+ 168:../src/nes/InfoNES_system.c **** //  GrPixelDraw(&sContext, i, PPU_Scanline);
+ 169:../src/nes/InfoNES_system.c **** 
+ 170:../src/nes/InfoNES_system.c ****   }
+ 171:../src/nes/InfoNES_system.c **** }
+ 204              		.loc 1 171 0
+ 205 0038 F240     		lw	ra,28(sp)
+ 206              		.cfi_restore 1
+ 207 003a 6244     		lw	s0,24(sp)
+ 208              		.cfi_restore 8
+ 209              	.LVL16:
+ 210 003c D244     		lw	s1,20(sp)
+ 211              		.cfi_restore 9
+ 212 003e 4249     		lw	s2,16(sp)
+ 213              		.cfi_restore 18
+ 214 0040 B249     		lw	s3,12(sp)
+ 215              		.cfi_restore 19
+ 216 0042 0561     		addi	sp,sp,32
+ 217              		.cfi_def_cfa_offset 0
+ 218 0044 8280     		jr	ra
+ 219              		.cfi_endproc
+ 220              	.LFE6:
+ 222              		.section	.text.InfoNES_PadState,"ax",@progbits
+ 223              		.align	1
+ 224              		.globl	InfoNES_PadState
+ 226              	InfoNES_PadState:
+ 227              	.LFB7:
+ 172:../src/nes/InfoNES_system.c **** /* Get a joypad state */
+ 173:../src/nes/InfoNES_system.c **** #ifdef GPIO_UP
+ 174:../src/nes/InfoNES_system.c **** extern bool up_key;
+ 175:../src/nes/InfoNES_system.c **** #endif
+ 176:../src/nes/InfoNES_system.c **** #ifdef GPIO_DOWN
+ 177:../src/nes/InfoNES_system.c **** extern bool down_key;
+ 178:../src/nes/InfoNES_system.c **** #endif
+ 179:../src/nes/InfoNES_system.c **** #ifdef GPIO_LFT
+ 180:../src/nes/InfoNES_system.c **** extern bool lft_key;
+ 181:../src/nes/InfoNES_system.c **** #endif
+ 182:../src/nes/InfoNES_system.c **** #ifdef GPIO_RHT
+ 183:../src/nes/InfoNES_system.c **** extern bool rht_key;
+ 184:../src/nes/InfoNES_system.c **** #endif
+ 185:../src/nes/InfoNES_system.c **** #ifdef GPIO_START
+ 186:../src/nes/InfoNES_system.c **** extern bool start_key;
+ 187:../src/nes/InfoNES_system.c **** #endif
+ 188:../src/nes/InfoNES_system.c **** #ifdef GPIO_A
+ 189:../src/nes/InfoNES_system.c **** extern bool a_key;
+ 190:../src/nes/InfoNES_system.c **** #endif
+ 191:../src/nes/InfoNES_system.c **** #ifdef GPIO_B
+ 192:../src/nes/InfoNES_system.c **** extern bool b_key;
+ 193:../src/nes/InfoNES_system.c **** #endif
+ 194:../src/nes/InfoNES_system.c **** 
+ 195:../src/nes/InfoNES_system.c **** 
+ 196:../src/nes/InfoNES_system.c **** void InfoNES_PadState( DWORD *pdwPad1, DWORD *pdwPad2, DWORD *pdwSystem )
+ 197:../src/nes/InfoNES_system.c **** {
+ 228              		.loc 1 197 0
+ 229              		.cfi_startproc
+ 230              	.LVL17:
+ 198:../src/nes/InfoNES_system.c ****   
+ 199:../src/nes/InfoNES_system.c ****     *pdwPad1 = 0;
+ 231              		.loc 1 199 0
+ 232 0000 23200500 		sw	zero,0(a0)
+ 200:../src/nes/InfoNES_system.c **** #ifdef GPIO_UP
+ 201:../src/nes/InfoNES_system.c **** 	if(up_key)
+ 202:../src/nes/InfoNES_system.c **** 	{
+ 203:../src/nes/InfoNES_system.c **** 		*pdwPad1 |= PAD_JOY_UP;
+ 204:../src/nes/InfoNES_system.c **** 		//printf("up\n");
+ 205:../src/nes/InfoNES_system.c **** 	}
+ 206:../src/nes/InfoNES_system.c **** #endif
+ 207:../src/nes/InfoNES_system.c **** #ifdef GPIO_DOWN
+ 208:../src/nes/InfoNES_system.c **** 	if(down_key)
+ 209:../src/nes/InfoNES_system.c **** 	{
+ 210:../src/nes/InfoNES_system.c **** 		*pdwPad1 |= PAD_JOY_DOWN;
+ 211:../src/nes/InfoNES_system.c **** 		//printf("DOWN\n");
+ 212:../src/nes/InfoNES_system.c **** 	}
+ 213:../src/nes/InfoNES_system.c **** #endif
+ 214:../src/nes/InfoNES_system.c **** #ifdef GPIO_LFT
+ 215:../src/nes/InfoNES_system.c **** 	if(lft_key)
+ 216:../src/nes/InfoNES_system.c **** 	{
+ 217:../src/nes/InfoNES_system.c **** 		*pdwPad1 |= PAD_JOY_LEFT;
+ 218:../src/nes/InfoNES_system.c **** 		//printf("LEFT\n");
+ 219:../src/nes/InfoNES_system.c **** 	}
+ 220:../src/nes/InfoNES_system.c **** #endif
+ 221:../src/nes/InfoNES_system.c **** #ifdef GPIO_RHT
+ 222:../src/nes/InfoNES_system.c **** 	if(rht_key)
+ 223:../src/nes/InfoNES_system.c **** 	{
+ 224:../src/nes/InfoNES_system.c **** 		*pdwPad1 |= PAD_JOY_RIGHT;
+ 225:../src/nes/InfoNES_system.c **** 		//printf("RIGHT\n");
+ 226:../src/nes/InfoNES_system.c **** 	}
+ 227:../src/nes/InfoNES_system.c **** #endif
+ 228:../src/nes/InfoNES_system.c **** #ifdef GPIO_START
+ 229:../src/nes/InfoNES_system.c **** 	if(start_key)
+ 230:../src/nes/InfoNES_system.c **** 	{
+ 231:../src/nes/InfoNES_system.c **** 		*pdwPad1 |= PAD_JOY_START;
+ 232:../src/nes/InfoNES_system.c **** 		//printf("start\n");
+ 233:../src/nes/InfoNES_system.c **** 	}
+ 234:../src/nes/InfoNES_system.c **** #endif
+ 235:../src/nes/InfoNES_system.c **** #ifdef GPIO_A
+ 236:../src/nes/InfoNES_system.c **** 	if(a_key)
+ 237:../src/nes/InfoNES_system.c **** 	{
+ 238:../src/nes/InfoNES_system.c **** 		*pdwPad1 |= PAD_JOY_A;
+ 239:../src/nes/InfoNES_system.c **** 		//printf("A\n");
+ 240:../src/nes/InfoNES_system.c **** 	}
+ 241:../src/nes/InfoNES_system.c **** #endif
+ 242:../src/nes/InfoNES_system.c **** #ifdef GPIO_B
+ 243:../src/nes/InfoNES_system.c **** 	if(b_key)
+ 244:../src/nes/InfoNES_system.c **** 	{
+ 245:../src/nes/InfoNES_system.c **** 		*pdwPad1 |= PAD_JOY_B;
+ 246:../src/nes/InfoNES_system.c **** 		//printf("B\n");
+ 247:../src/nes/InfoNES_system.c **** 	}
+ 248:../src/nes/InfoNES_system.c **** #endif
+ 249:../src/nes/InfoNES_system.c **** 
+ 250:../src/nes/InfoNES_system.c **** 
+ 251:../src/nes/InfoNES_system.c ****   
+ 252:../src/nes/InfoNES_system.c **** }
+ 233              		.loc 1 252 0
+ 234 0004 8280     		ret
+ 235              		.cfi_endproc
+ 236              	.LFE7:
+ 238              		.section	.text.InfoNES_MemoryCopy,"ax",@progbits
+ 239              		.align	1
+ 240              		.globl	InfoNES_MemoryCopy
+ 242              	InfoNES_MemoryCopy:
+ 243              	.LFB8:
+ 253:../src/nes/InfoNES_system.c **** 
+ 254:../src/nes/InfoNES_system.c **** /* memcpy */
+ 255:../src/nes/InfoNES_system.c **** void *InfoNES_MemoryCopy( void *dest, const void *src, int count ){return memcpy(dest,src,count);}
+ 244              		.loc 1 255 0
+ 245              		.cfi_startproc
+ 246              	.LVL18:
+ 247              		.loc 1 255 0
+ 248 0000 17030000 		tail	memcpy
+ 248      67000300 
+ 249              	.LVL19:
+ 250              		.cfi_endproc
+ 251              	.LFE8:
+ 253              		.section	.text.InfoNES_MemorySet,"ax",@progbits
+ 254              		.align	1
+ 255              		.globl	InfoNES_MemorySet
+ 257              	InfoNES_MemorySet:
+ 258              	.LFB9:
+ 256:../src/nes/InfoNES_system.c **** 
+ 257:../src/nes/InfoNES_system.c **** /* memset */
+ 258:../src/nes/InfoNES_system.c **** void *InfoNES_MemorySet( void *dest, int c, int count ){return memset(dest,c,count);}
+ 259              		.loc 1 258 0
+ 260              		.cfi_startproc
+ 261              	.LVL20:
+ 262              		.loc 1 258 0
+ 263 0000 17030000 		tail	memset
+ 263      67000300 
+ 264              	.LVL21:
+ 265              		.cfi_endproc
+ 266              	.LFE9:
+ 268              		.section	.text.InfoNES_DebugPrint,"ax",@progbits
+ 269              		.align	1
+ 270              		.globl	InfoNES_DebugPrint
+ 272              	InfoNES_DebugPrint:
+ 273              	.LFB10:
+ 259:../src/nes/InfoNES_system.c **** 
+ 260:../src/nes/InfoNES_system.c **** /* Print debug message */
+ 261:../src/nes/InfoNES_system.c **** void InfoNES_DebugPrint( char *pszMsg )
+ 262:../src/nes/InfoNES_system.c **** {
+ 274              		.loc 1 262 0
+ 275              		.cfi_startproc
+ 276              	.LVL22:
+ 263:../src/nes/InfoNES_system.c **** }
+ 277              		.loc 1 263 0
+ 278 0000 8280     		ret
+ 279              		.cfi_endproc
+ 280              	.LFE10:
+ 282              		.section	.text.InfoNES_Wait,"ax",@progbits
+ 283              		.align	1
+ 284              		.globl	InfoNES_Wait
+ 286              	InfoNES_Wait:
+ 287              	.LFB20:
+ 288              		.cfi_startproc
+ 289 0000 8280     		ret
+ 290              		.cfi_endproc
+ 291              	.LFE20:
+ 293              		.section	.text.InfoNES_SoundInit,"ax",@progbits
+ 294              		.align	1
+ 295              		.globl	InfoNES_SoundInit
+ 297              	InfoNES_SoundInit:
+ 298              	.LFB12:
+ 264:../src/nes/InfoNES_system.c **** 
+ 265:../src/nes/InfoNES_system.c **** /* Wait */
+ 266:../src/nes/InfoNES_system.c **** void InfoNES_Wait()
+ 267:../src/nes/InfoNES_system.c **** {
+ 268:../src/nes/InfoNES_system.c **** 
+ 269:../src/nes/InfoNES_system.c **** }
+ 270:../src/nes/InfoNES_system.c **** 
+ 271:../src/nes/InfoNES_system.c **** /* Sound Initialize */
+ 272:../src/nes/InfoNES_system.c **** void InfoNES_SoundInit( void )
+ 273:../src/nes/InfoNES_system.c **** {
+ 299              		.loc 1 273 0
+ 300              		.cfi_startproc
+ 274:../src/nes/InfoNES_system.c **** 	
+ 275:../src/nes/InfoNES_system.c **** }
+ 301              		.loc 1 275 0
+ 302 0000 8280     		ret
+ 303              		.cfi_endproc
+ 304              	.LFE12:
+ 306              		.section	.text.InfoNES_SoundOpen,"ax",@progbits
+ 307              		.align	1
+ 308              		.globl	InfoNES_SoundOpen
+ 310              	InfoNES_SoundOpen:
+ 311              	.LFB13:
+ 276:../src/nes/InfoNES_system.c **** 
+ 277:../src/nes/InfoNES_system.c **** /* Sound Open */
+ 278:../src/nes/InfoNES_system.c **** int InfoNES_SoundOpen( int samples_per_sync, int sample_rate )
+ 279:../src/nes/InfoNES_system.c **** {
+ 312              		.loc 1 279 0
+ 313              		.cfi_startproc
+ 314              	.LVL23:
+ 280:../src/nes/InfoNES_system.c ****   return 0;
+ 281:../src/nes/InfoNES_system.c **** }
+ 315              		.loc 1 281 0
+ 316 0000 0145     		li	a0,0
+ 317              	.LVL24:
+ 318 0002 8280     		ret
+ 319              		.cfi_endproc
+ 320              	.LFE13:
+ 322              		.section	.text.InfoNES_SoundClose,"ax",@progbits
+ 323              		.align	1
+ 324              		.globl	InfoNES_SoundClose
+ 326              	InfoNES_SoundClose:
+ 327              	.LFB22:
+ 328              		.cfi_startproc
+ 329 0000 8280     		ret
+ 330              		.cfi_endproc
+ 331              	.LFE22:
+ 333              		.section	.text.InfoNES_SoundOutput,"ax",@progbits
+ 334              		.align	1
+ 335              		.globl	InfoNES_SoundOutput
+ 337              	InfoNES_SoundOutput:
+ 338              	.LFB15:
+ 282:../src/nes/InfoNES_system.c **** 
+ 283:../src/nes/InfoNES_system.c **** /* Sound Close */
+ 284:../src/nes/InfoNES_system.c **** void InfoNES_SoundClose( void )
+ 285:../src/nes/InfoNES_system.c **** {
+ 286:../src/nes/InfoNES_system.c **** }
+ 287:../src/nes/InfoNES_system.c **** 
+ 288:../src/nes/InfoNES_system.c **** /* Sound Output 5 Waves - 2 Pulse, 1 Triangle, 1 Noise, 1 DPCM */
+ 289:../src/nes/InfoNES_system.c **** void InfoNES_SoundOutput(int samples, BYTE *wave1, BYTE *wave2, BYTE *wave3, BYTE *wave4, BYTE *wav
+ 290:../src/nes/InfoNES_system.c **** {
+ 339              		.loc 1 290 0
+ 340              		.cfi_startproc
+ 341              	.LVL25:
+ 291:../src/nes/InfoNES_system.c **** }
+ 342              		.loc 1 291 0
+ 343 0000 8280     		ret
+ 344              		.cfi_endproc
+ 345              	.LFE15:
+ 347              		.section	.text.InfoNES_MessageBox,"ax",@progbits
+ 348              		.align	1
+ 349              		.globl	InfoNES_MessageBox
+ 351              	InfoNES_MessageBox:
+ 352              	.LFB16:
+ 292:../src/nes/InfoNES_system.c **** 
+ 293:../src/nes/InfoNES_system.c **** /* Print system message */
+ 294:../src/nes/InfoNES_system.c **** void InfoNES_MessageBox( char *pszMsg, ... )
+ 295:../src/nes/InfoNES_system.c **** {
+ 353              		.loc 1 295 0
+ 354              		.cfi_startproc
+ 355              	.LVL26:
+ 356 0000 0111     		addi	sp,sp,-32
+ 357              		.cfi_def_cfa_offset 32
+ 358              		.loc 1 295 0
+ 359 0002 2EC2     		sw	a1,4(sp)
+ 360 0004 32C4     		sw	a2,8(sp)
+ 361 0006 36C6     		sw	a3,12(sp)
+ 362 0008 3AC8     		sw	a4,16(sp)
+ 363 000a 3ECA     		sw	a5,20(sp)
+ 364 000c 42CC     		sw	a6,24(sp)
+ 365 000e 46CE     		sw	a7,28(sp)
+ 296:../src/nes/InfoNES_system.c **** }
+ 366              		.loc 1 296 0
+ 367 0010 0561     		addi	sp,sp,32
+ 368              		.cfi_def_cfa_offset 0
+ 369 0012 8280     		jr	ra
+ 370              		.cfi_endproc
+ 371              	.LFE16:
+ 373              		.globl	NesPalette
+ 374              		.globl	FrameCount
+ 375              		.section	.data.NesPalette,"aw",@progbits
+ 376              		.align	2
+ 379              	NesPalette:
+ 380 0000 738E     		.half	-29069
+ 381 0002 20D1     		.half	-12000
+ 382 0004 0015     		.half	5376
+ 383 0006 4013     		.half	4928
+ 384 0008 880E     		.half	3720
+ 385 000a A802     		.half	680
+ 386 000c A000     		.half	160
+ 387 000e 7840     		.half	16504
+ 388 0010 4140     		.half	16449
+ 389 0012 0200     		.half	2
+ 390 0014 0280     		.half	-32766
+ 391 0016 01C2     		.half	-15871
+ 392 0018 19CB     		.half	-13543
+ 393 001a 0000     		.half	0
+ 394 001c 0000     		.half	0
+ 395 001e 0000     		.half	0
+ 396 0020 BDD7     		.half	-10307
+ 397 0022 039D     		.half	-25341
+ 398 0024 21DD     		.half	-8927
+ 399 0026 801E     		.half	7808
+ 400 0028 B817     		.half	6072
+ 401 002a E00B     		.half	3040
+ 402 002c D940     		.half	16601
+ 403 002e CA41     		.half	16842
+ 404 0030 8B80     		.half	-32629
+ 405 0032 0480     		.half	-32764
+ 406 0034 0540     		.half	16389
+ 407 0036 0487     		.half	-30972
+ 408 0038 0411     		.half	4356
+ 409 003a 0000     		.half	0
+ 410 003c 0000     		.half	0
+ 411 003e 0000     		.half	0
+ 412 0040 FFDF     		.half	-8193
+ 413 0042 3DDF     		.half	-8387
+ 414 0044 5C9F     		.half	-24740
+ 415 0046 445F     		.half	24388
+ 416 0048 F3DF     		.half	-8205
+ 417 004a FB96     		.half	-26885
+ 418 004c FB8C     		.half	-29445
+ 419 004e FCC7     		.half	-14340
+ 420 0050 F5C7     		.half	-14347
+ 421 0052 8682     		.half	-32122
+ 422 0054 4EC9     		.half	-14002
+ 423 0056 5FD3     		.half	-11425
+ 424 0058 075B     		.half	23303
+ 425 005a 0000     		.half	0
+ 426 005c 0000     		.half	0
+ 427 005e 0000     		.half	0
+ 428 0060 FFDF     		.half	-8193
+ 429 0062 AF1F     		.half	8111
+ 430 0064 C69F     		.half	-24634
+ 431 0066 D65F     		.half	24534
+ 432 0068 FE1F     		.half	8190
+ 433 006a FE1B     		.half	7166
+ 434 006c FDD6     		.half	-10499
+ 435 006e FED5     		.half	-10754
+ 436 0070 FF14     		.half	5375
+ 437 0072 E7D4     		.half	-11033
+ 438 0074 AF97     		.half	-26705
+ 439 0076 B7D9     		.half	-9801
+ 440 0078 9FDE     		.half	-8545
+ 441 007a 0000     		.half	0
+ 442 007c 0000     		.half	0
+ 443 007e 0000     		.half	0
+ 444              		.section	.rodata.InfoNES_LoadLine.str1.4,"aMS",@progbits,1
+ 445              		.align	2
+ 446              	.LC1:
+ 447 0000 576F726B 		.string	"WorkLine[%d]:%d\n"
+ 447      4C696E65 
+ 447      5B25645D 
+ 447      3A25640A 
+ 447      00
+ 448              		.section	.rodata.InfoNES_ReadRom.str1.4,"aMS",@progbits,1
+ 449              		.align	2
+ 450              	.LC0:
+ 451 0000 4E45531A 		.string	"NES\032"
+ 451      00
+ 452              		.section	.sbss.FrameCount,"aw",@nobits
+ 453              		.align	2
+ 456              	FrameCount:
+ 457 0000 00000000 		.zero	4
+ 458              		.text
+ 459              	.Letext0:
+ 460              		.file 2 "../src/nes/InfoNES_Types.h"
+ 461              		.file 3 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 462              		.file 4 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 463              		.file 5 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 464              		.file 6 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 465              		.file 7 "../src/nes/InfoNES.h"
+ 466              		.file 8 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 467              		.file 9 "../src/nes/../uart.h"
+ 468              		.file 10 "<built-in>"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 InfoNES_system.c
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:10     .text.InfoNES_Menu:0000000000000000 InfoNES_Menu
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:14     .text.InfoNES_Menu:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:15     .text.InfoNES_Menu:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:16     .text.InfoNES_Menu:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:18     .text.InfoNES_Menu:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:25     .text.InfoNES_ReadRom:0000000000000000 InfoNES_ReadRom
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:28     .text.InfoNES_ReadRom:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:30     .text.InfoNES_ReadRom:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:31     .text.InfoNES_ReadRom:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:34     .text.InfoNES_ReadRom:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:35     .text.InfoNES_ReadRom:0000000000000008 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:42     .text.InfoNES_ReadRom:0000000000000016 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:43     .text.InfoNES_ReadRom:0000000000000018 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:45     .text.InfoNES_ReadRom:0000000000000018 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:48     .text.InfoNES_ReadRom:0000000000000020 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:53     .text.InfoNES_ReadRom:000000000000002c .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:57     .text.InfoNES_ReadRom:000000000000002e .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:58     .text.InfoNES_ReadRom:0000000000000030 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:59     .text.InfoNES_ReadRom:0000000000000030 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:61     .text.InfoNES_ReadRom:0000000000000032 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:63     .text.InfoNES_ReadRom:0000000000000034 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:67     .text.InfoNES_ReadRom:0000000000000036 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:70     .text.InfoNES_ReadRom:000000000000003a .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:80     .text.InfoNES_ReadRom:000000000000005c .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:87     .text.InfoNES_ReadRom:0000000000000070 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:89     .text.InfoNES_ReadRom:0000000000000074 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:92     .text.InfoNES_ReadRom:0000000000000076 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:95     .text.InfoNES_ReadRom:000000000000007a .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:100    .text.InfoNES_ReadRom:0000000000000082 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:102    .text.InfoNES_ReadRom:0000000000000086 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:106    .text.InfoNES_ReadRom:000000000000008e .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:108    .text.InfoNES_ReadRom:0000000000000090 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:110    .text.InfoNES_ReadRom:0000000000000094 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:111    .text.InfoNES_ReadRom:0000000000000096 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:112    .text.InfoNES_ReadRom:0000000000000096 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:114    .text.InfoNES_ReadRom:0000000000000098 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:116    .text.InfoNES_ReadRom:0000000000000098 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:120    .text.InfoNES_ReadRom:000000000000009c .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:124    .text.InfoNES_ReadRom:00000000000000a4 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:125    .text.InfoNES_ReadRom:00000000000000a6 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:129    .text.InfoNES_ReadRom:00000000000000a8 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:131    .text.InfoNES_ReadRom:00000000000000a8 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:134    .text.InfoNES_ReadRom:00000000000000b2 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:141    .text.InfoNES_ReleaseRom:0000000000000000 InfoNES_ReleaseRom
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:144    .text.InfoNES_ReleaseRom:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:145    .text.InfoNES_ReleaseRom:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:146    .text.InfoNES_ReleaseRom:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:147    .text.InfoNES_ReleaseRom:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:154    .text.InfoNES_LoadFrame:0000000000000000 InfoNES_LoadFrame
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:156    .text.InfoNES_LoadFrame:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:158    .text.InfoNES_LoadFrame:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:165    .text.InfoNES_LoadLine:0000000000000000 InfoNES_LoadLine
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:168    .text.InfoNES_LoadLine:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:170    .text.InfoNES_LoadLine:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:171    .text.InfoNES_LoadLine:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:172    .text.InfoNES_LoadLine:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:174    .text.InfoNES_LoadLine:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:180    .text.InfoNES_LoadLine:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:181    .text.InfoNES_LoadLine:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:182    .text.InfoNES_LoadLine:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:183    .text.InfoNES_LoadLine:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:186    .text.InfoNES_LoadLine:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:192    .text.InfoNES_LoadLine:000000000000001e .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:196    .text.InfoNES_LoadLine:0000000000000028 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:199    .text.InfoNES_LoadLine:000000000000002a .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:203    .text.InfoNES_LoadLine:0000000000000034 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:205    .text.InfoNES_LoadLine:0000000000000038 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:206    .text.InfoNES_LoadLine:000000000000003a .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:208    .text.InfoNES_LoadLine:000000000000003c .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:211    .text.InfoNES_LoadLine:000000000000003e .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:213    .text.InfoNES_LoadLine:0000000000000040 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:215    .text.InfoNES_LoadLine:0000000000000042 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:217    .text.InfoNES_LoadLine:0000000000000044 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:219    .text.InfoNES_LoadLine:0000000000000046 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:226    .text.InfoNES_PadState:0000000000000000 InfoNES_PadState
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:229    .text.InfoNES_PadState:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:231    .text.InfoNES_PadState:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:232    .text.InfoNES_PadState:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:234    .text.InfoNES_PadState:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:235    .text.InfoNES_PadState:0000000000000006 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:242    .text.InfoNES_MemoryCopy:0000000000000000 InfoNES_MemoryCopy
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:245    .text.InfoNES_MemoryCopy:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:247    .text.InfoNES_MemoryCopy:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:248    .text.InfoNES_MemoryCopy:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:250    .text.InfoNES_MemoryCopy:0000000000000008 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:257    .text.InfoNES_MemorySet:0000000000000000 InfoNES_MemorySet
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:260    .text.InfoNES_MemorySet:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:262    .text.InfoNES_MemorySet:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:263    .text.InfoNES_MemorySet:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:265    .text.InfoNES_MemorySet:0000000000000008 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:272    .text.InfoNES_DebugPrint:0000000000000000 InfoNES_DebugPrint
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:275    .text.InfoNES_DebugPrint:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:277    .text.InfoNES_DebugPrint:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:278    .text.InfoNES_DebugPrint:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:279    .text.InfoNES_DebugPrint:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:286    .text.InfoNES_Wait:0000000000000000 InfoNES_Wait
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:288    .text.InfoNES_Wait:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:290    .text.InfoNES_Wait:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:297    .text.InfoNES_SoundInit:0000000000000000 InfoNES_SoundInit
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:300    .text.InfoNES_SoundInit:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:301    .text.InfoNES_SoundInit:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:302    .text.InfoNES_SoundInit:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:303    .text.InfoNES_SoundInit:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:310    .text.InfoNES_SoundOpen:0000000000000000 InfoNES_SoundOpen
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:313    .text.InfoNES_SoundOpen:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:315    .text.InfoNES_SoundOpen:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:316    .text.InfoNES_SoundOpen:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:319    .text.InfoNES_SoundOpen:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:326    .text.InfoNES_SoundClose:0000000000000000 InfoNES_SoundClose
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:328    .text.InfoNES_SoundClose:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:330    .text.InfoNES_SoundClose:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:337    .text.InfoNES_SoundOutput:0000000000000000 InfoNES_SoundOutput
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:340    .text.InfoNES_SoundOutput:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:342    .text.InfoNES_SoundOutput:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:343    .text.InfoNES_SoundOutput:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:344    .text.InfoNES_SoundOutput:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:351    .text.InfoNES_MessageBox:0000000000000000 InfoNES_MessageBox
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:354    .text.InfoNES_MessageBox:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:356    .text.InfoNES_MessageBox:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:357    .text.InfoNES_MessageBox:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:359    .text.InfoNES_MessageBox:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:367    .text.InfoNES_MessageBox:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:368    .text.InfoNES_MessageBox:0000000000000012 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:370    .text.InfoNES_MessageBox:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:379    .data.NesPalette:0000000000000000 NesPalette
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:456    .sbss.FrameCount:0000000000000000 FrameCount
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:21     .text.InfoNES_Menu:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:137    .text.InfoNES_ReadRom:00000000000000b2 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:150    .text.InfoNES_ReleaseRom:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:222    .text.InfoNES_LoadLine:0000000000000046 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:238    .text.InfoNES_PadState:0000000000000006 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:253    .text.InfoNES_MemoryCopy:0000000000000008 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:268    .text.InfoNES_MemorySet:0000000000000008 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:282    .text.InfoNES_DebugPrint:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:306    .text.InfoNES_SoundInit:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:322    .text.InfoNES_SoundOpen:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:347    .text.InfoNES_SoundOutput:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:375    .text.InfoNES_MessageBox:0000000000000014 .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:66     .text.InfoNES_ReadRom:0000000000000036 .L15
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:51     .text.InfoNES_ReadRom:000000000000002c .L4
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:128    .text.InfoNES_ReadRom:00000000000000a8 .L9
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:55     .text.InfoNES_ReadRom:000000000000002e .L3
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:97     .text.InfoNES_ReadRom:0000000000000082 .L7
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:446    .rodata.InfoNES_LoadLine.str1.4:0000000000000000 .LC1
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:190    .text.InfoNES_LoadLine:000000000000001e .L19
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:2312   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3650   .debug_str:0000000000000566 .LASF215
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3592   .debug_str:000000000000042d .LASF216
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3394   .debug_str:0000000000000013 .LASF217
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3362   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3390   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3506   .debug_str:000000000000027b .LASF0
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3724   .debug_str:000000000000076c .LASF2
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3626   .debug_str:00000000000004e4 .LASF1
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3788   .debug_str:00000000000008b3 .LASF3
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3624   .debug_str:00000000000004df .LASF4
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3746   .debug_str:00000000000007c5 .LASF5
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3680   .debug_str:00000000000006a3 .LASF6
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3784   .debug_str:00000000000008a0 .LASF7
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3674   .debug_str:000000000000067e .LASF8
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3676   .debug_str:0000000000000688 .LASF9
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3610   .debug_str:000000000000049e .LASF10
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3516   .debug_str:00000000000002b3 .LASF11
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3418   .debug_str:00000000000000c4 .LASF12
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3660   .debug_str:000000000000063b .LASF13
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3448   .debug_str:000000000000015a .LASF14
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3796   .debug_str:00000000000008dc .LASF15
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3464   .debug_str:00000000000001c7 .LASF16
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3780   .debug_str:0000000000000887 .LASF17
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3728   .debug_str:0000000000000785 .LASF18
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3594   .debug_str:0000000000000449 .LASF19
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3690   .debug_str:00000000000006c6 .LASF20
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3496   .debug_str:0000000000000250 .LASF21
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3562   .debug_str:0000000000000392 .LASF22
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3632   .debug_str:00000000000004fc .LASF23
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3590   .debug_str:0000000000000424 .LASF24
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3618   .debug_str:00000000000004c2 .LASF25
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3472   .debug_str:00000000000001ed .LASF30
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3548   .debug_str:000000000000034d .LASF26
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3710   .debug_str:000000000000072f .LASF27
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3684   .debug_str:00000000000006ae .LASF28
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3524   .debug_str:00000000000002e7 .LASF29
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3718   .debug_str:0000000000000756 .LASF31
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3540   .debug_str:0000000000000330 .LASF32
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3500   .debug_str:000000000000025f .LASF33
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3480   .debug_str:0000000000000212 .LASF34
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3576   .debug_str:00000000000003d1 .LASF35
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3658   .debug_str:0000000000000632 .LASF36
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3696   .debug_str:00000000000006ee .LASF37
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3474   .debug_str:00000000000001f5 .LASF38
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3542   .debug_str:0000000000000339 .LASF39
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3640   .debug_str:0000000000000526 .LASF40
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3400   .debug_str:0000000000000061 .LASF41
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3636   .debug_str:0000000000000512 .LASF42
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3732   .debug_str:0000000000000793 .LASF43
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3792   .debug_str:00000000000008cd .LASF44
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3812   .debug_str:0000000000000929 .LASF45
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3670   .debug_str:000000000000066d .LASF46
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3546   .debug_str:0000000000000348 .LASF47
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3466   .debug_str:00000000000001cf .LASF48
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3758   .debug_str:000000000000080c .LASF49
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3612   .debug_str:00000000000004ac .LASF50
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3794   .debug_str:00000000000008d6 .LASF51
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3522   .debug_str:00000000000002df .LASF52
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3430   .debug_str:0000000000000107 .LASF53
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3622   .debug_str:00000000000004d9 .LASF54
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3428   .debug_str:00000000000000fe .LASF55
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3470   .debug_str:00000000000001e5 .LASF56
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3454   .debug_str:000000000000018f .LASF57
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3668   .debug_str:0000000000000666 .LASF58
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3822   .debug_str:0000000000000952 .LASF59
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3598   .debug_str:0000000000000455 .LASF60
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3828   .debug_str:0000000000000969 .LASF61
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3798   .debug_str:00000000000008e3 .LASF62
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3716   .debug_str:000000000000074d .LASF63
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3530   .debug_str:00000000000002fb .LASF64
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3686   .debug_str:00000000000006b4 .LASF65
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3722   .debug_str:0000000000000766 .LASF66
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3672   .debug_str:0000000000000675 .LASF67
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3808   .debug_str:000000000000091c .LASF68
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3786   .debug_str:00000000000008ac .LASF69
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3432   .debug_str:000000000000010e .LASF70
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3606   .debug_str:0000000000000488 .LASF71
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3462   .debug_str:00000000000001bf .LASF72
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3824   .debug_str:0000000000000958 .LASF73
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3544   .debug_str:0000000000000343 .LASF74
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3534   .debug_str:000000000000030f .LASF75
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3806   .debug_str:0000000000000903 .LASF76
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3778   .debug_str:000000000000087f .LASF77
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3600   .debug_str:000000000000045c .LASF78
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3628   .debug_str:00000000000004e9 .LASF79
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3476   .debug_str:00000000000001ff .LASF80
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3514   .debug_str:00000000000002a9 .LASF81
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3564   .debug_str:000000000000039a .LASF82
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3614   .debug_str:00000000000004b2 .LASF83
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3708   .debug_str:0000000000000727 .LASF84
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3744   .debug_str:00000000000007bd .LASF85
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3706   .debug_str:0000000000000722 .LASF86
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3582   .debug_str:00000000000003f4 .LASF87
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3578   .debug_str:00000000000003db .LASF88
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3766   .debug_str:0000000000000836 .LASF89
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3682   .debug_str:00000000000006a9 .LASF90
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3572   .debug_str:00000000000003c3 .LASF91
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3528   .debug_str:00000000000002f4 .LASF92
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3760   .debug_str:0000000000000813 .LASF93
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3726   .debug_str:000000000000077e .LASF94
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3596   .debug_str:000000000000044f .LASF95
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3508   .debug_str:0000000000000281 .LASF96
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3814   .debug_str:0000000000000931 .LASF97
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3616   .debug_str:00000000000004bc .LASF98
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3752   .debug_str:00000000000007ed .LASF99
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3800   .debug_str:00000000000008e9 .LASF100
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3770   .debug_str:0000000000000851 .LASF101
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3518   .debug_str:00000000000002ca .LASF102
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3702   .debug_str:000000000000070b .LASF103
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3608   .debug_str:000000000000048f .LASF104
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3816   .debug_str:0000000000000937 .LASF105
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3412   .debug_str:00000000000000a1 .LASF106
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3570   .debug_str:00000000000003b6 .LASF107
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3772   .debug_str:000000000000085e .LASF108
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3406   .debug_str:000000000000007b .LASF109
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3712   .debug_str:0000000000000737 .LASF110
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3416   .debug_str:00000000000000b8 .LASF111
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3750   .debug_str:00000000000007e0 .LASF112
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3458   .debug_str:00000000000001a0 .LASF113
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3580   .debug_str:00000000000003e5 .LASF114
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3550   .debug_str:0000000000000353 .LASF115
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3620   .debug_str:00000000000004ca .LASF116
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3568   .debug_str:00000000000003a5 .LASF117
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3648   .debug_str:000000000000055d .LASF118
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3504   .debug_str:0000000000000274 .LASF119
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3826   .debug_str:0000000000000960 .LASF120
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3704   .debug_str:000000000000071a .LASF121
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3818   .debug_str:0000000000000942 .LASF218
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3502   .debug_str:0000000000000268 .LASF122
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3692   .debug_str:00000000000006cd .LASF123
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3538   .debug_str:000000000000032b .LASF124
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3764   .debug_str:000000000000082d .LASF125
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3552   .debug_str:0000000000000364 .LASF126
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3554   .debug_str:000000000000036d .LASF127
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3556   .debug_str:0000000000000376 .LASF128
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3558   .debug_str:000000000000037f .LASF129
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3404   .debug_str:0000000000000076 .LASF130
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3810   .debug_str:0000000000000924 .LASF131
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3804   .debug_str:00000000000008fb .LASF132
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3402   .debug_str:000000000000006f .LASF133
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3486   .debug_str:000000000000022c .LASF134
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3488   .debug_str:0000000000000233 .LASF135
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3490   .debug_str:000000000000023a .LASF136
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3492   .debug_str:0000000000000241 .LASF137
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3498   .debug_str:0000000000000258 .LASF138
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3654   .debug_str:0000000000000611 .LASF139
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3410   .debug_str:0000000000000093 .LASF140
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3442   .debug_str:0000000000000142 .LASF141
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3440   .debug_str:000000000000013a .LASF142
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3444   .debug_str:000000000000014a .LASF143
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3446   .debug_str:0000000000000152 .LASF144
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3532   .debug_str:0000000000000303 .LASF145
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3420   .debug_str:00000000000000d1 .LASF146
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3748   .debug_str:00000000000007d3 .LASF147
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3832   .debug_str:000000000000097b .LASF148
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3678   .debug_str:0000000000000691 .LASF149
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3688   .debug_str:00000000000006ba .LASF150
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3664   .debug_str:0000000000000650 .LASF151
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3602   .debug_str:0000000000000467 .LASF152
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3510   .debug_str:0000000000000289 .LASF153
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3452   .debug_str:000000000000017f .LASF154
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3408   .debug_str:0000000000000089 .LASF155
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3560   .debug_str:0000000000000388 .LASF156
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3574   .debug_str:00000000000003c8 .LASF157
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3426   .debug_str:00000000000000f4 .LASF158
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3642   .debug_str:0000000000000531 .LASF159
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3588   .debug_str:000000000000041b .LASF160
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3700   .debug_str:0000000000000702 .LASF161
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3634   .debug_str:0000000000000507 .LASF162
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3438   .debug_str:000000000000012f .LASF163
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3720   .debug_str:000000000000075b .LASF164
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3774   .debug_str:000000000000086c .LASF165
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3630   .debug_str:00000000000004f3 .LASF166
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3512   .debug_str:000000000000029b .LASF167
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3802   .debug_str:00000000000008f6 .LASF168
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3666   .debug_str:000000000000065c .LASF169
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3396   .debug_str:0000000000000044 .LASF170
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3482   .debug_str:000000000000021c .LASF171
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3484   .debug_str:0000000000000224 .LASF172
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3776   .debug_str:0000000000000875 .LASF173
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3834   .debug_str:0000000000000989 .LASF174
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3662   .debug_str:0000000000000647 .LASF175
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3694   .debug_str:00000000000006e0 .LASF176
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3652   .debug_str:0000000000000608 .LASF177
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3830   .debug_str:000000000000096f .LASF178
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3714   .debug_str:0000000000000741 .LASF179
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3478   .debug_str:0000000000000207 .LASF180
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3456   .debug_str:0000000000000195 .LASF181
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3520   .debug_str:00000000000002d7 .LASF182
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3450   .debug_str:000000000000016c .LASF183
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:352    .text.InfoNES_MessageBox:0000000000000000 .LFB16
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:371    .text.InfoNES_MessageBox:0000000000000014 .LFE16
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3730   .debug_str:000000000000078c .LASF185
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3762   .debug_str:0000000000000819 .LASF184
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:338    .text.InfoNES_SoundOutput:0000000000000000 .LFB15
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:345    .text.InfoNES_SoundOutput:0000000000000002 .LFE15
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3494   .debug_str:0000000000000248 .LASF186
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3734   .debug_str:000000000000079f .LASF187
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3736   .debug_str:00000000000007a5 .LASF188
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3738   .debug_str:00000000000007ab .LASF189
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3740   .debug_str:00000000000007b1 .LASF190
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3742   .debug_str:00000000000007b7 .LASF191
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3768   .debug_str:000000000000083e .LASF206
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3414   .debug_str:00000000000000a6 .LASF195
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:311    .text.InfoNES_SoundOpen:0000000000000000 .LFB13
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:320    .text.InfoNES_SoundOpen:0000000000000004 .LFE13
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3644   .debug_str:000000000000053f .LASF192
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3182   .debug_loc:0000000000000000 .LLST9
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3424   .debug_str:00000000000000e8 .LASF193
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3756   .debug_str:00000000000007fa .LASF219
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3586   .debug_str:000000000000040e .LASF204
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3604   .debug_str:0000000000000475 .LASF194
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:273    .text.InfoNES_DebugPrint:0000000000000000 .LFB10
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:280    .text.InfoNES_DebugPrint:0000000000000002 .LFE10
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3656   .debug_str:0000000000000620 .LASF196
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:258    .text.InfoNES_MemorySet:0000000000000000 .LFB9
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:266    .text.InfoNES_MemorySet:0000000000000008 .LFE9
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3820   .debug_str:000000000000094d .LASF197
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3196   .debug_loc:0000000000000021 .LLST6
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3210   .debug_loc:0000000000000042 .LLST7
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3566   .debug_str:000000000000039f .LASF198
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3224   .debug_loc:0000000000000063 .LLST8
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:264    .text.InfoNES_MemorySet:0000000000000008 .LVL21
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3392   .debug_str:0000000000000000 .LASF199
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:243    .text.InfoNES_MemoryCopy:0000000000000000 .LFB8
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:251    .text.InfoNES_MemoryCopy:0000000000000008 .LFE8
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3238   .debug_loc:0000000000000084 .LLST3
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3252   .debug_loc:00000000000000a5 .LLST4
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3266   .debug_loc:00000000000000c6 .LLST5
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:249    .text.InfoNES_MemoryCopy:0000000000000008 .LVL19
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3468   .debug_str:00000000000001d4 .LASF200
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:227    .text.InfoNES_PadState:0000000000000000 .LFB7
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:236    .text.InfoNES_PadState:0000000000000006 .LFE7
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3526   .debug_str:00000000000002ec .LASF201
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3754   .debug_str:00000000000007f2 .LASF202
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3698   .debug_str:00000000000006f8 .LASF203
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3584   .debug_str:00000000000003fd .LASF220
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:166    .text.InfoNES_LoadLine:0000000000000000 .LFB6
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:220    .text.InfoNES_LoadLine:0000000000000046 .LFE6
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3280   .debug_loc:00000000000000e7 .LLST2
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:200    .text.InfoNES_LoadLine:0000000000000032 .LVL15
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3398   .debug_str:000000000000004f .LASF205
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3434   .debug_str:0000000000000115 .LASF207
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3782   .debug_str:0000000000000890 .LASF208
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:26     .text.InfoNES_ReadRom:0000000000000000 .LFB3
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:135    .text.InfoNES_ReadRom:00000000000000b2 .LFE3
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3638   .debug_str:000000000000051a .LASF209
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3306   .debug_loc:0000000000000129 .LLST0
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3320   .debug_loc:000000000000014a .LLST1
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:46     .text.InfoNES_ReadRom:0000000000000020 .LVL2
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:85     .text.InfoNES_ReadRom:0000000000000070 .LVL5
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3646   .debug_str:0000000000000550 .LASF221
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:11     .text.InfoNES_Menu:0000000000000000 .LFB2
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:19     .text.InfoNES_Menu:0000000000000004 .LFE2
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:142    .text.InfoNES_ReleaseRom:0000000000000000 .LFB4
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:148    .text.InfoNES_ReleaseRom:0000000000000002 .LFE4
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:298    .text.InfoNES_SoundInit:0000000000000000 .LFB12
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:304    .text.InfoNES_SoundInit:0000000000000002 .LFE12
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3436   .debug_str:0000000000000128 .LASF210
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3790   .debug_str:00000000000008c6 .LASF212
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3460   .debug_str:00000000000001ae .LASF213
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3422   .debug_str:00000000000000e1 .LASF211
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:3536   .debug_str:000000000000031a .LASF214
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:314    .text.InfoNES_SoundOpen:0000000000000000 .LVL23
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:317    .text.InfoNES_SoundOpen:0000000000000002 .LVL24
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:261    .text.InfoNES_MemorySet:0000000000000000 .LVL20
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:246    .text.InfoNES_MemoryCopy:0000000000000000 .LVL18
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:169    .text.InfoNES_LoadLine:0000000000000000 .LVL12
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:189    .text.InfoNES_LoadLine:000000000000001e .LVL13
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:197    .text.InfoNES_LoadLine:000000000000002a .LVL14
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:209    .text.InfoNES_LoadLine:000000000000003c .LVL16
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:29     .text.InfoNES_ReadRom:0000000000000000 .LVL0
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:40     .text.InfoNES_ReadRom:0000000000000016 .LVL1
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:98     .text.InfoNES_ReadRom:0000000000000082 .LVL7
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:104    .text.InfoNES_ReadRom:000000000000008e .LVL8
+C:\Users\rana\AppData\Local\Temp\ccSyhQFP.s:470    .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+nes_rom
+NesHeader
+memcpy
+SRAM
+memset
+ROM
+VROM
+WorkLine
+printk

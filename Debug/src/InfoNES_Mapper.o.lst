@@ -1,0 +1,781 @@
+   1              		.file	"InfoNES_Mapper.c"
+   2              		.option nopic
+   3              		.text
+   4              	.Ltext0:
+   5              		.cfi_sections	.debug_frame
+   6              		.section	.text.Map0_Write,"ax",@progbits
+   7              		.align	1
+   8              		.globl	Map0_Write
+  10              	Map0_Write:
+  11              	.LFB1:
+  12              		.file 1 "../src/mapper/InfoNES_Mapper_000.h"
+   1:../src/mapper/InfoNES_Mapper_000.h **** /*===================================================================*/
+   2:../src/mapper/InfoNES_Mapper_000.h **** /*                                                                   */
+   3:../src/mapper/InfoNES_Mapper_000.h **** /*                            Mapper 0                               */
+   4:../src/mapper/InfoNES_Mapper_000.h **** /*                                                                   */
+   5:../src/mapper/InfoNES_Mapper_000.h **** /*===================================================================*/
+   6:../src/mapper/InfoNES_Mapper_000.h **** 
+   7:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+   8:../src/mapper/InfoNES_Mapper_000.h **** /*  Initialize Mapper 0                                              */
+   9:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+  10:../src/mapper/InfoNES_Mapper_000.h **** void Map0_Init()
+  11:../src/mapper/InfoNES_Mapper_000.h **** {
+  12:../src/mapper/InfoNES_Mapper_000.h ****   /* Initialize Mapper */
+  13:../src/mapper/InfoNES_Mapper_000.h ****   MapperInit = Map0_Init;
+  14:../src/mapper/InfoNES_Mapper_000.h **** 
+  15:../src/mapper/InfoNES_Mapper_000.h ****   /* Write to Mapper */
+  16:../src/mapper/InfoNES_Mapper_000.h ****   MapperWrite = Map0_Write;
+  17:../src/mapper/InfoNES_Mapper_000.h **** 
+  18:../src/mapper/InfoNES_Mapper_000.h ****   /* Write to SRAM */
+  19:../src/mapper/InfoNES_Mapper_000.h ****   MapperSram = Map0_Sram;
+  20:../src/mapper/InfoNES_Mapper_000.h **** 
+  21:../src/mapper/InfoNES_Mapper_000.h ****   /* Write to APU */
+  22:../src/mapper/InfoNES_Mapper_000.h ****   MapperApu = Map0_Apu;
+  23:../src/mapper/InfoNES_Mapper_000.h **** 
+  24:../src/mapper/InfoNES_Mapper_000.h ****   /* Read from APU */
+  25:../src/mapper/InfoNES_Mapper_000.h ****   MapperReadApu = Map0_ReadApu;
+  26:../src/mapper/InfoNES_Mapper_000.h **** 
+  27:../src/mapper/InfoNES_Mapper_000.h ****   /* Callback at VSync */
+  28:../src/mapper/InfoNES_Mapper_000.h ****   MapperVSync = Map0_VSync;
+  29:../src/mapper/InfoNES_Mapper_000.h **** 
+  30:../src/mapper/InfoNES_Mapper_000.h ****   /* Callback at HSync */
+  31:../src/mapper/InfoNES_Mapper_000.h ****   MapperHSync = Map0_HSync;
+  32:../src/mapper/InfoNES_Mapper_000.h **** 
+  33:../src/mapper/InfoNES_Mapper_000.h ****   /* Callback at PPU */
+  34:../src/mapper/InfoNES_Mapper_000.h ****   MapperPPU = Map0_PPU;
+  35:../src/mapper/InfoNES_Mapper_000.h **** 
+  36:../src/mapper/InfoNES_Mapper_000.h ****   /* Callback at Rendering Screen ( 1:BG, 0:Sprite ) */
+  37:../src/mapper/InfoNES_Mapper_000.h ****   MapperRenderScreen = Map0_RenderScreen;
+  38:../src/mapper/InfoNES_Mapper_000.h **** 
+  39:../src/mapper/InfoNES_Mapper_000.h ****   /* Set SRAM Banks */
+  40:../src/mapper/InfoNES_Mapper_000.h ****   SRAMBANK = SRAM;
+  41:../src/mapper/InfoNES_Mapper_000.h **** 
+  42:../src/mapper/InfoNES_Mapper_000.h ****   /* Set ROM Banks */
+  43:../src/mapper/InfoNES_Mapper_000.h ****   if ( NesHeader.byRomSize > 1 )
+  44:../src/mapper/InfoNES_Mapper_000.h ****   {
+  45:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK0 = ROMPAGE( 0 );
+  46:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK1 = ROMPAGE( 1 );
+  47:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK2 = ROMPAGE( 2 );
+  48:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK3 = ROMPAGE( 3 );
+  49:../src/mapper/InfoNES_Mapper_000.h ****   }
+  50:../src/mapper/InfoNES_Mapper_000.h ****   else if ( NesHeader.byRomSize > 0 )
+  51:../src/mapper/InfoNES_Mapper_000.h ****   {
+  52:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK0 = ROMPAGE( 0 );
+  53:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK1 = ROMPAGE( 1 );
+  54:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK2 = ROMPAGE( 0 );
+  55:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK3 = ROMPAGE( 1 );
+  56:../src/mapper/InfoNES_Mapper_000.h ****   } else {
+  57:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK0 = ROMPAGE( 0 );
+  58:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK1 = ROMPAGE( 0 );
+  59:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK2 = ROMPAGE( 0 );
+  60:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK3 = ROMPAGE( 0 );
+  61:../src/mapper/InfoNES_Mapper_000.h ****   }
+  62:../src/mapper/InfoNES_Mapper_000.h **** 
+  63:../src/mapper/InfoNES_Mapper_000.h ****   /* Set PPU Banks */
+  64:../src/mapper/InfoNES_Mapper_000.h ****   if ( NesHeader.byVRomSize > 0 )
+  65:../src/mapper/InfoNES_Mapper_000.h ****   {
+  66:../src/mapper/InfoNES_Mapper_000.h ****     for ( int nPage = 0; nPage < 8; ++nPage )
+  67:../src/mapper/InfoNES_Mapper_000.h ****       PPUBANK[ nPage ] = VROMPAGE( nPage );
+  68:../src/mapper/InfoNES_Mapper_000.h ****     InfoNES_SetupChr();
+  69:../src/mapper/InfoNES_Mapper_000.h ****   }
+  70:../src/mapper/InfoNES_Mapper_000.h **** 
+  71:../src/mapper/InfoNES_Mapper_000.h ****   /* Set up wiring of the interrupt pin */
+  72:../src/mapper/InfoNES_Mapper_000.h ****   K6502_Set_Int_Wiring( 1, 1 ); 
+  73:../src/mapper/InfoNES_Mapper_000.h **** }
+  74:../src/mapper/InfoNES_Mapper_000.h **** 
+  75:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+  76:../src/mapper/InfoNES_Mapper_000.h **** /*  Mapper 0 Write Function                                          */
+  77:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+  78:../src/mapper/InfoNES_Mapper_000.h **** void Map0_Write( WORD wAddr, BYTE byData )
+  79:../src/mapper/InfoNES_Mapper_000.h **** {
+  13              		.loc 1 79 0
+  14              		.cfi_startproc
+  15              	.LVL0:
+  80:../src/mapper/InfoNES_Mapper_000.h **** /*
+  81:../src/mapper/InfoNES_Mapper_000.h ****  *  Dummy Write to Mapper
+  82:../src/mapper/InfoNES_Mapper_000.h ****  *
+  83:../src/mapper/InfoNES_Mapper_000.h ****  */
+  84:../src/mapper/InfoNES_Mapper_000.h **** }
+  16              		.loc 1 84 0
+  17 0000 8280     		ret
+  18              		.cfi_endproc
+  19              	.LFE1:
+  21              		.section	.text.Map0_ReadApu,"ax",@progbits
+  22              		.align	1
+  23              		.globl	Map0_ReadApu
+  25              	Map0_ReadApu:
+  26              	.LFB4:
+  85:../src/mapper/InfoNES_Mapper_000.h **** 
+  86:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+  87:../src/mapper/InfoNES_Mapper_000.h **** /*  Mapper 0 Write to SRAM Function                                  */
+  88:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+  89:../src/mapper/InfoNES_Mapper_000.h **** void Map0_Sram( WORD wAddr, BYTE byData )
+  90:../src/mapper/InfoNES_Mapper_000.h **** {
+  91:../src/mapper/InfoNES_Mapper_000.h **** /*
+  92:../src/mapper/InfoNES_Mapper_000.h ****  *  Dummy Write to Sram
+  93:../src/mapper/InfoNES_Mapper_000.h ****  *
+  94:../src/mapper/InfoNES_Mapper_000.h ****  */
+  95:../src/mapper/InfoNES_Mapper_000.h **** }
+  96:../src/mapper/InfoNES_Mapper_000.h **** 
+  97:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+  98:../src/mapper/InfoNES_Mapper_000.h **** /*  Mapper 0 Write to APU Function                                   */
+  99:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+ 100:../src/mapper/InfoNES_Mapper_000.h **** void Map0_Apu( WORD wAddr, BYTE byData )
+ 101:../src/mapper/InfoNES_Mapper_000.h **** {
+ 102:../src/mapper/InfoNES_Mapper_000.h **** /*
+ 103:../src/mapper/InfoNES_Mapper_000.h ****  *  Dummy Write to Apu
+ 104:../src/mapper/InfoNES_Mapper_000.h ****  *
+ 105:../src/mapper/InfoNES_Mapper_000.h ****  */
+ 106:../src/mapper/InfoNES_Mapper_000.h **** }
+ 107:../src/mapper/InfoNES_Mapper_000.h **** 
+ 108:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+ 109:../src/mapper/InfoNES_Mapper_000.h **** /*  Mapper 0 Read from APU Function                                  */
+ 110:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+ 111:../src/mapper/InfoNES_Mapper_000.h **** BYTE Map0_ReadApu( WORD wAddr )
+ 112:../src/mapper/InfoNES_Mapper_000.h **** {
+  27              		.loc 1 112 0
+  28              		.cfi_startproc
+  29              	.LVL1:
+ 113:../src/mapper/InfoNES_Mapper_000.h **** /*
+ 114:../src/mapper/InfoNES_Mapper_000.h ****  *  Dummy Read from Apu
+ 115:../src/mapper/InfoNES_Mapper_000.h ****  *
+ 116:../src/mapper/InfoNES_Mapper_000.h ****  */
+ 117:../src/mapper/InfoNES_Mapper_000.h ****   return ( wAddr >> 8 );
+ 118:../src/mapper/InfoNES_Mapper_000.h **** }
+  30              		.loc 1 118 0
+  31 0000 2181     		srli	a0,a0,8
+  32              	.LVL2:
+  33 0002 8280     		ret
+  34              		.cfi_endproc
+  35              	.LFE4:
+  37              		.section	.text.Map0_VSync,"ax",@progbits
+  38              		.align	1
+  39              		.globl	Map0_VSync
+  41              	Map0_VSync:
+  42              	.LFB5:
+ 119:../src/mapper/InfoNES_Mapper_000.h **** 
+ 120:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+ 121:../src/mapper/InfoNES_Mapper_000.h **** /*  Mapper 0 V-Sync Function                                         */
+ 122:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+ 123:../src/mapper/InfoNES_Mapper_000.h **** void Map0_VSync()
+ 124:../src/mapper/InfoNES_Mapper_000.h **** {
+  43              		.loc 1 124 0
+  44              		.cfi_startproc
+ 125:../src/mapper/InfoNES_Mapper_000.h **** /*
+ 126:../src/mapper/InfoNES_Mapper_000.h ****  *  Dummy Callback at VSync
+ 127:../src/mapper/InfoNES_Mapper_000.h ****  *
+ 128:../src/mapper/InfoNES_Mapper_000.h ****  */
+ 129:../src/mapper/InfoNES_Mapper_000.h **** }
+  45              		.loc 1 129 0
+  46 0000 8280     		ret
+  47              		.cfi_endproc
+  48              	.LFE5:
+  50              		.section	.text.Map0_PPU,"ax",@progbits
+  51              		.align	1
+  52              		.globl	Map0_PPU
+  54              	Map0_PPU:
+  55              	.LFB7:
+ 130:../src/mapper/InfoNES_Mapper_000.h **** 
+ 131:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+ 132:../src/mapper/InfoNES_Mapper_000.h **** /*  Mapper 0 H-Sync Function                                         */
+ 133:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+ 134:../src/mapper/InfoNES_Mapper_000.h **** void Map0_HSync()
+ 135:../src/mapper/InfoNES_Mapper_000.h **** {
+ 136:../src/mapper/InfoNES_Mapper_000.h **** /*
+ 137:../src/mapper/InfoNES_Mapper_000.h ****  *  Dummy Callback at HSync
+ 138:../src/mapper/InfoNES_Mapper_000.h ****  *
+ 139:../src/mapper/InfoNES_Mapper_000.h ****  */
+ 140:../src/mapper/InfoNES_Mapper_000.h **** #if 0 
+ 141:../src/mapper/InfoNES_Mapper_000.h ****   // Frame IRQ
+ 142:../src/mapper/InfoNES_Mapper_000.h ****   FrameStep += STEP_PER_SCANLINE;
+ 143:../src/mapper/InfoNES_Mapper_000.h ****   if ( FrameStep > STEP_PER_FRAME && FrameIRQ_Enable )
+ 144:../src/mapper/InfoNES_Mapper_000.h ****   {
+ 145:../src/mapper/InfoNES_Mapper_000.h ****     FrameStep %= STEP_PER_FRAME;
+ 146:../src/mapper/InfoNES_Mapper_000.h ****     IRQ_REQ;
+ 147:../src/mapper/InfoNES_Mapper_000.h ****     APU_Reg[ 0x4015 ] |= 0x40;
+ 148:../src/mapper/InfoNES_Mapper_000.h ****   }
+ 149:../src/mapper/InfoNES_Mapper_000.h **** #endif
+ 150:../src/mapper/InfoNES_Mapper_000.h **** }
+ 151:../src/mapper/InfoNES_Mapper_000.h **** 
+ 152:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+ 153:../src/mapper/InfoNES_Mapper_000.h **** /*  Mapper 0 PPU Function                                            */
+ 154:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+ 155:../src/mapper/InfoNES_Mapper_000.h **** void Map0_PPU( WORD wAddr )
+ 156:../src/mapper/InfoNES_Mapper_000.h **** {
+  56              		.loc 1 156 0
+  57              		.cfi_startproc
+  58              	.LVL3:
+ 157:../src/mapper/InfoNES_Mapper_000.h **** /*
+ 158:../src/mapper/InfoNES_Mapper_000.h ****  *  Dummy Callback at PPU
+ 159:../src/mapper/InfoNES_Mapper_000.h ****  *
+ 160:../src/mapper/InfoNES_Mapper_000.h ****  */
+ 161:../src/mapper/InfoNES_Mapper_000.h **** }
+  59              		.loc 1 161 0
+  60 0000 8280     		ret
+  61              		.cfi_endproc
+  62              	.LFE7:
+  64              		.section	.text.Map0_RenderScreen,"ax",@progbits
+  65              		.align	1
+  66              		.globl	Map0_RenderScreen
+  68              	Map0_RenderScreen:
+  69              	.LFB8:
+ 162:../src/mapper/InfoNES_Mapper_000.h **** 
+ 163:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+ 164:../src/mapper/InfoNES_Mapper_000.h **** /*  Mapper 0 Rendering Screen Function                               */
+ 165:../src/mapper/InfoNES_Mapper_000.h **** /*-------------------------------------------------------------------*/
+ 166:../src/mapper/InfoNES_Mapper_000.h **** void Map0_RenderScreen( BYTE byMode )
+ 167:../src/mapper/InfoNES_Mapper_000.h **** {
+  70              		.loc 1 167 0
+  71              		.cfi_startproc
+  72              	.LVL4:
+ 168:../src/mapper/InfoNES_Mapper_000.h **** /*
+ 169:../src/mapper/InfoNES_Mapper_000.h ****  *  Dummy Callback at Rendering Screen
+ 170:../src/mapper/InfoNES_Mapper_000.h ****  *
+ 171:../src/mapper/InfoNES_Mapper_000.h ****  */
+ 172:../src/mapper/InfoNES_Mapper_000.h **** }
+  73              		.loc 1 172 0
+  74 0000 8280     		ret
+  75              		.cfi_endproc
+  76              	.LFE8:
+  78              		.section	.text.Map0_Init,"ax",@progbits
+  79              		.align	1
+  80              		.globl	Map0_Init
+  82              	Map0_Init:
+  83              	.LFB0:
+  11:../src/mapper/InfoNES_Mapper_000.h ****   /* Initialize Mapper */
+  84              		.loc 1 11 0
+  85              		.cfi_startproc
+  13:../src/mapper/InfoNES_Mapper_000.h **** 
+  86              		.loc 1 13 0
+  87 0000 37070000 		lui	a4,%hi(Map0_Init)
+  88 0004 37060000 		lui	a2,%hi(MapperInit)
+  89 0008 13070700 		addi	a4,a4,%lo(Map0_Init)
+  90 000c 2320E600 		sw	a4,%lo(MapperInit)(a2)
+  16:../src/mapper/InfoNES_Mapper_000.h **** 
+  91              		.loc 1 16 0
+  92 0010 37070000 		lui	a4,%hi(Map0_Write)
+  93 0014 37060000 		lui	a2,%hi(MapperWrite)
+  94 0018 13070700 		addi	a4,a4,%lo(Map0_Write)
+  95 001c 2320E600 		sw	a4,%lo(MapperWrite)(a2)
+  19:../src/mapper/InfoNES_Mapper_000.h **** 
+  96              		.loc 1 19 0
+  97 0020 37070000 		lui	a4,%hi(Map0_Sram)
+  98 0024 37060000 		lui	a2,%hi(MapperSram)
+  99 0028 13070700 		addi	a4,a4,%lo(Map0_Sram)
+ 100 002c 2320E600 		sw	a4,%lo(MapperSram)(a2)
+  22:../src/mapper/InfoNES_Mapper_000.h **** 
+ 101              		.loc 1 22 0
+ 102 0030 37070000 		lui	a4,%hi(Map0_Apu)
+ 103 0034 37060000 		lui	a2,%hi(MapperApu)
+ 104 0038 13070700 		addi	a4,a4,%lo(Map0_Apu)
+ 105 003c 2320E600 		sw	a4,%lo(MapperApu)(a2)
+  25:../src/mapper/InfoNES_Mapper_000.h **** 
+ 106              		.loc 1 25 0
+ 107 0040 37070000 		lui	a4,%hi(Map0_ReadApu)
+ 108 0044 37060000 		lui	a2,%hi(MapperReadApu)
+ 109 0048 13070700 		addi	a4,a4,%lo(Map0_ReadApu)
+ 110 004c 2320E600 		sw	a4,%lo(MapperReadApu)(a2)
+  28:../src/mapper/InfoNES_Mapper_000.h **** 
+ 111              		.loc 1 28 0
+ 112 0050 37070000 		lui	a4,%hi(Map0_VSync)
+ 113 0054 37060000 		lui	a2,%hi(MapperVSync)
+ 114 0058 13070700 		addi	a4,a4,%lo(Map0_VSync)
+ 115 005c 2320E600 		sw	a4,%lo(MapperVSync)(a2)
+  31:../src/mapper/InfoNES_Mapper_000.h **** 
+ 116              		.loc 1 31 0
+ 117 0060 37070000 		lui	a4,%hi(Map0_HSync)
+ 118 0064 37060000 		lui	a2,%hi(MapperHSync)
+ 119 0068 13070700 		addi	a4,a4,%lo(Map0_HSync)
+ 120 006c 2320E600 		sw	a4,%lo(MapperHSync)(a2)
+  34:../src/mapper/InfoNES_Mapper_000.h **** 
+ 121              		.loc 1 34 0
+ 122 0070 37070000 		lui	a4,%hi(Map0_PPU)
+ 123 0074 37060000 		lui	a2,%hi(MapperPPU)
+ 124 0078 13070700 		addi	a4,a4,%lo(Map0_PPU)
+ 125 007c 2320E600 		sw	a4,%lo(MapperPPU)(a2)
+  43:../src/mapper/InfoNES_Mapper_000.h ****   {
+ 126              		.loc 1 43 0
+ 127 0080 B7070000 		lui	a5,%hi(NesHeader)
+  37:../src/mapper/InfoNES_Mapper_000.h **** 
+ 128              		.loc 1 37 0
+ 129 0084 37070000 		lui	a4,%hi(Map0_RenderScreen)
+ 130 0088 37060000 		lui	a2,%hi(MapperRenderScreen)
+ 131 008c 13070700 		addi	a4,a4,%lo(Map0_RenderScreen)
+  43:../src/mapper/InfoNES_Mapper_000.h ****   {
+ 132              		.loc 1 43 0
+ 133 0090 93870700 		addi	a5,a5,%lo(NesHeader)
+  37:../src/mapper/InfoNES_Mapper_000.h **** 
+ 134              		.loc 1 37 0
+ 135 0094 2320E600 		sw	a4,%lo(MapperRenderScreen)(a2)
+  43:../src/mapper/InfoNES_Mapper_000.h ****   {
+ 136              		.loc 1 43 0
+ 137 0098 83C64700 		lbu	a3,4(a5)
+  40:../src/mapper/InfoNES_Mapper_000.h **** 
+ 138              		.loc 1 40 0
+ 139 009c 37070000 		lui	a4,%hi(SRAM)
+ 140 00a0 37060000 		lui	a2,%hi(SRAMBANK)
+ 141 00a4 13070700 		addi	a4,a4,%lo(SRAM)
+ 142 00a8 2320E600 		sw	a4,%lo(SRAMBANK)(a2)
+ 143 00ac 37070000 		lui	a4,%hi(ROM)
+  43:../src/mapper/InfoNES_Mapper_000.h ****   {
+ 144              		.loc 1 43 0
+ 145 00b0 0546     		li	a2,1
+ 146 00b2 03270700 		lw	a4,%lo(ROM)(a4)
+ 147 00b6 637FD606 		bleu	a3,a2,.L8
+  46:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK2 = ROMPAGE( 2 );
+ 148              		.loc 1 46 0
+ 149 00ba 8965     		li	a1,8192
+  47:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK3 = ROMPAGE( 3 );
+ 150              		.loc 1 47 0
+ 151 00bc 1166     		li	a2,16384
+  48:../src/mapper/InfoNES_Mapper_000.h ****   }
+ 152              		.loc 1 48 0
+ 153 00be 9966     		li	a3,24576
+  45:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK1 = ROMPAGE( 1 );
+ 154              		.loc 1 45 0
+ 155 00c0 37050000 		lui	a0,%hi(ROMBANK0)
+  46:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK2 = ROMPAGE( 2 );
+ 156              		.loc 1 46 0
+ 157 00c4 BA95     		add	a1,a4,a1
+  47:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK3 = ROMPAGE( 3 );
+ 158              		.loc 1 47 0
+ 159 00c6 3A96     		add	a2,a4,a2
+  48:../src/mapper/InfoNES_Mapper_000.h ****   }
+ 160              		.loc 1 48 0
+ 161 00c8 BA96     		add	a3,a4,a3
+  45:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK1 = ROMPAGE( 1 );
+ 162              		.loc 1 45 0
+ 163 00ca 2320E500 		sw	a4,%lo(ROMBANK0)(a0)
+  46:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK2 = ROMPAGE( 2 );
+ 164              		.loc 1 46 0
+ 165 00ce 37070000 		lui	a4,%hi(ROMBANK1)
+ 166 00d2 2320B700 		sw	a1,%lo(ROMBANK1)(a4)
+  47:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK3 = ROMPAGE( 3 );
+ 167              		.loc 1 47 0
+ 168 00d6 37070000 		lui	a4,%hi(ROMBANK2)
+ 169 00da 2320C700 		sw	a2,%lo(ROMBANK2)(a4)
+  48:../src/mapper/InfoNES_Mapper_000.h ****   }
+ 170              		.loc 1 48 0
+ 171 00de 37070000 		lui	a4,%hi(ROMBANK3)
+ 172 00e2 2320D700 		sw	a3,%lo(ROMBANK3)(a4)
+ 173              	.L9:
+  64:../src/mapper/InfoNES_Mapper_000.h ****   {
+ 174              		.loc 1 64 0
+ 175 00e6 83C75700 		lbu	a5,5(a5)
+ 176 00ea 9DCF     		beqz	a5,.L18
+ 177 00ec B7070000 		lui	a5,%hi(VROM)
+ 178 00f0 03A70700 		lw	a4,%lo(VROM)(a5)
+ 179 00f4 B7070000 		lui	a5,%hi(PPUBANK)
+  11:../src/mapper/InfoNES_Mapper_000.h ****   /* Initialize Mapper */
+ 180              		.loc 1 11 0
+ 181 00f8 4111     		addi	sp,sp,-16
+ 182              		.cfi_def_cfa_offset 16
+ 183 00fa 93870700 		addi	a5,a5,%lo(PPUBANK)
+ 184 00fe 06C6     		sw	ra,12(sp)
+ 185              		.cfi_offset 1, -4
+ 186 0100 93860702 		addi	a3,a5,32
+ 187              	.L12:
+ 188              	.LBB2:
+  67:../src/mapper/InfoNES_Mapper_000.h ****     InfoNES_SetupChr();
+ 189              		.loc 1 67 0 discriminator 3
+ 190 0104 98C3     		sw	a4,0(a5)
+ 191              	.LVL5:
+ 192 0106 9107     		addi	a5,a5,4
+ 193 0108 13070740 		addi	a4,a4,1024
+  66:../src/mapper/InfoNES_Mapper_000.h ****       PPUBANK[ nPage ] = VROMPAGE( nPage );
+ 194              		.loc 1 66 0 discriminator 3
+ 195 010c E39CD7FE 		bne	a5,a3,.L12
+ 196              	.LBE2:
+  68:../src/mapper/InfoNES_Mapper_000.h ****   }
+ 197              		.loc 1 68 0
+ 198 0110 97000000 		call	InfoNES_SetupChr
+ 198      E7800000 
+ 199              	.LVL6:
+  73:../src/mapper/InfoNES_Mapper_000.h **** 
+ 200              		.loc 1 73 0
+ 201 0118 B240     		lw	ra,12(sp)
+ 202              		.cfi_restore 1
+  72:../src/mapper/InfoNES_Mapper_000.h **** }
+ 203              		.loc 1 72 0
+ 204 011a 8545     		li	a1,1
+  73:../src/mapper/InfoNES_Mapper_000.h **** 
+ 205              		.loc 1 73 0
+  72:../src/mapper/InfoNES_Mapper_000.h **** }
+ 206              		.loc 1 72 0
+ 207 011c 0545     		li	a0,1
+  73:../src/mapper/InfoNES_Mapper_000.h **** 
+ 208              		.loc 1 73 0
+ 209 011e 4101     		addi	sp,sp,16
+ 210              		.cfi_def_cfa_offset 0
+  72:../src/mapper/InfoNES_Mapper_000.h **** }
+ 211              		.loc 1 72 0
+ 212 0120 17030000 		tail	K6502_Set_Int_Wiring
+ 212      67000300 
+ 213              	.LVL7:
+ 214              	.L18:
+ 215 0128 8545     		li	a1,1
+ 216 012a 0545     		li	a0,1
+ 217 012c 17030000 		tail	K6502_Set_Int_Wiring
+ 217      67000300 
+ 218              	.LVL8:
+ 219              	.L8:
+  50:../src/mapper/InfoNES_Mapper_000.h ****   {
+ 220              		.loc 1 50 0
+ 221 0134 85C6     		beqz	a3,.L10
+  52:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK1 = ROMPAGE( 1 );
+ 222              		.loc 1 52 0
+ 223 0136 37060000 		lui	a2,%hi(ROMBANK0)
+  53:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK2 = ROMPAGE( 0 );
+ 224              		.loc 1 53 0
+ 225 013a 8966     		li	a3,8192
+ 226 013c BA96     		add	a3,a4,a3
+  52:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK1 = ROMPAGE( 1 );
+ 227              		.loc 1 52 0
+ 228 013e 2320E600 		sw	a4,%lo(ROMBANK0)(a2)
+  53:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK2 = ROMPAGE( 0 );
+ 229              		.loc 1 53 0
+ 230 0142 37060000 		lui	a2,%hi(ROMBANK1)
+ 231 0146 2320D600 		sw	a3,%lo(ROMBANK1)(a2)
+  54:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK3 = ROMPAGE( 1 );
+ 232              		.loc 1 54 0
+ 233 014a 37060000 		lui	a2,%hi(ROMBANK2)
+ 234 014e 2320E600 		sw	a4,%lo(ROMBANK2)(a2)
+  55:../src/mapper/InfoNES_Mapper_000.h ****   } else {
+ 235              		.loc 1 55 0
+ 236 0152 37070000 		lui	a4,%hi(ROMBANK3)
+ 237 0156 2320D700 		sw	a3,%lo(ROMBANK3)(a4)
+ 238 015a 71B7     		j	.L9
+ 239              	.L10:
+  57:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK1 = ROMPAGE( 0 );
+ 240              		.loc 1 57 0
+ 241 015c B7060000 		lui	a3,%hi(ROMBANK0)
+ 242 0160 23A0E600 		sw	a4,%lo(ROMBANK0)(a3)
+  58:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK2 = ROMPAGE( 0 );
+ 243              		.loc 1 58 0
+ 244 0164 B7060000 		lui	a3,%hi(ROMBANK1)
+ 245 0168 23A0E600 		sw	a4,%lo(ROMBANK1)(a3)
+  59:../src/mapper/InfoNES_Mapper_000.h ****     ROMBANK3 = ROMPAGE( 0 );
+ 246              		.loc 1 59 0
+ 247 016c B7060000 		lui	a3,%hi(ROMBANK2)
+ 248 0170 23A0E600 		sw	a4,%lo(ROMBANK2)(a3)
+  60:../src/mapper/InfoNES_Mapper_000.h ****   }
+ 249              		.loc 1 60 0
+ 250 0174 B7060000 		lui	a3,%hi(ROMBANK3)
+ 251 0178 23A0E600 		sw	a4,%lo(ROMBANK3)(a3)
+ 252 017c ADB7     		j	.L9
+ 253              		.cfi_endproc
+ 254              	.LFE0:
+ 256              		.section	.text.Map0_Sram,"ax",@progbits
+ 257              		.align	1
+ 258              		.globl	Map0_Sram
+ 260              	Map0_Sram:
+ 261              	.LFB10:
+ 262              		.cfi_startproc
+ 263 0000 8280     		ret
+ 264              		.cfi_endproc
+ 265              	.LFE10:
+ 267              		.section	.text.Map0_Apu,"ax",@progbits
+ 268              		.align	1
+ 269              		.globl	Map0_Apu
+ 271              	Map0_Apu:
+ 272              	.LFB12:
+ 273              		.cfi_startproc
+ 274 0000 8280     		ret
+ 275              		.cfi_endproc
+ 276              	.LFE12:
+ 278              		.section	.text.Map0_HSync,"ax",@progbits
+ 279              		.align	1
+ 280              		.globl	Map0_HSync
+ 282              	Map0_HSync:
+ 283              	.LFB14:
+ 284              		.cfi_startproc
+ 285 0000 8280     		ret
+ 286              		.cfi_endproc
+ 287              	.LFE14:
+ 289              		.globl	MapperTable
+ 290              		.globl	DRAM
+ 291              		.section	.bss.DRAM,"aw",@nobits
+ 292              		.align	2
+ 295              	DRAM:
+ 296 0000 00000000 		.zero	40960
+ 296      00000000 
+ 296      00000000 
+ 296      00000000 
+ 296      00000000 
+ 297              		.section	.data.MapperTable,"aw",@progbits
+ 298              		.align	2
+ 301              	MapperTable:
+ 302 0000 00000000 		.word	0
+ 303 0004 00000000 		.word	Map0_Init
+ 304 0008 FFFFFFFF 		.word	-1
+ 305 000c 00000000 		.word	0
+ 306              		.text
+ 307              	.Letext0:
+ 308              		.file 2 "../src/InfoNES_Types.h"
+ 309              		.file 3 "../src/InfoNES.h"
+ 310              		.file 4 "../src/InfoNES_System.h"
+ 311              		.file 5 "../src/InfoNES_Mapper.h"
+ 312              		.file 6 "../src/K6502.h"
+ 313              		.file 7 "../src/InfoNES_Mapper.c"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 InfoNES_Mapper.c
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:10     .text.Map0_Write:0000000000000000 Map0_Write
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:14     .text.Map0_Write:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:16     .text.Map0_Write:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:17     .text.Map0_Write:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:18     .text.Map0_Write:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:25     .text.Map0_ReadApu:0000000000000000 Map0_ReadApu
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:28     .text.Map0_ReadApu:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:30     .text.Map0_ReadApu:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:31     .text.Map0_ReadApu:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:34     .text.Map0_ReadApu:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:41     .text.Map0_VSync:0000000000000000 Map0_VSync
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:44     .text.Map0_VSync:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:45     .text.Map0_VSync:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:46     .text.Map0_VSync:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:47     .text.Map0_VSync:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:54     .text.Map0_PPU:0000000000000000 Map0_PPU
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:57     .text.Map0_PPU:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:59     .text.Map0_PPU:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:60     .text.Map0_PPU:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:61     .text.Map0_PPU:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:68     .text.Map0_RenderScreen:0000000000000000 Map0_RenderScreen
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:71     .text.Map0_RenderScreen:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:73     .text.Map0_RenderScreen:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:74     .text.Map0_RenderScreen:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:75     .text.Map0_RenderScreen:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:82     .text.Map0_Init:0000000000000000 Map0_Init
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:85     .text.Map0_Init:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:86     .text.Map0_Init:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:87     .text.Map0_Init:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:92     .text.Map0_Init:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:260    .text.Map0_Sram:0000000000000000 Map0_Sram
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:97     .text.Map0_Init:0000000000000020 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:271    .text.Map0_Apu:0000000000000000 Map0_Apu
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:102    .text.Map0_Init:0000000000000030 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:107    .text.Map0_Init:0000000000000040 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:112    .text.Map0_Init:0000000000000050 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:282    .text.Map0_HSync:0000000000000000 Map0_HSync
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:117    .text.Map0_Init:0000000000000060 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:122    .text.Map0_Init:0000000000000070 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:127    .text.Map0_Init:0000000000000080 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:129    .text.Map0_Init:0000000000000084 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:133    .text.Map0_Init:0000000000000090 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:135    .text.Map0_Init:0000000000000094 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:137    .text.Map0_Init:0000000000000098 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:139    .text.Map0_Init:000000000000009c .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:145    .text.Map0_Init:00000000000000b0 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:149    .text.Map0_Init:00000000000000ba .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:151    .text.Map0_Init:00000000000000bc .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:153    .text.Map0_Init:00000000000000be .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:155    .text.Map0_Init:00000000000000c0 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:157    .text.Map0_Init:00000000000000c4 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:159    .text.Map0_Init:00000000000000c6 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:161    .text.Map0_Init:00000000000000c8 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:163    .text.Map0_Init:00000000000000ca .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:165    .text.Map0_Init:00000000000000ce .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:168    .text.Map0_Init:00000000000000d6 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:171    .text.Map0_Init:00000000000000de .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:175    .text.Map0_Init:00000000000000e6 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:181    .text.Map0_Init:00000000000000f8 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:182    .text.Map0_Init:00000000000000fa .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:185    .text.Map0_Init:0000000000000100 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:190    .text.Map0_Init:0000000000000104 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:195    .text.Map0_Init:000000000000010c .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:198    .text.Map0_Init:0000000000000110 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:201    .text.Map0_Init:0000000000000118 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:202    .text.Map0_Init:000000000000011a .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:204    .text.Map0_Init:000000000000011a .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:206    .text.Map0_Init:000000000000011c .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:207    .text.Map0_Init:000000000000011c .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:209    .text.Map0_Init:000000000000011e .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:210    .text.Map0_Init:0000000000000120 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:212    .text.Map0_Init:0000000000000120 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:221    .text.Map0_Init:0000000000000134 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:223    .text.Map0_Init:0000000000000136 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:225    .text.Map0_Init:000000000000013a .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:228    .text.Map0_Init:000000000000013e .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:230    .text.Map0_Init:0000000000000142 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:233    .text.Map0_Init:000000000000014a .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:236    .text.Map0_Init:0000000000000152 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:241    .text.Map0_Init:000000000000015c .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:244    .text.Map0_Init:0000000000000164 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:247    .text.Map0_Init:000000000000016c .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:250    .text.Map0_Init:0000000000000174 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:253    .text.Map0_Init:000000000000017e .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:262    .text.Map0_Sram:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:264    .text.Map0_Sram:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:273    .text.Map0_Apu:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:275    .text.Map0_Apu:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:284    .text.Map0_HSync:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:286    .text.Map0_HSync:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:301    .data.MapperTable:0000000000000000 MapperTable
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:295    .bss.DRAM:0000000000000000 DRAM
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:21     .text.Map0_Write:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:37     .text.Map0_ReadApu:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:50     .text.Map0_VSync:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:64     .text.Map0_PPU:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:78     .text.Map0_RenderScreen:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:256    .text.Map0_Init:000000000000017e .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:219    .text.Map0_Init:0000000000000134 .L8
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:214    .text.Map0_Init:0000000000000128 .L18
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:187    .text.Map0_Init:0000000000000104 .L12
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:239    .text.Map0_Init:000000000000015c .L10
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:173    .text.Map0_Init:00000000000000e6 .L9
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1100   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1838   .debug_str:0000000000000233 .LASF100
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1908   .debug_str:000000000000049f .LASF101
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1864   .debug_str:000000000000036b .LASF102
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1722   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1738   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1834   .debug_str:0000000000000228 .LASF0
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1894   .debug_str:000000000000043b .LASF2
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1790   .debug_str:0000000000000128 .LASF1
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1868   .debug_str:00000000000003aa .LASF3
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1778   .debug_str:00000000000000e4 .LASF4
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1842   .debug_str:00000000000002e1 .LASF5
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1808   .debug_str:0000000000000199 .LASF6
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1940   .debug_str:000000000000053d .LASF7
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1920   .debug_str:00000000000004e6 .LASF8
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1922   .debug_str:00000000000004ef .LASF9
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1924   .debug_str:00000000000004f8 .LASF10
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1926   .debug_str:0000000000000501 .LASF11
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1746   .debug_str:0000000000000022 .LASF12
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1918   .debug_str:00000000000004e1 .LASF13
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1818   .debug_str:00000000000001cb .LASF14
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1788   .debug_str:0000000000000121 .LASF15
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1936   .debug_str:000000000000052f .LASF16
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1938   .debug_str:0000000000000536 .LASF17
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1862   .debug_str:0000000000000364 .LASF18
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1942   .debug_str:0000000000000546 .LASF19
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1948   .debug_str:0000000000000567 .LASF20
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1830   .debug_str:000000000000020f .LASF21
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1820   .debug_str:00000000000001d3 .LASF22
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1916   .debug_str:00000000000004d2 .LASF23
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1792   .debug_str:000000000000012d .LASF24
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1844   .debug_str:00000000000002ef .LASF25
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1776   .debug_str:00000000000000d1 .LASF26
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1802   .debug_str:0000000000000176 .LASF27
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1956   .debug_str:000000000000058a .LASF28
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1832   .debug_str:0000000000000219 .LASF29
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1880   .debug_str:00000000000003e9 .LASF30
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1866   .debug_str:000000000000039c .LASF31
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1796   .debug_str:0000000000000153 .LASF32
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1914   .debug_str:00000000000004c3 .LASF33
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1888   .debug_str:000000000000041d .LASF34
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1934   .debug_str:0000000000000526 .LASF35
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1806   .debug_str:000000000000018b .LASF36
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1904   .debug_str:0000000000000482 .LASF37
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1846   .debug_str:00000000000002fd .LASF38
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1856   .debug_str:000000000000033f .LASF39
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1794   .debug_str:0000000000000141 .LASF40
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1950   .debug_str:000000000000056e .LASF41
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1750   .debug_str:0000000000000034 .LASF42
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1768   .debug_str:00000000000000a0 .LASF43
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1786   .debug_str:000000000000010f .LASF44
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1774   .debug_str:00000000000000c1 .LASF45
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1764   .debug_str:000000000000008a .LASF46
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1784   .debug_str:0000000000000105 .LASF47
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1816   .debug_str:00000000000001c2 .LASF48
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1826   .debug_str:00000000000001f9 .LASF49
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1854   .debug_str:0000000000000332 .LASF50
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1814   .debug_str:00000000000001b8 .LASF51
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1812   .debug_str:00000000000001b1 .LASF52
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1740   .debug_str:0000000000000000 .LASF53
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1772   .debug_str:00000000000000b8 .LASF54
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1804   .debug_str:0000000000000180 .LASF55
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1896   .debug_str:000000000000044d .LASF56
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1892   .debug_str:0000000000000430 .LASF57
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1872   .debug_str:00000000000003c3 .LASF58
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1930   .debug_str:0000000000000513 .LASF59
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1858   .debug_str:000000000000034d .LASF60
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1946   .debug_str:000000000000055b .LASF61
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1756   .debug_str:0000000000000060 .LASF62
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1742   .debug_str:000000000000000d .LASF63
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1752   .debug_str:0000000000000040 .LASF64
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1766   .debug_str:0000000000000094 .LASF65
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1822   .debug_str:00000000000001e2 .LASF66
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1882   .debug_str:00000000000003fd .LASF67
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1810   .debug_str:000000000000019e .LASF68
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1902   .debug_str:0000000000000474 .LASF83
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1910   .debug_str:00000000000004b7 .LASF69
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1762   .debug_str:0000000000000080 .LASF70
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1900   .debug_str:0000000000000469 .LASF71
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1952   .debug_str:000000000000057a .LASF72
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1954   .debug_str:0000000000000582 .LASF73
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1890   .debug_str:0000000000000426 .LASF74
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1932   .debug_str:000000000000051c .LASF75
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1848   .debug_str:000000000000030a .LASF76
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1944   .debug_str:000000000000054d .LASF77
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1876   .debug_str:00000000000003d6 .LASF78
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1860   .debug_str:0000000000000358 .LASF79
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1828   .debug_str:0000000000000203 .LASF80
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1748   .debug_str:0000000000000029 .LASF81
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1836   .debug_str:000000000000022e .LASF82
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1886   .debug_str:000000000000040d .LASF84
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1878   .debug_str:00000000000003df .LASF85
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1840   .debug_str:00000000000002d5 .LASF86
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1780   .debug_str:00000000000000e9 .LASF87
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1850   .debug_str:0000000000000313 .LASF88
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1770   .debug_str:00000000000000ae .LASF89
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1782   .debug_str:00000000000000f5 .LASF90
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1754   .debug_str:000000000000004e .LASF91
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:69     .text.Map0_RenderScreen:0000000000000000 .LFB8
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:76     .text.Map0_RenderScreen:0000000000000002 .LFE8
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1800   .debug_str:000000000000016f .LASF93
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1928   .debug_str:000000000000050a .LASF92
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:55     .text.Map0_PPU:0000000000000000 .LFB7
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:62     .text.Map0_PPU:0000000000000002 .LFE7
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1870   .debug_str:00000000000003bd .LASF94
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1758   .debug_str:000000000000006b .LASF103
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1824   .debug_str:00000000000001ee .LASF104
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1906   .debug_str:0000000000000492 .LASF105
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:26     .text.Map0_ReadApu:0000000000000000 .LFB4
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:35     .text.Map0_ReadApu:0000000000000004 .LFE4
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1685   .debug_loc:0000000000000000 .LLST0
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1798   .debug_str:0000000000000166 .LASF96
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1912   .debug_str:00000000000004bc .LASF95
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1760   .debug_str:0000000000000076 .LASF97
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1744   .debug_str:0000000000000017 .LASF106
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1874   .debug_str:00000000000003cc .LASF107
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:83     .text.Map0_Init:0000000000000000 .LFB0
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:254    .text.Map0_Init:000000000000017e .LFE0
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:188    .text.Map0_Init:0000000000000104 .LBB2
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:196    .text.Map0_Init:0000000000000110 .LBE2
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1884   .debug_str:0000000000000407 .LASF108
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:199    .text.Map0_Init:0000000000000118 .LVL6
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:213    .text.Map0_Init:0000000000000128 .LVL7
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:218    .text.Map0_Init:0000000000000134 .LVL8
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:11     .text.Map0_Write:0000000000000000 .LFB1
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:19     .text.Map0_Write:0000000000000002 .LFE1
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:42     .text.Map0_VSync:0000000000000000 .LFB5
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:48     .text.Map0_VSync:0000000000000002 .LFE5
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1898   .debug_str:0000000000000458 .LASF98
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:1852   .debug_str:000000000000031d .LASF99
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:29     .text.Map0_ReadApu:0000000000000000 .LVL1
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:32     .text.Map0_ReadApu:0000000000000002 .LVL2
+C:\Users\rana\AppData\Local\Temp\ccMPFWJQ.s:315    .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+MapperInit
+MapperWrite
+MapperSram
+MapperApu
+MapperReadApu
+MapperVSync
+MapperHSync
+MapperPPU
+NesHeader
+MapperRenderScreen
+SRAM
+SRAMBANK
+ROM
+ROMBANK0
+ROMBANK1
+ROMBANK2
+ROMBANK3
+VROM
+PPUBANK
+InfoNES_SetupChr
+K6502_Set_Int_Wiring

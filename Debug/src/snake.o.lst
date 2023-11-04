@@ -1,0 +1,2100 @@
+   1              		.file	"snake.c"
+   2              		.option nopic
+   3              		.text
+   4              	.Ltext0:
+   5              		.cfi_sections	.debug_frame
+   6              		.section	.text.HDMI_DrawPoint.part.0,"ax",@progbits
+   7              		.align	1
+   9              	HDMI_DrawPoint.part.0:
+  10              	.LFB12:
+  11              		.file 1 "../src/snake.c"
+   1:../src/snake.c **** /*
+   2:../src/snake.c ****  * snake.c
+   3:../src/snake.c ****  *
+   4:../src/snake.c ****  *  Created on: 2023年11月1日
+   5:../src/snake.c ****  *      Author: rana
+   6:../src/snake.c ****  */
+   7:../src/snake.c **** #include "snake.h"
+   8:../src/snake.c **** 
+   9:../src/snake.c **** void HDMI_DrawPoint(u8 x,u8 y,u8 c)
+  12              		.loc 1 9 0
+  13              		.cfi_startproc
+  14              	.LVL0:
+  15              	.LBB64:
+  16              	.LBB65:
+  10:../src/snake.c **** {
+  11:../src/snake.c **** 	if(c)
+  12:../src/snake.c **** 		delay(DELAY_CUT,x,y);
+  13:../src/snake.c ****   else
+  14:../src/snake.c **** 	  clear_point(x,y);
+  15:../src/snake.c **** }
+  16:../src/snake.c **** 
+  17:../src/snake.c **** void draw_point(int x,int y){
+  18:../src/snake.c **** 	int addr_temp;
+  19:../src/snake.c **** 	addr_temp = 40*y + x;
+  20:../src/snake.c **** 	ram_address = addr_temp;
+  21:../src/snake.c **** 	ram_data_address = POINT;
+  22:../src/snake.c **** }
+  23:../src/snake.c **** 
+  24:../src/snake.c **** void clear_point(int x,int y){
+  25:../src/snake.c **** 	int addr_temp;
+  26:../src/snake.c **** 	int cut_temp = 20;
+  27:../src/snake.c **** 	addr_temp = 40*y + x;
+  28:../src/snake.c **** 	while(cut_temp--){
+  29:../src/snake.c **** 		ram_address = addr_temp;
+  30:../src/snake.c **** 		ram_data_address = 0;
+  31:../src/snake.c **** 	}
+  32:../src/snake.c **** }
+  33:../src/snake.c **** void delay(long d,char x,char y){
+  34:../src/snake.c **** 	int addr_temp;
+  35:../src/snake.c **** 	addr_temp = 40*y + x;
+  17              		.loc 1 35 0
+  18 0000 E205     		slli	a1,a1,24
+  19              	.LVL1:
+  20 0002 E185     		srai	a1,a1,24
+  21 0004 13972500 		slli	a4,a1,2
+  22 0008 2E97     		add	a4,a4,a1
+  23 000a 6205     		slli	a0,a0,24
+  24              	.LVL2:
+  25 000c 0E07     		slli	a4,a4,3
+  26 000e 6185     		srai	a0,a0,24
+  36:../src/snake.c **** 	long count = d;
+  37:../src/snake.c **** 	while(count--){
+  38:../src/snake.c **** 		ram_address = addr_temp;
+  27              		.loc 1 38 0
+  28 0010 A166     		li	a3,32768
+  35:../src/snake.c **** 	long count = d;
+  29              		.loc 1 35 0
+  30 0012 B7470F00 		li	a5,999424
+  31 0016 2A97     		add	a4,a4,a0
+  32 0018 93870724 		addi	a5,a5,576
+  39:../src/snake.c **** 		ram_data_address = POINT;
+  33              		.loc 1 39 0
+  34 001c 93850607 		addi	a1,a3,112
+  35 0020 4D46     		li	a2,19
+  36              	.LVL3:
+  37              	.L2:
+  38:../src/snake.c **** 		ram_data_address = POINT;
+  38              		.loc 1 38 0
+  39 0022 B8D2     		sw	a4,96(a3)
+  40              		.loc 1 39 0
+  41 0024 90C1     		sw	a2,0(a1)
+  42              	.LVL4:
+  43 0026 FD17     		addi	a5,a5,-1
+  44              	.LVL5:
+  37:../src/snake.c **** 		ram_address = addr_temp;
+  45              		.loc 1 37 0
+  46 0028 EDFF     		bnez	a5,.L2
+  47              	.LBE65:
+  48              	.LBE64:
+  15:../src/snake.c **** 
+  49              		.loc 1 15 0
+  50 002a 8280     		ret
+  51              		.cfi_endproc
+  52              	.LFE12:
+  54              		.section	.text.HDMI_DrawPoint,"ax",@progbits
+  55              		.align	1
+  56              		.globl	HDMI_DrawPoint
+  58              	HDMI_DrawPoint:
+  59              	.LFB1:
+  10:../src/snake.c **** 	if(c)
+  60              		.loc 1 10 0
+  61              		.cfi_startproc
+  62              	.LVL6:
+  11:../src/snake.c **** 		delay(DELAY_CUT,x,y);
+  63              		.loc 1 11 0
+  64 0000 09C6     		beqz	a2,.L6
+  65 0002 17030000 		tail	HDMI_DrawPoint.part.0
+  65      67000300 
+  66              	.LVL7:
+  67              	.L6:
+  68              	.LBB68:
+  69              	.LBB69:
+  27:../src/snake.c **** 	while(cut_temp--){
+  70              		.loc 1 27 0
+  71 000a 93962500 		slli	a3,a1,2
+  72 000e AE96     		add	a3,a3,a1
+  73 0010 8E06     		slli	a3,a3,3
+  74 0012 AA96     		add	a3,a3,a0
+  75 0014 D147     		li	a5,20
+  29:../src/snake.c **** 		ram_data_address = 0;
+  76              		.loc 1 29 0
+  77 0016 2167     		li	a4,32768
+  78              	.LVL8:
+  79              	.L7:
+  80 0018 34D3     		sw	a3,96(a4)
+  30:../src/snake.c **** 	}
+  81              		.loc 1 30 0
+  82 001a 23280706 		sw	zero,112(a4)
+  83              	.LVL9:
+  84 001e FD17     		addi	a5,a5,-1
+  85              	.LVL10:
+  28:../src/snake.c **** 		ram_address = addr_temp;
+  86              		.loc 1 28 0
+  87 0020 E5FF     		bnez	a5,.L7
+  88              	.LBE69:
+  89              	.LBE68:
+  15:../src/snake.c **** 
+  90              		.loc 1 15 0
+  91 0022 8280     		ret
+  92              		.cfi_endproc
+  93              	.LFE1:
+  95              		.section	.text.draw_point,"ax",@progbits
+  96              		.align	1
+  97              		.globl	draw_point
+  99              	draw_point:
+ 100              	.LFB2:
+  17:../src/snake.c **** 	int addr_temp;
+ 101              		.loc 1 17 0
+ 102              		.cfi_startproc
+ 103              	.LVL11:
+  19:../src/snake.c **** 	ram_address = addr_temp;
+ 104              		.loc 1 19 0
+ 105 0000 93972500 		slli	a5,a1,2
+ 106 0004 BE95     		add	a1,a5,a1
+ 107              	.LVL12:
+ 108 0006 8E05     		slli	a1,a1,3
+  20:../src/snake.c **** 	ram_data_address = POINT;
+ 109              		.loc 1 20 0
+ 110 0008 A167     		li	a5,32768
+  19:../src/snake.c **** 	ram_address = addr_temp;
+ 111              		.loc 1 19 0
+ 112 000a AA95     		add	a1,a1,a0
+  20:../src/snake.c **** 	ram_data_address = POINT;
+ 113              		.loc 1 20 0
+ 114 000c ACD3     		sw	a1,96(a5)
+  21:../src/snake.c **** }
+ 115              		.loc 1 21 0
+ 116 000e 4D47     		li	a4,19
+ 117 0010 B8DB     		sw	a4,112(a5)
+  22:../src/snake.c **** 
+ 118              		.loc 1 22 0
+ 119 0012 8280     		ret
+ 120              		.cfi_endproc
+ 121              	.LFE2:
+ 123              		.section	.text.clear_point,"ax",@progbits
+ 124              		.align	1
+ 125              		.globl	clear_point
+ 127              	clear_point:
+ 128              	.LFB3:
+  24:../src/snake.c **** 	int addr_temp;
+ 129              		.loc 1 24 0
+ 130              		.cfi_startproc
+ 131              	.LVL13:
+  27:../src/snake.c **** 	while(cut_temp--){
+ 132              		.loc 1 27 0
+ 133 0000 93972500 		slli	a5,a1,2
+ 134 0004 AE97     		add	a5,a5,a1
+ 135 0006 8E07     		slli	a5,a5,3
+ 136 0008 3E95     		add	a0,a5,a0
+ 137              	.LVL14:
+  29:../src/snake.c **** 		ram_data_address = 0;
+ 138              		.loc 1 29 0
+ 139 000a 2167     		li	a4,32768
+  27:../src/snake.c **** 	while(cut_temp--){
+ 140              		.loc 1 27 0
+ 141 000c D147     		li	a5,20
+ 142              	.LVL15:
+ 143              	.L11:
+  29:../src/snake.c **** 		ram_data_address = 0;
+ 144              		.loc 1 29 0
+ 145 000e 28D3     		sw	a0,96(a4)
+  30:../src/snake.c **** 	}
+ 146              		.loc 1 30 0
+ 147 0010 23280706 		sw	zero,112(a4)
+ 148              	.LVL16:
+ 149 0014 FD17     		addi	a5,a5,-1
+ 150              	.LVL17:
+  28:../src/snake.c **** 		ram_address = addr_temp;
+ 151              		.loc 1 28 0
+ 152 0016 E5FF     		bnez	a5,.L11
+  32:../src/snake.c **** void delay(long d,char x,char y){
+ 153              		.loc 1 32 0
+ 154 0018 8280     		ret
+ 155              		.cfi_endproc
+ 156              	.LFE3:
+ 158              		.section	.text.delay,"ax",@progbits
+ 159              		.align	1
+ 160              		.globl	delay
+ 162              	delay:
+ 163              	.LFB4:
+  33:../src/snake.c **** 	int addr_temp;
+ 164              		.loc 1 33 0
+ 165              		.cfi_startproc
+ 166              	.LVL18:
+  35:../src/snake.c **** 	long count = d;
+ 167              		.loc 1 35 0
+ 168 0000 93172600 		slli	a5,a2,2
+ 169 0004 3E96     		add	a2,a5,a2
+ 170              	.LVL19:
+ 171 0006 0E06     		slli	a2,a2,3
+ 172 0008 B295     		add	a1,a2,a1
+ 173              	.LVL20:
+  37:../src/snake.c **** 		ram_address = addr_temp;
+ 174              		.loc 1 37 0
+ 175 000a 9307F5FF 		addi	a5,a0,-1
+ 176              	.LVL21:
+ 177 000e 19C9     		beqz	a0,.L13
+  38:../src/snake.c **** 		ram_data_address = POINT;
+ 178              		.loc 1 38 0
+ 179 0010 2167     		li	a4,32768
+ 180              		.loc 1 39 0
+ 181 0012 13050707 		addi	a0,a4,112
+ 182              	.LVL22:
+ 183 0016 4D46     		li	a2,19
+  37:../src/snake.c **** 		ram_address = addr_temp;
+ 184              		.loc 1 37 0
+ 185 0018 FD56     		li	a3,-1
+ 186              	.LVL23:
+ 187              	.L15:
+  38:../src/snake.c **** 		ram_data_address = POINT;
+ 188              		.loc 1 38 0
+ 189 001a 2CD3     		sw	a1,96(a4)
+ 190              		.loc 1 39 0
+ 191 001c 10C1     		sw	a2,0(a0)
+  37:../src/snake.c **** 		ram_address = addr_temp;
+ 192              		.loc 1 37 0
+ 193 001e FD17     		addi	a5,a5,-1
+ 194              	.LVL24:
+ 195 0020 E39DD7FE 		bne	a5,a3,.L15
+ 196              	.L13:
+  40:../src/snake.c **** 	}
+  41:../src/snake.c **** }
+ 197              		.loc 1 41 0
+ 198 0024 8280     		ret
+ 199              		.cfi_endproc
+ 200              	.LFE4:
+ 202              		.section	.text.draw_c,"ax",@progbits
+ 203              		.align	1
+ 204              		.globl	draw_c
+ 206              	draw_c:
+ 207              	.LFB5:
+  42:../src/snake.c **** //0:R,2:G,3:A,4:M,5:E,6:O,7:V
+  43:../src/snake.c **** void draw_c(int x,int y,char c){
+ 208              		.loc 1 43 0
+ 209              		.cfi_startproc
+ 210              	.LVL25:
+  44:../src/snake.c **** 	int addr_temp;
+  45:../src/snake.c **** 	int data_temp;
+  46:../src/snake.c **** 	addr_temp = 40*y + x;
+ 211              		.loc 1 46 0
+ 212 0000 93972500 		slli	a5,a1,2
+ 213              	.LVL26:
+ 214 0004 BE95     		add	a1,a5,a1
+ 215              	.LVL27:
+ 216 0006 8E05     		slli	a1,a1,3
+  47:../src/snake.c **** 	data_temp = (c<<4) | (c<<1)+1;
+ 217              		.loc 1 47 0
+ 218 0008 93171600 		slli	a5,a2,1
+  48:../src/snake.c **** 	ram_address = addr_temp;
+ 219              		.loc 1 48 0
+ 220 000c 2167     		li	a4,32768
+  46:../src/snake.c **** 	data_temp = (c<<4) | (c<<1)+1;
+ 221              		.loc 1 46 0
+ 222 000e AA95     		add	a1,a1,a0
+  47:../src/snake.c **** 	data_temp = (c<<4) | (c<<1)+1;
+ 223              		.loc 1 47 0
+ 224 0010 8507     		addi	a5,a5,1
+ 225 0012 1206     		slli	a2,a2,4
+ 226              	.LVL28:
+ 227              		.loc 1 48 0
+ 228 0014 2CD3     		sw	a1,96(a4)
+  47:../src/snake.c **** 	data_temp = (c<<4) | (c<<1)+1;
+ 229              		.loc 1 47 0
+ 230 0016 D18F     		or	a5,a5,a2
+ 231              	.LVL29:
+  49:../src/snake.c **** 	ram_data_address = data_temp;
+ 232              		.loc 1 49 0
+ 233 0018 3CDB     		sw	a5,112(a4)
+  50:../src/snake.c **** }
+ 234              		.loc 1 50 0
+ 235 001a 8280     		ret
+ 236              		.cfi_endproc
+ 237              	.LFE5:
+ 239              		.section	.text.draw_gameover,"ax",@progbits
+ 240              		.align	1
+ 241              		.globl	draw_gameover
+ 243              	draw_gameover:
+ 244              	.LFB6:
+  51:../src/snake.c **** void draw_gameover(){
+ 245              		.loc 1 51 0
+ 246              		.cfi_startproc
+ 247              	.LVL30:
+ 248              	.LBB70:
+ 249              	.LBB71:
+  48:../src/snake.c **** 	ram_data_address = data_temp;
+ 250              		.loc 1 48 0
+ 251 0000 A167     		li	a5,32768
+ 252 0002 13074026 		li	a4,612
+ 253 0006 B8D3     		sw	a4,96(a5)
+  49:../src/snake.c **** }
+ 254              		.loc 1 49 0
+ 255 0008 13075002 		li	a4,37
+ 256 000c B8DB     		sw	a4,112(a5)
+ 257              	.LVL31:
+ 258              	.LBE71:
+ 259              	.LBE70:
+ 260              	.LBB72:
+ 261              	.LBB73:
+  48:../src/snake.c **** 	ram_data_address = data_temp;
+ 262              		.loc 1 48 0
+ 263 000e 13076026 		li	a4,614
+ 264 0012 B8D3     		sw	a4,96(a5)
+  49:../src/snake.c **** }
+ 265              		.loc 1 49 0
+ 266 0014 13077003 		li	a4,55
+ 267 0018 B8DB     		sw	a4,112(a5)
+ 268              	.LVL32:
+ 269              	.LBE73:
+ 270              	.LBE72:
+ 271              	.LBB74:
+ 272              	.LBB75:
+  48:../src/snake.c **** 	ram_data_address = data_temp;
+ 273              		.loc 1 48 0
+ 274 001a 13078026 		li	a4,616
+ 275 001e B8D3     		sw	a4,96(a5)
+  49:../src/snake.c **** }
+ 276              		.loc 1 49 0
+ 277 0020 13079004 		li	a4,73
+ 278 0024 B8DB     		sw	a4,112(a5)
+ 279              	.LVL33:
+ 280              	.LBE75:
+ 281              	.LBE74:
+ 282              	.LBB76:
+ 283              	.LBB77:
+  48:../src/snake.c **** 	ram_data_address = data_temp;
+ 284              		.loc 1 48 0
+ 285 0026 1307A026 		li	a4,618
+ 286 002a B8D3     		sw	a4,96(a5)
+  49:../src/snake.c **** }
+ 287              		.loc 1 49 0
+ 288 002c 1307B005 		li	a4,91
+ 289 0030 B8DB     		sw	a4,112(a5)
+ 290              	.LVL34:
+ 291              	.LBE77:
+ 292              	.LBE76:
+ 293              	.LBB78:
+ 294              	.LBB79:
+  48:../src/snake.c **** 	ram_data_address = data_temp;
+ 295              		.loc 1 48 0
+ 296 0032 9306C026 		li	a3,620
+ 297 0036 B4D3     		sw	a3,96(a5)
+  49:../src/snake.c **** }
+ 298              		.loc 1 49 0
+ 299 0038 9306D006 		li	a3,109
+ 300 003c B4DB     		sw	a3,112(a5)
+ 301              	.LVL35:
+ 302              	.LBE79:
+ 303              	.LBE78:
+ 304              	.LBB80:
+ 305              	.LBB81:
+  48:../src/snake.c **** 	ram_data_address = data_temp;
+ 306              		.loc 1 48 0
+ 307 003e 9306E026 		li	a3,622
+ 308 0042 B4D3     		sw	a3,96(a5)
+  49:../src/snake.c **** }
+ 309              		.loc 1 49 0
+ 310 0044 9306F007 		li	a3,127
+ 311 0048 B4DB     		sw	a3,112(a5)
+ 312              	.LVL36:
+ 313              	.LBE81:
+ 314              	.LBE80:
+ 315              	.LBB82:
+ 316              	.LBB83:
+  48:../src/snake.c **** 	ram_data_address = data_temp;
+ 317              		.loc 1 48 0
+ 318 004a 93060027 		li	a3,624
+ 319 004e B4D3     		sw	a3,96(a5)
+  49:../src/snake.c **** }
+ 320              		.loc 1 49 0
+ 321 0050 B8DB     		sw	a4,112(a5)
+ 322              	.LVL37:
+ 323              	.LBE83:
+ 324              	.LBE82:
+ 325              	.LBB84:
+ 326              	.LBB85:
+  48:../src/snake.c **** 	ram_data_address = data_temp;
+ 327              		.loc 1 48 0
+ 328 0052 13072027 		li	a4,626
+ 329 0056 B8D3     		sw	a4,96(a5)
+  49:../src/snake.c **** }
+ 330              		.loc 1 49 0
+ 331 0058 0547     		li	a4,1
+ 332 005a B8DB     		sw	a4,112(a5)
+ 333              	.LVL38:
+ 334              	.LBE85:
+ 335              	.LBE84:
+  52:../src/snake.c **** 	draw_c(12,15,2);
+  53:../src/snake.c **** 	draw_c(14,15,3);
+  54:../src/snake.c **** 	draw_c(16,15,4);
+  55:../src/snake.c **** 	draw_c(18,15,5);
+  56:../src/snake.c **** 	draw_c(20,15,6);
+  57:../src/snake.c **** 	draw_c(22,15,7);
+  58:../src/snake.c **** 	draw_c(24,15,5);
+  59:../src/snake.c **** 	draw_c(26,15,0);
+  60:../src/snake.c **** }
+ 336              		.loc 1 60 0
+ 337 005c 8280     		ret
+ 338              		.cfi_endproc
+ 339              	.LFE6:
+ 341              		.section	.text.SnakeGameStart,"ax",@progbits
+ 342              		.align	1
+ 343              		.globl	SnakeGameStart
+ 345              	SnakeGameStart:
+ 346              	.LFB11:
+  61:../src/snake.c **** //保存节点坐标结果体
+  62:../src/snake.c **** 
+  63:../src/snake.c **** struct SNAKE
+  64:../src/snake.c **** {
+  65:../src/snake.c ****   u8 x;//节点x坐标
+  66:../src/snake.c ****   u8 y;//节点y坐标
+  67:../src/snake.c **** };
+  68:../src/snake.c **** 
+  69:../src/snake.c **** struct SNAKE snake_info[50];//蛇节点最多50个
+  70:../src/snake.c **** static u8 node_cnt=0;//蛇身长度
+  71:../src/snake.c **** 
+  72:../src/snake.c **** static void HDMI_DrawSnakebody(struct SNAKE *buff,u8 cnt,u8 c)
+  73:../src/snake.c **** {
+  74:../src/snake.c ****     u8 i=0;
+  75:../src/snake.c ****     for(i=0;i<cnt;i++)
+  76:../src/snake.c ****     {
+  77:../src/snake.c ****     	HDMI_DrawPoint(buff[i].x,buff[i].y,c);
+  78:../src/snake.c ****     }
+  79:../src/snake.c **** }
+  80:../src/snake.c **** /**************判断实物位置***************
+  81:../src/snake.c **** **
+  82:../src/snake.c **** **判断新生成的实物x坐标是否落在蛇身上
+  83:../src/snake.c **** **形参:u8 x --实物光标位置
+  84:../src/snake.c **** **      cnt  --蛇身节点个数
+  85:../src/snake.c **** **返回值：1 --落在蛇身上，0 -- 没有
+  86:../src/snake.c **** *******************************************/
+  87:../src/snake.c **** static u8 HDMI_GetSnakeFoodX(u8 x,u8 cnt)
+  88:../src/snake.c **** {
+  89:../src/snake.c ****   u8 i=0;
+  90:../src/snake.c ****   for(i=0;i<cnt;i++)
+  91:../src/snake.c ****   {
+  92:../src/snake.c ****     if(x==snake_info[i].x)break;
+  93:../src/snake.c ****   }
+  94:../src/snake.c ****   if(i==cnt)return 0;
+  95:../src/snake.c ****   else return 1;
+  96:../src/snake.c **** }
+  97:../src/snake.c **** /**************判断实物位置***************
+  98:../src/snake.c **** **
+  99:../src/snake.c **** **判断新生成的实物y坐标是否落在蛇身上
+ 100:../src/snake.c **** **形参:u8 y --实物光标位置
+ 101:../src/snake.c **** **      cnt  --蛇身节点个数
+ 102:../src/snake.c **** **返回值：1 --落在蛇身上，0 -- 没有
+ 103:../src/snake.c **** *******************************************/
+ 104:../src/snake.c **** static u8 HDMI_GetSnakeFoodY(u8 y,u8 cnt)
+ 105:../src/snake.c **** {
+ 106:../src/snake.c ****   u8 i=0;
+ 107:../src/snake.c ****   for(i=0;i<cnt;i++)
+ 108:../src/snake.c ****   {
+ 109:../src/snake.c ****     if(y==snake_info[i].y)break;
+ 110:../src/snake.c ****   }
+ 111:../src/snake.c ****   if(i==cnt)return 0;
+ 112:../src/snake.c ****   else return 1;
+ 113:../src/snake.c **** }
+ 114:../src/snake.c **** /*******************动态移动蛇身********************************/
+ 115:../src/snake.c **** static void Snake_Move(u8 x,u8 y)
+ 116:../src/snake.c **** {
+ 117:../src/snake.c ****   u8 i=0;
+ 118:../src/snake.c ****   draw_point(snake_info[node_cnt-1].x,snake_info[node_cnt-1].y);//显示蛇头节点
+ 119:../src/snake.c ****   HDMI_DrawPoint(snake_info[0].x,snake_info[0].y,0);//清除蛇尾
+ 120:../src/snake.c ****   for(i=0;i<node_cnt-1;i++)//节点往前偏移
+ 121:../src/snake.c ****   {
+ 122:../src/snake.c ****     snake_info[i].x= snake_info[i+1].x;
+ 123:../src/snake.c ****     snake_info[i].y=snake_info[i+1].y;
+ 124:../src/snake.c **** 
+ 125:../src/snake.c ****   }
+ 126:../src/snake.c ****   /*蛇头节点坐标*/
+ 127:../src/snake.c ****   snake_info[node_cnt-1].x=x;
+ 128:../src/snake.c ****   snake_info[node_cnt-1].y=y;
+ 129:../src/snake.c ****   draw_point(snake_info[0].x,snake_info[0].y);//显示蛇头节点
+ 130:../src/snake.c ****   HDMI_DrawPoint(snake_info[node_cnt-1].x,snake_info[node_cnt-1].y,1);//显示蛇头节点
+ 131:../src/snake.c ****   printk("x0:%d,y0:%d",snake_info[0].x,snake_info[0].y);
+ 132:../src/snake.c **** //  HDMI_DrawSnakebody(snake_info,node_cnt,1);
+ 133:../src/snake.c **** }
+ 134:../src/snake.c **** /*******************控制方向,判断游戏是否结束********************/
+ 135:../src/snake.c **** u8 SnakeGameStart(void)
+ 136:../src/snake.c **** {
+ 347              		.loc 1 136 0
+ 348              		.cfi_startproc
+ 349              	.LVL39:
+ 350 0000 3971     		addi	sp,sp,-64
+ 351              		.cfi_def_cfa_offset 64
+ 352 0002 26DA     		sw	s1,52(sp)
+ 353              		.cfi_offset 9, -12
+ 137:../src/snake.c ****   u8 i=0;
+ 138:../src/snake.c ****   u8 x=15;
+ 139:../src/snake.c ****   u8 y=15;
+ 140:../src/snake.c ****   u8 food_x,food_y;
+ 141:../src/snake.c ****   u8 stat=8;
+ 142:../src/snake.c ****   char buff[20];
+ 143:../src/snake.c ****   //创建蛇身1
+ 144:../src/snake.c ****   snake_info[node_cnt].x=x;
+ 354              		.loc 1 144 0
+ 355 0004 B7040000 		lui	s1,%hi(.LANCHOR0)
+ 356 0008 93840400 		addi	s1,s1,%lo(.LANCHOR0)
+ 357 000c 83C70400 		lbu	a5,0(s1)
+ 136:../src/snake.c ****   u8 i=0;
+ 358              		.loc 1 136 0
+ 359 0010 22DC     		sw	s0,56(sp)
+ 360              		.cfi_offset 8, -8
+ 361              		.loc 1 144 0
+ 362 0012 37040000 		lui	s0,%hi(.LANCHOR1)
+ 145:../src/snake.c ****   snake_info[node_cnt].y=y;
+ 146:../src/snake.c ****   node_cnt++;
+ 363              		.loc 1 146 0
+ 364 0016 13871700 		addi	a4,a5,1
+ 136:../src/snake.c ****   u8 i=0;
+ 365              		.loc 1 136 0
+ 366 001a 62CC     		sw	s8,24(sp)
+ 144:../src/snake.c ****   snake_info[node_cnt].y=y;
+ 367              		.loc 1 144 0
+ 368 001c 8566     		li	a3,4096
+ 369              		.cfi_offset 24, -40
+ 370 001e 130C0400 		addi	s8,s0,%lo(.LANCHOR1)
+ 371 0022 13961700 		slli	a2,a5,1
+ 372              		.loc 1 146 0
+ 373 0026 1377F70F 		andi	a4,a4,0xff
+ 147:../src/snake.c ****   //创建蛇身2
+ 148:../src/snake.c ****   snake_info[node_cnt].x=x+1;
+ 149:../src/snake.c ****   snake_info[node_cnt].y=y;
+ 150:../src/snake.c ****   //保存蛇头坐标
+ 151:../src/snake.c ****   x=snake_info[node_cnt].x;
+ 152:../src/snake.c ****   y=snake_info[node_cnt].y;
+ 153:../src/snake.c ****   node_cnt++;
+ 374              		.loc 1 153 0
+ 375 002a 8907     		addi	a5,a5,2
+ 136:../src/snake.c ****   u8 i=0;
+ 376              		.loc 1 136 0
+ 377 002c 06DE     		sw	ra,60(sp)
+ 378 002e 4AD8     		sw	s2,48(sp)
+ 379 0030 4ED6     		sw	s3,44(sp)
+ 380 0032 52D4     		sw	s4,40(sp)
+ 381 0034 56D2     		sw	s5,36(sp)
+ 382 0036 5AD0     		sw	s6,32(sp)
+ 383 0038 5ECE     		sw	s7,28(sp)
+ 384 003a 66CA     		sw	s9,20(sp)
+ 385 003c 6AC8     		sw	s10,16(sp)
+ 386 003e 6EC6     		sw	s11,12(sp)
+ 387              		.cfi_offset 1, -4
+ 388              		.cfi_offset 18, -16
+ 389              		.cfi_offset 19, -20
+ 390              		.cfi_offset 20, -24
+ 391              		.cfi_offset 21, -28
+ 392              		.cfi_offset 22, -32
+ 393              		.cfi_offset 23, -36
+ 394              		.cfi_offset 25, -44
+ 395              		.cfi_offset 26, -48
+ 396              		.cfi_offset 27, -52
+ 144:../src/snake.c ****   snake_info[node_cnt].y=y;
+ 397              		.loc 1 144 0
+ 398 0040 9385F6F0 		addi	a1,a3,-241
+ 399              		.loc 1 153 0
+ 400 0044 93F7F70F 		andi	a5,a5,0xff
+ 144:../src/snake.c ****   snake_info[node_cnt].y=y;
+ 401              		.loc 1 144 0
+ 402 0048 6296     		add	a2,s8,a2
+ 148:../src/snake.c ****   snake_info[node_cnt].y=y;
+ 403              		.loc 1 148 0
+ 404 004a 0607     		slli	a4,a4,1
+ 144:../src/snake.c ****   snake_info[node_cnt].y=y;
+ 405              		.loc 1 144 0
+ 406 004c 2310B600 		sh	a1,0(a2)
+ 148:../src/snake.c ****   snake_info[node_cnt].y=y;
+ 407              		.loc 1 148 0
+ 408 0050 938606F1 		addi	a3,a3,-240
+ 409 0054 B305EC00 		add	a1,s8,a4
+ 154:../src/snake.c ****   snake_info[node_cnt].y = y;
+ 155:../src/snake.c ****   snake_info[node_cnt].x = x;
+ 410              		.loc 1 155 0
+ 411 0058 13961700 		slli	a2,a5,1
+ 148:../src/snake.c ****   snake_info[node_cnt].y=y;
+ 412              		.loc 1 148 0
+ 413 005c 2390D500 		sh	a3,0(a1)
+ 414              	.LVL40:
+ 415              		.loc 1 155 0
+ 416 0060 6296     		add	a2,s8,a2
+ 153:../src/snake.c ****   snake_info[node_cnt].y = y;
+ 417              		.loc 1 153 0
+ 418 0062 2380F400 		sb	a5,0(s1)
+ 419              		.loc 1 155 0
+ 420 0066 2310D600 		sh	a3,0(a2)
+ 421              	.LVL41:
+ 422              	.LBB114:
+ 423              	.LBB115:
+  75:../src/snake.c ****     {
+ 424              		.loc 1 75 0
+ 425 006a 8DC3     		beqz	a5,.L23
+ 426 006c 13092C00 		addi	s2,s8,2
+ 427 0070 13040400 		addi	s0,s0,%lo(.LANCHOR1)
+ 428 0074 3A99     		add	s2,s2,a4
+ 429              	.LVL42:
+ 430              	.L24:
+ 431              	.LBB116:
+ 432              	.LBB117:
+ 433 0076 83451400 		lbu	a1,1(s0)
+ 434 007a 03450400 		lbu	a0,0(s0)
+ 435 007e 0904     		addi	s0,s0,2
+ 436              	.LVL43:
+ 437 0080 97000000 		call	HDMI_DrawPoint.part.0
+ 437      E7800000 
+ 438              	.LVL44:
+ 439              	.LBE117:
+ 440              	.LBE116:
+ 441 0088 E31724FF 		bne	s0,s2,.L24
+ 442              	.L23:
+ 443              	.LVL45:
+ 444              	.LBE115:
+ 445              	.LBE114:
+ 156:../src/snake.c ****   HDMI_DrawSnakebody(snake_info,node_cnt,1);//绘制蛇身
+ 157:../src/snake.c ****   //生成实物坐标
+ 158:../src/snake.c ****   food_x=(rand()%40)+1;
+ 446              		.loc 1 158 0
+ 447 008c 97000000 		call	rand
+ 447      E7800000 
+ 448              	.LVL46:
+ 449 0094 2A84     		mv	s0,a0
+ 450              	.LVL47:
+ 159:../src/snake.c ****   food_y=(rand()%30)+1;
+ 451              		.loc 1 159 0
+ 452 0096 97000000 		call	rand
+ 452      E7800000 
+ 453              	.LVL48:
+ 454 009e 7946     		li	a2,30
+ 158:../src/snake.c ****   food_y=(rand()%30)+1;
+ 455              		.loc 1 158 0
+ 456 00a0 93058002 		li	a1,40
+ 457              		.loc 1 159 0
+ 458 00a4 3366C502 		rem	a2,a0,a2
+ 160:../src/snake.c ****   printk("foodx:%d,foody:%d\n",food_x,food_y);
+ 459              		.loc 1 160 0
+ 460 00a8 B7070000 		lui	a5,%hi(.LC0)
+ 461 00ac 13850700 		addi	a0,a5,%lo(.LC0)
+ 462              	.LVL49:
+ 158:../src/snake.c ****   food_y=(rand()%30)+1;
+ 463              		.loc 1 158 0
+ 464 00b0 B365B402 		rem	a1,s0,a1
+ 159:../src/snake.c ****   food_y=(rand()%30)+1;
+ 465              		.loc 1 159 0
+ 466 00b4 0506     		addi	a2,a2,1
+ 467              		.loc 1 160 0
+ 468 00b6 1376F60F 		andi	a2,a2,0xff
+ 158:../src/snake.c ****   food_y=(rand()%30)+1;
+ 469              		.loc 1 158 0
+ 470 00ba 8505     		addi	a1,a1,1
+ 471              		.loc 1 160 0
+ 472 00bc 93F5F50F 		andi	a1,a1,0xff
+ 473 00c0 97000000 		call	printk
+ 473      E7800000 
+ 474              	.LVL50:
+ 475              	.LBB118:
+ 476              	.LBB119:
+ 477 00c8 BD45     		li	a1,15
+ 478 00ca 5D45     		li	a0,23
+ 479 00cc 97000000 		call	HDMI_DrawPoint.part.0
+ 479      E7800000 
+ 480              	.LVL51:
+ 481              	.LBE119:
+ 482              	.LBE118:
+ 161:../src/snake.c ****   food_x = 23;
+ 162:../src/snake.c ****   food_y = 15;
+ 163:../src/snake.c ****   HDMI_DrawPoint(food_x,food_y,1);//绘制实物
+ 164:../src/snake.c ****   int getps2 = *ps2ctrl_point;//手柄键值接收
+ 165:../src/snake.c ****   u8 key_val=0;//取有效键值
+ 166:../src/snake.c ****   while(1)
+ 167:../src/snake.c ****   {
+ 168:../src/snake.c **** 	  if(stat&1<<0)
+ 169:../src/snake.c **** 		  snake_info[node_cnt].y=snake_info[node_cnt-1].y+1;
+ 170:../src/snake.c **** 	  else if(stat&1<<1)
+ 171:../src/snake.c **** 		  snake_info[node_cnt].y=snake_info[node_cnt-1].y-1;
+ 172:../src/snake.c **** 	  else if(stat&1<<2)
+ 173:../src/snake.c **** 		  snake_info[node_cnt].x=snake_info[node_cnt-1].x-1;
+ 174:../src/snake.c **** 	  else if(stat&1<<3)
+ 175:../src/snake.c **** 		  snake_info[node_cnt].x=snake_info[node_cnt-1].x+1;
+ 483              		.loc 1 175 0
+ 484 00d4 83C50400 		lbu	a1,0(s1)
+ 164:../src/snake.c ****   u8 key_val=0;//取有效键值
+ 485              		.loc 1 164 0
+ 486 00d8 A167     		li	a5,32768
+ 487 00da 83A7070A 		lw	a5,160(a5)
+ 488              	.LVL52:
+ 489              		.loc 1 175 0
+ 490 00de 1387F5FF 		addi	a4,a1,-1
+ 491 00e2 0607     		slli	a4,a4,1
+ 492 00e4 6297     		add	a4,s8,a4
+ 493 00e6 83470700 		lbu	a5,0(a4)
+ 494 00ea 93961500 		slli	a3,a1,1
+ 495 00ee E296     		add	a3,s8,a3
+ 496 00f0 8507     		addi	a5,a5,1
+ 497 00f2 93F7F70F 		andi	a5,a5,0xff
+ 498 00f6 2380F600 		sb	a5,0(a3)
+ 176:../src/snake.c ****     if(snake_info[node_cnt].x>39 || snake_info[node_cnt].y>29 || snake_info[node_cnt-1].x<1 || snak
+ 499              		.loc 1 176 0
+ 500 00fa 13067002 		li	a2,39
+ 501 00fe 636EF614 		bgtu	a5,a2,.L25
+ 502 0102 03C61600 		lbu	a2,1(a3)
+ 503 0106 F546     		li	a3,29
+ 504 0108 63E9C614 		bgtu	a2,a3,.L25
+ 505 010c 83460700 		lbu	a3,0(a4)
+ 506 0110 63850614 		beqz	a3,.L25
+ 507 0114 03471700 		lbu	a4,1(a4)
+ 508 0118 63010714 		beqz	a4,.L25
+ 162:../src/snake.c ****   HDMI_DrawPoint(food_x,food_y,1);//绘制实物
+ 509              		.loc 1 162 0
+ 510 011c BD49     		li	s3,15
+ 161:../src/snake.c ****   food_y = 15;
+ 511              		.loc 1 161 0
+ 512 011e 5D49     		li	s2,23
+ 151:../src/snake.c ****   y=snake_info[node_cnt].y;
+ 513              		.loc 1 151 0
+ 514 0120 414D     		li	s10,16
+ 515 0122 B70A0000 		lui	s5,%hi(.LC3)
+ 516 0126 B70B0000 		lui	s7,%hi(.LC4)
+ 517              	.LBB120:
+ 518              	.LBB121:
+  20:../src/snake.c **** 	ram_data_address = POINT;
+ 519              		.loc 1 20 0
+ 520 012a A16D     		li	s11,32768
+  21:../src/snake.c **** }
+ 521              		.loc 1 21 0
+ 522 012c 4D4A     		li	s4,19
+ 523              	.LBE121:
+ 524              	.LBE120:
+ 177:../src/snake.c ****     {
+ 178:../src/snake.c **** //      snprintf(buff,sizeof(buff),"Mark:%d",node_cnt-2);
+ 179:../src/snake.c **** //      HDMI_DisplayStr(36,8,8,16,buff);//字符串显示
+ 180:../src/snake.c **** //      HDMI_DisplayStr(10,28,12,24,"Game over");//字符串显示
+ 181:../src/snake.c ****     	draw_gameover();
+ 182:../src/snake.c ****     	printk("game over");
+ 183:../src/snake.c ****       node_cnt=0;//清空节点
+ 184:../src/snake.c ****       break;//游戏结束
+ 185:../src/snake.c ****     }
+ 186:../src/snake.c ****     if(snake_info[node_cnt].x==food_x && snake_info[node_cnt].y==food_y)//判断是否吃到食物
+ 187:../src/snake.c ****     {
+ 188:../src/snake.c **** //      if((stat&1<<0) || (stat&1<<1))//向上或向下时y+5
+ 189:../src/snake.c **** //      {
+ 190:../src/snake.c **** //        snake_info[node_cnt].x=food_x;
+ 191:../src/snake.c **** //        snake_info[node_cnt].y=food_y+1;
+ 192:../src/snake.c ****         if(stat&1<<0) y++;if(stat&1<<1) y--;
+ 193:../src/snake.c **** //      }
+ 194:../src/snake.c **** //      else //向左或向右时x+5
+ 195:../src/snake.c **** //      {
+ 196:../src/snake.c **** //        snake_info[node_cnt].x=food_x+1;
+ 197:../src/snake.c **** //        snake_info[node_cnt].y=food_y;
+ 198:../src/snake.c ****         if(stat&1<<3) x++;if(stat&1<<2) x--;
+ 199:../src/snake.c **** //      }
+ 200:../src/snake.c ****       node_cnt++;
+ 201:../src/snake.c **** //      HDMI_DrawSnakebody(snake_info,node_cnt,1);
+ 202:../src/snake.c ****       draw_point(snake_info[node_cnt-1].x,snake_info[node_cnt-1].y);//显示蛇头节点
+ 203:../src/snake.c ****       printk("node_cnt:%d",node_cnt);
+ 204:../src/snake.c ****       while(1)//保证重新生成的实物不再蛇身上
+ 205:../src/snake.c ****       {
+ 206:../src/snake.c ****     	food_x=(rand()%40)+1;
+ 525              		.loc 1 206 0
+ 526 012e 930C8002 		li	s9,40
+ 527              	.LBB124:
+ 528              	.LBB125:
+ 128:../src/snake.c ****   draw_point(snake_info[0].x,snake_info[0].y);//显示蛇头节点
+ 529              		.loc 1 128 0
+ 530 0132 3D4B     		li	s6,15
+ 531              	.LVL53:
+ 532              	.L26:
+ 533 0134 13041D00 		addi	s0,s10,1
+ 534 0138 1374F40F 		andi	s0,s0,0xff
+ 535              	.LBE125:
+ 536              	.LBE124:
+ 186:../src/snake.c ****     {
+ 537              		.loc 1 186 0
+ 538 013c 638D2715 		beq	a5,s2,.L67
+ 539              	.LVL54:
+ 540              	.L27:
+ 207:../src/snake.c ****         if(HDMI_GetSnakeFoodX(food_x,node_cnt)==0)break;
+ 208:../src/snake.c ****       }
+ 209:../src/snake.c ****       while(1)
+ 210:../src/snake.c ****       {
+ 211:../src/snake.c ****     	food_y=(rand()%30)+1;
+ 212:../src/snake.c ****         if(HDMI_GetSnakeFoodY(food_y,node_cnt)==0)break;
+ 213:../src/snake.c ****       }
+ 214:../src/snake.c ****       HDMI_DrawPoint(food_x,food_y,1);//绘制实物
+ 215:../src/snake.c ****       printk("foodx:%d,foody:%d\n",food_x,food_y);
+ 216:../src/snake.c ****     }
+ 217:../src/snake.c ****     printk("x:%d,y:%d\n",snake_info[node_cnt-1].x,snake_info[node_cnt-1].y);
+ 541              		.loc 1 217 0
+ 542 0140 83C70400 		lbu	a5,0(s1)
+ 543 0144 13850A00 		addi	a0,s5,%lo(.LC3)
+ 544 0148 FD17     		addi	a5,a5,-1
+ 545 014a 8607     		slli	a5,a5,1
+ 546 014c E297     		add	a5,s8,a5
+ 547 014e 03C61700 		lbu	a2,1(a5)
+ 548 0152 83C50700 		lbu	a1,0(a5)
+ 549 0156 97000000 		call	printk
+ 549      E7800000 
+ 550              	.LVL55:
+ 551              	.LBB145:
+ 552              	.LBB144:
+ 118:../src/snake.c ****   HDMI_DrawPoint(snake_info[0].x,snake_info[0].y,0);//清除蛇尾
+ 553              		.loc 1 118 0
+ 554 015e 83C50400 		lbu	a1,0(s1)
+ 555              	.LBB126:
+ 556              	.LBB127:
+ 557              	.LBB128:
+ 558              	.LBB129:
+  27:../src/snake.c **** 	while(cut_temp--){
+ 559              		.loc 1 27 0
+ 560 0162 D147     		li	a5,20
+ 561              	.LBE129:
+ 562              	.LBE128:
+ 563              	.LBE127:
+ 564              	.LBE126:
+ 118:../src/snake.c ****   HDMI_DrawPoint(snake_info[0].x,snake_info[0].y,0);//清除蛇尾
+ 565              		.loc 1 118 0
+ 566 0164 FD15     		addi	a1,a1,-1
+ 567              	.LVL56:
+ 568 0166 13951500 		slli	a0,a1,1
+ 569              	.LVL57:
+ 570 016a B306AC00 		add	a3,s8,a0
+ 571 016e 03C61600 		lbu	a2,1(a3)
+ 572 0172 83C80600 		lbu	a7,0(a3)
+ 573              	.LBB133:
+ 574              	.LBB134:
+  19:../src/snake.c **** 	ram_address = addr_temp;
+ 575              		.loc 1 19 0
+ 576 0176 93162600 		slli	a3,a2,2
+ 577 017a B296     		add	a3,a3,a2
+ 578 017c 8E06     		slli	a3,a3,3
+ 579 017e C696     		add	a3,a3,a7
+  20:../src/snake.c **** 	ram_data_address = POINT;
+ 580              		.loc 1 20 0
+ 581 0180 23A0DD06 		sw	a3,96(s11)
+ 582              	.LVL58:
+  21:../src/snake.c **** }
+ 583              		.loc 1 21 0
+ 584 0184 23A84D07 		sw	s4,112(s11)
+ 585              	.LVL59:
+ 586              	.LBE134:
+ 587              	.LBE133:
+ 588              	.LBB135:
+ 589              	.LBB132:
+  14:../src/snake.c **** }
+ 590              		.loc 1 14 0
+ 591 0188 03461C00 		lbu	a2,1(s8)
+ 592              	.LVL60:
+ 593 018c 83480C00 		lbu	a7,0(s8)
+ 594              	.LVL61:
+ 595              	.LBB131:
+ 596              	.LBB130:
+  27:../src/snake.c **** 	while(cut_temp--){
+ 597              		.loc 1 27 0
+ 598 0190 93162600 		slli	a3,a2,2
+ 599 0194 B296     		add	a3,a3,a2
+ 600 0196 8E06     		slli	a3,a3,3
+ 601 0198 C696     		add	a3,a3,a7
+ 602              	.LVL62:
+ 603              	.L36:
+  29:../src/snake.c **** 		ram_data_address = 0;
+ 604              		.loc 1 29 0
+ 605 019a 23A0DD06 		sw	a3,96(s11)
+  30:../src/snake.c **** 	}
+ 606              		.loc 1 30 0
+ 607 019e 23A80D06 		sw	zero,112(s11)
+ 608              	.LVL63:
+ 609 01a2 FD17     		addi	a5,a5,-1
+ 610              	.LVL64:
+  28:../src/snake.c **** 		ram_address = addr_temp;
+ 611              		.loc 1 28 0
+ 612 01a4 FDFB     		bnez	a5,.L36
+ 613              	.LBE130:
+ 614              	.LBE131:
+ 615              	.LBE132:
+ 616              	.LBE135:
+ 120:../src/snake.c ****   {
+ 617              		.loc 1 120 0
+ 618 01a6 6357B002 		blez	a1,.L37
+ 619 01aa 0146     		li	a2,0
+ 620              	.LVL65:
+ 621              	.L38:
+ 122:../src/snake.c ****     snake_info[i].y=snake_info[i+1].y;
+ 622              		.loc 1 122 0
+ 623 01ac 93861700 		addi	a3,a5,1
+ 624 01b0 8606     		slli	a3,a3,1
+ 625 01b2 E296     		add	a3,s8,a3
+ 626 01b4 83C80600 		lbu	a7,0(a3)
+ 123:../src/snake.c **** 
+ 627              		.loc 1 123 0
+ 628 01b8 83C61600 		lbu	a3,1(a3)
+ 122:../src/snake.c ****     snake_info[i].y=snake_info[i+1].y;
+ 629              		.loc 1 122 0
+ 630 01bc 8607     		slli	a5,a5,1
+ 631 01be E297     		add	a5,s8,a5
+ 120:../src/snake.c ****   {
+ 632              		.loc 1 120 0
+ 633 01c0 0506     		addi	a2,a2,1
+ 634              	.LVL66:
+ 635 01c2 1376F60F 		andi	a2,a2,0xff
+ 636              	.LVL67:
+ 122:../src/snake.c ****     snake_info[i].y=snake_info[i+1].y;
+ 637              		.loc 1 122 0
+ 638 01c6 23801701 		sb	a7,0(a5)
+ 123:../src/snake.c **** 
+ 639              		.loc 1 123 0
+ 640 01ca A380D700 		sb	a3,1(a5)
+ 120:../src/snake.c ****   {
+ 641              		.loc 1 120 0
+ 642 01ce B287     		mv	a5,a2
+ 643 01d0 E34EB6FC 		bgt	a1,a2,.L38
+ 644              	.LVL68:
+ 645              	.L37:
+ 127:../src/snake.c ****   snake_info[node_cnt-1].y=y;
+ 646              		.loc 1 127 0
+ 647 01d4 6295     		add	a0,s8,a0
+ 128:../src/snake.c ****   draw_point(snake_info[0].x,snake_info[0].y);//显示蛇头节点
+ 648              		.loc 1 128 0
+ 649 01d6 A3006501 		sb	s6,1(a0)
+ 650              	.LVL69:
+ 129:../src/snake.c ****   HDMI_DrawPoint(snake_info[node_cnt-1].x,snake_info[node_cnt-1].y,1);//显示蛇头节点
+ 651              		.loc 1 129 0
+ 652 01da 83461C00 		lbu	a3,1(s8)
+ 653              	.LVL70:
+ 127:../src/snake.c ****   snake_info[node_cnt-1].y=y;
+ 654              		.loc 1 127 0
+ 655 01de 23008500 		sb	s0,0(a0)
+ 656              	.LVL71:
+ 129:../src/snake.c ****   HDMI_DrawPoint(snake_info[node_cnt-1].x,snake_info[node_cnt-1].y,1);//显示蛇头节点
+ 657              		.loc 1 129 0
+ 658 01e2 03460C00 		lbu	a2,0(s8)
+ 659              	.LBB136:
+ 660              	.LBB137:
+  19:../src/snake.c **** 	ram_address = addr_temp;
+ 661              		.loc 1 19 0
+ 662 01e6 93972600 		slli	a5,a3,2
+ 663 01ea B697     		add	a5,a5,a3
+ 664 01ec 8E07     		slli	a5,a5,3
+ 665 01ee B297     		add	a5,a5,a2
+  20:../src/snake.c **** 	ram_data_address = POINT;
+ 666              		.loc 1 20 0
+ 667 01f0 23A0FD06 		sw	a5,96(s11)
+ 668              	.LBE137:
+ 669              	.LBE136:
+ 670              	.LBB139:
+ 671              	.LBB140:
+ 672 01f4 BD45     		li	a1,15
+ 673 01f6 2285     		mv	a0,s0
+ 674              	.LBE140:
+ 675              	.LBE139:
+ 676              	.LBB142:
+ 677              	.LBB138:
+  21:../src/snake.c **** }
+ 678              		.loc 1 21 0
+ 679 01f8 23A84D07 		sw	s4,112(s11)
+ 680              	.LVL72:
+ 681              	.LBE138:
+ 682              	.LBE142:
+ 683              	.LBB143:
+ 684              	.LBB141:
+ 685 01fc 97000000 		call	HDMI_DrawPoint.part.0
+ 685      E7800000 
+ 686              	.LVL73:
+ 687              	.LBE141:
+ 688              	.LBE143:
+ 131:../src/snake.c **** //  HDMI_DrawSnakebody(snake_info,node_cnt,1);
+ 689              		.loc 1 131 0
+ 690 0204 03461C00 		lbu	a2,1(s8)
+ 691 0208 83450C00 		lbu	a1,0(s8)
+ 692 020c 13850B00 		addi	a0,s7,%lo(.LC4)
+ 693 0210 97000000 		call	printk
+ 693      E7800000 
+ 694              	.LVL74:
+ 695              	.LBE144:
+ 696              	.LBE145:
+ 175:../src/snake.c ****     if(snake_info[node_cnt].x>39 || snake_info[node_cnt].y>29 || snake_info[node_cnt-1].x<1 || snak
+ 697              		.loc 1 175 0
+ 698 0218 83C50400 		lbu	a1,0(s1)
+ 176:../src/snake.c ****     {
+ 699              		.loc 1 176 0
+ 700 021c 13057002 		li	a0,39
+ 175:../src/snake.c ****     if(snake_info[node_cnt].x>39 || snake_info[node_cnt].y>29 || snake_info[node_cnt-1].x<1 || snak
+ 701              		.loc 1 175 0
+ 702 0220 9386F5FF 		addi	a3,a1,-1
+ 703 0224 8606     		slli	a3,a3,1
+ 704 0226 E296     		add	a3,s8,a3
+ 705 0228 83C70600 		lbu	a5,0(a3)
+ 706 022c 13961500 		slli	a2,a1,1
+ 707 0230 6296     		add	a2,s8,a2
+ 708 0232 8507     		addi	a5,a5,1
+ 709 0234 93F7F70F 		andi	a5,a5,0xff
+ 710 0238 2300F600 		sb	a5,0(a2)
+ 176:../src/snake.c ****     {
+ 711              		.loc 1 176 0
+ 712 023c 636FF500 		bgtu	a5,a0,.L25
+ 176:../src/snake.c ****     {
+ 713              		.loc 1 176 0 is_stmt 0 discriminator 1
+ 714 0240 03461600 		lbu	a2,1(a2)
+ 715 0244 7545     		li	a0,29
+ 716 0246 636AC500 		bgtu	a2,a0,.L25
+ 176:../src/snake.c ****     {
+ 717              		.loc 1 176 0 discriminator 2
+ 718 024a 03C50600 		lbu	a0,0(a3)
+ 719 024e 11C5     		beqz	a0,.L25
+ 176:../src/snake.c ****     {
+ 720              		.loc 1 176 0 discriminator 3
+ 721 0250 83C61600 		lbu	a3,1(a3)
+ 218:../src/snake.c ****     key_val = 0b1000;//用于测试
+ 219:../src/snake.c ****     switch(key_val)
+ 220:../src/snake.c ****     {
+ 221:../src/snake.c ****       case 0b0001://上
+ 222:../src/snake.c ****       stat&=~(0x3<<2);//清除左右标志
+ 223:../src/snake.c ****       if(stat&1<<1){}//向下时不能直接向上
+ 224:../src/snake.c ****       else
+ 225:../src/snake.c ****       {
+ 226:../src/snake.c ****         stat|=1<<0;//向上
+ 227:../src/snake.c ****         y-=1;
+ 228:../src/snake.c ****         Snake_Move(x,y);
+ 229:../src/snake.c ****       }
+ 230:../src/snake.c ****       break;
+ 231:../src/snake.c ****       case 0b0010://下
+ 232:../src/snake.c ****       stat&=~(0x3<<2);//清除左右标志
+ 233:../src/snake.c ****       if(stat&1<<0){}//在向上时不能直接向下
+ 234:../src/snake.c ****       else
+ 235:../src/snake.c ****       {
+ 236:../src/snake.c ****         stat|=1<<1;//向下标志位
+ 237:../src/snake.c ****         y+=1;
+ 238:../src/snake.c ****         Snake_Move(x,y);
+ 239:../src/snake.c ****       }
+ 240:../src/snake.c ****       break;
+ 241:../src/snake.c ****       case 0b0100://左
+ 242:../src/snake.c ****       stat&=~(0x3<<0);//清除上下标志
+ 243:../src/snake.c ****       if(stat&1<<3){}//向右时不能直接向左
+ 244:../src/snake.c ****       else
+ 245:../src/snake.c ****       {
+ 246:../src/snake.c ****         stat|=1<<2;//向左
+ 247:../src/snake.c ****         x-=1;
+ 248:../src/snake.c ****         Snake_Move(x,y);
+ 249:../src/snake.c ****       }
+ 250:../src/snake.c ****       break;
+ 251:../src/snake.c ****       case 0b1000://右
+ 252:../src/snake.c ****       stat&=~(0x3<<0);//清除上下标志
+ 253:../src/snake.c ****       if(stat&1<<2){}//向左时不能直接向右
+ 254:../src/snake.c ****       else
+ 255:../src/snake.c ****       {
+ 256:../src/snake.c ****         stat|=1<<3;
+ 257:../src/snake.c ****         x+=1;
+ 722              		.loc 1 257 0 is_stmt 1 discriminator 3
+ 723 0254 228D     		mv	s10,s0
+ 176:../src/snake.c ****     {
+ 724              		.loc 1 176 0 discriminator 3
+ 725 0256 E39F06EC 		bnez	a3,.L26
+ 726              	.LVL75:
+ 727              	.L25:
+ 181:../src/snake.c ****     	printk("game over");
+ 728              		.loc 1 181 0
+ 729 025a 97000000 		call	draw_gameover
+ 729      E7800000 
+ 730              	.LVL76:
+ 182:../src/snake.c ****       node_cnt=0;//清空节点
+ 731              		.loc 1 182 0
+ 732 0262 37050000 		lui	a0,%hi(.LC1)
+ 733 0266 13050500 		addi	a0,a0,%lo(.LC1)
+ 734 026a 97000000 		call	printk
+ 734      E7800000 
+ 735              	.LVL77:
+ 258:../src/snake.c ****         Snake_Move(x,y);
+ 259:../src/snake.c ****       }
+ 260:../src/snake.c ****       break;
+ 261:../src/snake.c ****     }
+ 262:../src/snake.c **** //    Delay_Ms(300);
+ 263:../src/snake.c ****   }
+ 264:../src/snake.c ****   return 0;
+ 265:../src/snake.c **** }
+ 736              		.loc 1 265 0
+ 737 0272 F250     		lw	ra,60(sp)
+ 738              		.cfi_remember_state
+ 739              		.cfi_restore 1
+ 740 0274 6254     		lw	s0,56(sp)
+ 741              		.cfi_restore 8
+ 183:../src/snake.c ****       break;//游戏结束
+ 742              		.loc 1 183 0
+ 743 0276 23800400 		sb	zero,0(s1)
+ 744              		.loc 1 265 0
+ 745 027a 4259     		lw	s2,48(sp)
+ 746              		.cfi_restore 18
+ 747 027c D254     		lw	s1,52(sp)
+ 748              		.cfi_restore 9
+ 749 027e B259     		lw	s3,44(sp)
+ 750              		.cfi_restore 19
+ 751 0280 225A     		lw	s4,40(sp)
+ 752              		.cfi_restore 20
+ 753 0282 925A     		lw	s5,36(sp)
+ 754              		.cfi_restore 21
+ 755 0284 025B     		lw	s6,32(sp)
+ 756              		.cfi_restore 22
+ 757 0286 F24B     		lw	s7,28(sp)
+ 758              		.cfi_restore 23
+ 759 0288 624C     		lw	s8,24(sp)
+ 760              		.cfi_restore 24
+ 761 028a D24C     		lw	s9,20(sp)
+ 762              		.cfi_restore 25
+ 763 028c 424D     		lw	s10,16(sp)
+ 764              		.cfi_restore 26
+ 765 028e B24D     		lw	s11,12(sp)
+ 766              		.cfi_restore 27
+ 767 0290 0145     		li	a0,0
+ 768 0292 2161     		addi	sp,sp,64
+ 769              		.cfi_def_cfa_offset 0
+ 770 0294 8280     		jr	ra
+ 771              	.LVL78:
+ 772              	.L67:
+ 773              		.cfi_restore_state
+ 186:../src/snake.c ****     {
+ 774              		.loc 1 186 0 discriminator 1
+ 775 0296 E31536EB 		bne	a2,s3,.L27
+ 776              	.LVL79:
+ 200:../src/snake.c **** //      HDMI_DrawSnakebody(snake_info,node_cnt,1);
+ 777              		.loc 1 200 0 discriminator 1
+ 778 029a 8505     		addi	a1,a1,1
+ 779 029c 93F5F50F 		andi	a1,a1,0xff
+ 202:../src/snake.c ****       printk("node_cnt:%d",node_cnt);
+ 780              		.loc 1 202 0 discriminator 1
+ 781 02a0 9387F5FF 		addi	a5,a1,-1
+ 782              	.LVL80:
+ 783 02a4 8607     		slli	a5,a5,1
+ 784              	.LVL81:
+ 785 02a6 E297     		add	a5,s8,a5
+ 786              	.LVL82:
+ 787 02a8 83C61700 		lbu	a3,1(a5)
+ 788 02ac 03C60700 		lbu	a2,0(a5)
+ 200:../src/snake.c **** //      HDMI_DrawSnakebody(snake_info,node_cnt,1);
+ 789              		.loc 1 200 0 discriminator 1
+ 790 02b0 2380B400 		sb	a1,0(s1)
+ 791              	.LBB146:
+ 792              	.LBB122:
+  19:../src/snake.c **** 	ram_address = addr_temp;
+ 793              		.loc 1 19 0 discriminator 1
+ 794 02b4 93972600 		slli	a5,a3,2
+ 795 02b8 B697     		add	a5,a5,a3
+ 796 02ba 8E07     		slli	a5,a5,3
+ 797 02bc B297     		add	a5,a5,a2
+  20:../src/snake.c **** 	ram_data_address = POINT;
+ 798              		.loc 1 20 0 discriminator 1
+ 799 02be 23A0FD06 		sw	a5,96(s11)
+ 800              	.LVL83:
+ 801              	.LBE122:
+ 802              	.LBE146:
+ 203:../src/snake.c ****       while(1)//保证重新生成的实物不再蛇身上
+ 803              		.loc 1 203 0 discriminator 1
+ 804 02c2 B7070000 		lui	a5,%hi(.LC2)
+ 805              	.LBB147:
+ 806              	.LBB123:
+  21:../src/snake.c **** }
+ 807              		.loc 1 21 0 discriminator 1
+ 808 02c6 23A84D07 		sw	s4,112(s11)
+ 809              	.LBE123:
+ 810              	.LBE147:
+ 203:../src/snake.c ****       while(1)//保证重新生成的实物不再蛇身上
+ 811              		.loc 1 203 0 discriminator 1
+ 812 02ca 13850700 		addi	a0,a5,%lo(.LC2)
+ 813 02ce 97000000 		call	printk
+ 813      E7800000 
+ 814              	.LVL84:
+ 815              	.L56:
+ 206:../src/snake.c ****         if(HDMI_GetSnakeFoodX(food_x,node_cnt)==0)break;
+ 816              		.loc 1 206 0
+ 817 02d6 97000000 		call	rand
+ 817      E7800000 
+ 818              	.LVL85:
+ 819 02de 33699503 		rem	s2,a0,s9
+ 820              	.LVL86:
+ 207:../src/snake.c ****       }
+ 821              		.loc 1 207 0
+ 822 02e2 83C50400 		lbu	a1,0(s1)
+ 206:../src/snake.c ****         if(HDMI_GetSnakeFoodX(food_x,node_cnt)==0)break;
+ 823              		.loc 1 206 0
+ 824 02e6 0509     		addi	s2,s2,1
+ 825 02e8 1379F90F 		andi	s2,s2,0xff
+ 826              	.LVL87:
+ 827              	.LBB148:
+ 828              	.LBB149:
+  90:../src/snake.c ****   {
+ 829              		.loc 1 90 0
+ 830 02ec 9DC1     		beqz	a1,.L57
+  92:../src/snake.c ****   }
+ 831              		.loc 1 92 0
+ 832 02ee 83470C00 		lbu	a5,0(s8)
+ 833 02f2 E38227FF 		beq	a5,s2,.L56
+ 834 02f6 93062C00 		addi	a3,s8,2
+  90:../src/snake.c ****   {
+ 835              		.loc 1 90 0
+ 836 02fa 8147     		li	a5,0
+ 837 02fc 29A0     		j	.L30
+ 838              	.LVL88:
+ 839              	.L31:
+  92:../src/snake.c ****   }
+ 840              		.loc 1 92 0
+ 841 02fe 03C6E6FF 		lbu	a2,-2(a3)
+ 842 0302 E30A26FD 		beq	a2,s2,.L56
+ 843              	.LVL89:
+ 844              	.L30:
+  90:../src/snake.c ****   {
+ 845              		.loc 1 90 0
+ 846 0306 8507     		addi	a5,a5,1
+ 847              	.LVL90:
+ 848 0308 93F7F70F 		andi	a5,a5,0xff
+ 849              	.LVL91:
+ 850 030c 8906     		addi	a3,a3,2
+ 851 030e E398F5FE 		bne	a1,a5,.L31
+ 852              	.LVL92:
+ 853              	.L57:
+ 854              	.LBE149:
+ 855              	.LBE148:
+ 211:../src/snake.c ****         if(HDMI_GetSnakeFoodY(food_y,node_cnt)==0)break;
+ 856              		.loc 1 211 0
+ 857 0312 97000000 		call	rand
+ 857      E7800000 
+ 858              	.LVL93:
+ 859 031a F947     		li	a5,30
+ 860 031c B369F502 		rem	s3,a0,a5
+ 861              	.LVL94:
+ 212:../src/snake.c ****       }
+ 862              		.loc 1 212 0
+ 863 0320 83C50400 		lbu	a1,0(s1)
+ 211:../src/snake.c ****         if(HDMI_GetSnakeFoodY(food_y,node_cnt)==0)break;
+ 864              		.loc 1 211 0
+ 865 0324 8509     		addi	s3,s3,1
+ 866 0326 93F9F90F 		andi	s3,s3,0xff
+ 867              	.LVL95:
+ 868              	.LBB150:
+ 869              	.LBB151:
+ 107:../src/snake.c ****   {
+ 870              		.loc 1 107 0
+ 871 032a 9DC1     		beqz	a1,.L32
+ 109:../src/snake.c ****   }
+ 872              		.loc 1 109 0
+ 873 032c 83471C00 		lbu	a5,1(s8)
+ 874 0330 E38137FF 		beq	a5,s3,.L57
+ 875 0334 93063C00 		addi	a3,s8,3
+ 107:../src/snake.c ****   {
+ 876              		.loc 1 107 0
+ 877 0338 8147     		li	a5,0
+ 878 033a 29A0     		j	.L34
+ 879              	.LVL96:
+ 880              	.L35:
+ 109:../src/snake.c ****   }
+ 881              		.loc 1 109 0
+ 882 033c 03C6E6FF 		lbu	a2,-2(a3)
+ 883 0340 E30936FD 		beq	a2,s3,.L57
+ 884              	.LVL97:
+ 885              	.L34:
+ 107:../src/snake.c ****   {
+ 886              		.loc 1 107 0
+ 887 0344 8507     		addi	a5,a5,1
+ 888              	.LVL98:
+ 889 0346 93F7F70F 		andi	a5,a5,0xff
+ 890              	.LVL99:
+ 891 034a 8906     		addi	a3,a3,2
+ 892 034c E398F5FE 		bne	a1,a5,.L35
+ 893              	.LVL100:
+ 894              	.L32:
+ 895              	.LBE151:
+ 896              	.LBE150:
+ 897              	.LBB152:
+ 898              	.LBB153:
+ 899 0350 4A85     		mv	a0,s2
+ 900 0352 CE85     		mv	a1,s3
+ 901 0354 97000000 		call	HDMI_DrawPoint.part.0
+ 901      E7800000 
+ 902              	.LVL101:
+ 903              	.LBE153:
+ 904              	.LBE152:
+ 215:../src/snake.c ****     }
+ 905              		.loc 1 215 0
+ 906 035c B7070000 		lui	a5,%hi(.LC0)
+ 907 0360 4E86     		mv	a2,s3
+ 908 0362 CA85     		mv	a1,s2
+ 909 0364 13850700 		addi	a0,a5,%lo(.LC0)
+ 910 0368 97000000 		call	printk
+ 910      E7800000 
+ 911              	.LVL102:
+ 912 0370 93082D00 		addi	a7,s10,2
+ 913 0374 13F4F80F 		andi	s0,a7,0xff
+ 914 0378 E1B3     		j	.L27
+ 915              		.cfi_endproc
+ 916              	.LFE11:
+ 918              		.globl	snake_info
+ 919              		.section	.bss.snake_info,"aw",@nobits
+ 920              		.align	2
+ 921              		.set	.LANCHOR1,. + 0
+ 924              	snake_info:
+ 925 0000 00000000 		.zero	100
+ 925      00000000 
+ 925      00000000 
+ 925      00000000 
+ 925      00000000 
+ 926              		.section	.rodata.SnakeGameStart.str1.4,"aMS",@progbits,1
+ 927              		.align	2
+ 928              	.LC0:
+ 929 0000 666F6F64 		.string	"foodx:%d,foody:%d\n"
+ 929      783A2564 
+ 929      2C666F6F 
+ 929      64793A25 
+ 929      640A00
+ 930 0013 00       		.zero	1
+ 931              	.LC1:
+ 932 0014 67616D65 		.string	"game over"
+ 932      206F7665 
+ 932      7200
+ 933 001e 0000     		.zero	2
+ 934              	.LC2:
+ 935 0020 6E6F6465 		.string	"node_cnt:%d"
+ 935      5F636E74 
+ 935      3A256400 
+ 936              	.LC3:
+ 937 002c 783A2564 		.string	"x:%d,y:%d\n"
+ 937      2C793A25 
+ 937      640A00
+ 938 0037 00       		.zero	1
+ 939              	.LC4:
+ 940 0038 78303A25 		.string	"x0:%d,y0:%d"
+ 940      642C7930 
+ 940      3A256400 
+ 941              		.section	.sbss.node_cnt,"aw",@nobits
+ 942              		.set	.LANCHOR0,. + 0
+ 945              	node_cnt:
+ 946 0000 00       		.zero	1
+ 947              		.text
+ 948              	.Letext0:
+ 949              		.file 2 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 950              		.file 3 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 951              		.file 4 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 952              		.file 5 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 953              		.file 6 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 954              		.file 7 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 955              		.file 8 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 956              		.file 9 "../src/uart.h"
+ 957              		.file 10 "../src/snake.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 snake.c
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:9      .text.HDMI_DrawPoint.part.0:0000000000000000 HDMI_DrawPoint.part.0
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:13     .text.HDMI_DrawPoint.part.0:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:17     .text.HDMI_DrawPoint.part.0:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:18     .text.HDMI_DrawPoint.part.0:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:28     .text.HDMI_DrawPoint.part.0:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:30     .text.HDMI_DrawPoint.part.0:0000000000000012 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:34     .text.HDMI_DrawPoint.part.0:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:39     .text.HDMI_DrawPoint.part.0:0000000000000022 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:41     .text.HDMI_DrawPoint.part.0:0000000000000024 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:46     .text.HDMI_DrawPoint.part.0:0000000000000028 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:50     .text.HDMI_DrawPoint.part.0:000000000000002a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:51     .text.HDMI_DrawPoint.part.0:000000000000002c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:58     .text.HDMI_DrawPoint:0000000000000000 HDMI_DrawPoint
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:61     .text.HDMI_DrawPoint:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:63     .text.HDMI_DrawPoint:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:64     .text.HDMI_DrawPoint:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:71     .text.HDMI_DrawPoint:000000000000000a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:77     .text.HDMI_DrawPoint:0000000000000016 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:82     .text.HDMI_DrawPoint:000000000000001a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:87     .text.HDMI_DrawPoint:0000000000000020 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:91     .text.HDMI_DrawPoint:0000000000000022 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:92     .text.HDMI_DrawPoint:0000000000000024 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:99     .text.draw_point:0000000000000000 draw_point
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:102    .text.draw_point:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:104    .text.draw_point:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:105    .text.draw_point:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:110    .text.draw_point:0000000000000008 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:112    .text.draw_point:000000000000000a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:114    .text.draw_point:000000000000000c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:116    .text.draw_point:000000000000000e .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:119    .text.draw_point:0000000000000012 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:120    .text.draw_point:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:127    .text.clear_point:0000000000000000 clear_point
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:130    .text.clear_point:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:132    .text.clear_point:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:133    .text.clear_point:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:139    .text.clear_point:000000000000000a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:141    .text.clear_point:000000000000000c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:145    .text.clear_point:000000000000000e .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:147    .text.clear_point:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:152    .text.clear_point:0000000000000016 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:154    .text.clear_point:0000000000000018 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:155    .text.clear_point:000000000000001a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:162    .text.delay:0000000000000000 delay
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:165    .text.delay:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:167    .text.delay:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:168    .text.delay:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:175    .text.delay:000000000000000a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:179    .text.delay:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:181    .text.delay:0000000000000012 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:185    .text.delay:0000000000000018 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:189    .text.delay:000000000000001a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:191    .text.delay:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:193    .text.delay:000000000000001e .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:198    .text.delay:0000000000000024 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:199    .text.delay:0000000000000026 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:206    .text.draw_c:0000000000000000 draw_c
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:209    .text.draw_c:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:211    .text.draw_c:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:212    .text.draw_c:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:218    .text.draw_c:0000000000000008 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:220    .text.draw_c:000000000000000c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:222    .text.draw_c:000000000000000e .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:224    .text.draw_c:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:228    .text.draw_c:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:230    .text.draw_c:0000000000000016 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:233    .text.draw_c:0000000000000018 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:235    .text.draw_c:000000000000001a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:236    .text.draw_c:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:243    .text.draw_gameover:0000000000000000 draw_gameover
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:246    .text.draw_gameover:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:250    .text.draw_gameover:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:251    .text.draw_gameover:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:255    .text.draw_gameover:0000000000000008 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:263    .text.draw_gameover:000000000000000e .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:266    .text.draw_gameover:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:274    .text.draw_gameover:000000000000001a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:277    .text.draw_gameover:0000000000000020 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:285    .text.draw_gameover:0000000000000026 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:288    .text.draw_gameover:000000000000002c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:296    .text.draw_gameover:0000000000000032 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:299    .text.draw_gameover:0000000000000038 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:307    .text.draw_gameover:000000000000003e .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:310    .text.draw_gameover:0000000000000044 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:318    .text.draw_gameover:000000000000004a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:321    .text.draw_gameover:0000000000000050 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:328    .text.draw_gameover:0000000000000052 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:331    .text.draw_gameover:0000000000000058 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:337    .text.draw_gameover:000000000000005c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:338    .text.draw_gameover:000000000000005e .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:345    .text.SnakeGameStart:0000000000000000 SnakeGameStart
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:348    .text.SnakeGameStart:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:350    .text.SnakeGameStart:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:351    .text.SnakeGameStart:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:353    .text.SnakeGameStart:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:355    .text.SnakeGameStart:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:359    .text.SnakeGameStart:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:360    .text.SnakeGameStart:0000000000000012 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:362    .text.SnakeGameStart:0000000000000012 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:364    .text.SnakeGameStart:0000000000000016 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:366    .text.SnakeGameStart:000000000000001a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:368    .text.SnakeGameStart:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:369    .text.SnakeGameStart:000000000000001e .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:373    .text.SnakeGameStart:0000000000000026 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:375    .text.SnakeGameStart:000000000000002a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:377    .text.SnakeGameStart:000000000000002c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:387    .text.SnakeGameStart:0000000000000040 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:388    .text.SnakeGameStart:0000000000000040 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:389    .text.SnakeGameStart:0000000000000040 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:390    .text.SnakeGameStart:0000000000000040 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:391    .text.SnakeGameStart:0000000000000040 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:392    .text.SnakeGameStart:0000000000000040 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:393    .text.SnakeGameStart:0000000000000040 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:394    .text.SnakeGameStart:0000000000000040 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:395    .text.SnakeGameStart:0000000000000040 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:396    .text.SnakeGameStart:0000000000000040 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:398    .text.SnakeGameStart:0000000000000040 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:400    .text.SnakeGameStart:0000000000000044 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:402    .text.SnakeGameStart:0000000000000048 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:404    .text.SnakeGameStart:000000000000004a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:406    .text.SnakeGameStart:000000000000004c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:408    .text.SnakeGameStart:0000000000000050 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:411    .text.SnakeGameStart:0000000000000058 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:413    .text.SnakeGameStart:000000000000005c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:416    .text.SnakeGameStart:0000000000000060 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:418    .text.SnakeGameStart:0000000000000062 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:420    .text.SnakeGameStart:0000000000000066 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:425    .text.SnakeGameStart:000000000000006a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:447    .text.SnakeGameStart:000000000000008c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:452    .text.SnakeGameStart:0000000000000096 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:456    .text.SnakeGameStart:00000000000000a0 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:458    .text.SnakeGameStart:00000000000000a4 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:460    .text.SnakeGameStart:00000000000000a8 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:464    .text.SnakeGameStart:00000000000000b0 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:466    .text.SnakeGameStart:00000000000000b4 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:468    .text.SnakeGameStart:00000000000000b6 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:470    .text.SnakeGameStart:00000000000000ba .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:472    .text.SnakeGameStart:00000000000000bc .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:484    .text.SnakeGameStart:00000000000000d4 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:486    .text.SnakeGameStart:00000000000000d8 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:490    .text.SnakeGameStart:00000000000000de .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:500    .text.SnakeGameStart:00000000000000fa .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:510    .text.SnakeGameStart:000000000000011c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:512    .text.SnakeGameStart:000000000000011e .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:514    .text.SnakeGameStart:0000000000000120 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:520    .text.SnakeGameStart:000000000000012a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:522    .text.SnakeGameStart:000000000000012c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:526    .text.SnakeGameStart:000000000000012e .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:530    .text.SnakeGameStart:0000000000000132 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:538    .text.SnakeGameStart:000000000000013c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:542    .text.SnakeGameStart:0000000000000140 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:554    .text.SnakeGameStart:000000000000015e .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:560    .text.SnakeGameStart:0000000000000162 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:566    .text.SnakeGameStart:0000000000000164 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:576    .text.SnakeGameStart:0000000000000176 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:581    .text.SnakeGameStart:0000000000000180 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:584    .text.SnakeGameStart:0000000000000184 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:591    .text.SnakeGameStart:0000000000000188 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:598    .text.SnakeGameStart:0000000000000190 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:605    .text.SnakeGameStart:000000000000019a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:607    .text.SnakeGameStart:000000000000019e .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:612    .text.SnakeGameStart:00000000000001a4 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:618    .text.SnakeGameStart:00000000000001a6 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:623    .text.SnakeGameStart:00000000000001ac .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:628    .text.SnakeGameStart:00000000000001b8 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:630    .text.SnakeGameStart:00000000000001bc .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:633    .text.SnakeGameStart:00000000000001c0 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:638    .text.SnakeGameStart:00000000000001c6 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:640    .text.SnakeGameStart:00000000000001ca .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:642    .text.SnakeGameStart:00000000000001ce .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:647    .text.SnakeGameStart:00000000000001d4 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:649    .text.SnakeGameStart:00000000000001d6 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:652    .text.SnakeGameStart:00000000000001da .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:655    .text.SnakeGameStart:00000000000001de .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:658    .text.SnakeGameStart:00000000000001e2 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:662    .text.SnakeGameStart:00000000000001e6 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:667    .text.SnakeGameStart:00000000000001f0 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:679    .text.SnakeGameStart:00000000000001f8 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:690    .text.SnakeGameStart:0000000000000204 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:698    .text.SnakeGameStart:0000000000000218 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:700    .text.SnakeGameStart:000000000000021c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:702    .text.SnakeGameStart:0000000000000220 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:712    .text.SnakeGameStart:000000000000023c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:714    .text.SnakeGameStart:0000000000000240 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:718    .text.SnakeGameStart:000000000000024a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:721    .text.SnakeGameStart:0000000000000250 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:723    .text.SnakeGameStart:0000000000000254 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:725    .text.SnakeGameStart:0000000000000256 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:729    .text.SnakeGameStart:000000000000025a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:732    .text.SnakeGameStart:0000000000000262 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:737    .text.SnakeGameStart:0000000000000272 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:738    .text.SnakeGameStart:0000000000000274 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:739    .text.SnakeGameStart:0000000000000274 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:741    .text.SnakeGameStart:0000000000000276 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:743    .text.SnakeGameStart:0000000000000276 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:745    .text.SnakeGameStart:000000000000027a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:746    .text.SnakeGameStart:000000000000027c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:748    .text.SnakeGameStart:000000000000027e .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:750    .text.SnakeGameStart:0000000000000280 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:752    .text.SnakeGameStart:0000000000000282 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:754    .text.SnakeGameStart:0000000000000284 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:756    .text.SnakeGameStart:0000000000000286 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:758    .text.SnakeGameStart:0000000000000288 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:760    .text.SnakeGameStart:000000000000028a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:762    .text.SnakeGameStart:000000000000028c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:764    .text.SnakeGameStart:000000000000028e .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:766    .text.SnakeGameStart:0000000000000290 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:769    .text.SnakeGameStart:0000000000000294 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:773    .text.SnakeGameStart:0000000000000296 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:775    .text.SnakeGameStart:0000000000000296 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:778    .text.SnakeGameStart:000000000000029a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:781    .text.SnakeGameStart:00000000000002a0 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:790    .text.SnakeGameStart:00000000000002b0 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:794    .text.SnakeGameStart:00000000000002b4 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:799    .text.SnakeGameStart:00000000000002be .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:804    .text.SnakeGameStart:00000000000002c2 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:808    .text.SnakeGameStart:00000000000002c6 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:812    .text.SnakeGameStart:00000000000002ca .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:817    .text.SnakeGameStart:00000000000002d6 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:822    .text.SnakeGameStart:00000000000002e2 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:824    .text.SnakeGameStart:00000000000002e6 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:830    .text.SnakeGameStart:00000000000002ec .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:832    .text.SnakeGameStart:00000000000002ee .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:836    .text.SnakeGameStart:00000000000002fa .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:841    .text.SnakeGameStart:00000000000002fe .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:846    .text.SnakeGameStart:0000000000000306 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:857    .text.SnakeGameStart:0000000000000312 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:863    .text.SnakeGameStart:0000000000000320 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:865    .text.SnakeGameStart:0000000000000324 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:871    .text.SnakeGameStart:000000000000032a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:873    .text.SnakeGameStart:000000000000032c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:877    .text.SnakeGameStart:0000000000000338 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:882    .text.SnakeGameStart:000000000000033c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:887    .text.SnakeGameStart:0000000000000344 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:906    .text.SnakeGameStart:000000000000035c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:915    .text.SnakeGameStart:000000000000037a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:924    .bss.snake_info:0000000000000000 snake_info
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:921    .bss.snake_info:0000000000000000 .LANCHOR1
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:942    .sbss.node_cnt:0000000000000000 .LANCHOR0
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:945    .sbss.node_cnt:0000000000000000 node_cnt
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:54     .text.HDMI_DrawPoint.part.0:000000000000002c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:95     .text.HDMI_DrawPoint:0000000000000024 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:123    .text.draw_point:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:158    .text.clear_point:000000000000001a .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:202    .text.delay:0000000000000026 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:239    .text.draw_c:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:341    .text.draw_gameover:000000000000005e .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:919    .text.SnakeGameStart:000000000000037a .L0 
+                     .debug_frame:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:37     .text.HDMI_DrawPoint.part.0:0000000000000022 .L2
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:67     .text.HDMI_DrawPoint:000000000000000a .L6
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:79     .text.HDMI_DrawPoint:0000000000000018 .L7
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:143    .text.clear_point:000000000000000e .L11
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:196    .text.delay:0000000000000024 .L13
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:187    .text.delay:000000000000001a .L15
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:928    .rodata.SnakeGameStart.str1.4:0000000000000000 .LC0
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:936    .rodata.SnakeGameStart.str1.4:000000000000002c .LC3
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:939    .rodata.SnakeGameStart.str1.4:0000000000000038 .LC4
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:931    .rodata.SnakeGameStart.str1.4:0000000000000014 .LC1
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:934    .rodata.SnakeGameStart.str1.4:0000000000000020 .LC2
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:442    .text.SnakeGameStart:000000000000008c .L23
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:430    .text.SnakeGameStart:0000000000000076 .L24
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:727    .text.SnakeGameStart:000000000000025a .L25
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:772    .text.SnakeGameStart:0000000000000296 .L67
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:603    .text.SnakeGameStart:000000000000019a .L36
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:645    .text.SnakeGameStart:00000000000001d4 .L37
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:621    .text.SnakeGameStart:00000000000001ac .L38
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:532    .text.SnakeGameStart:0000000000000134 .L26
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:540    .text.SnakeGameStart:0000000000000140 .L27
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:853    .text.SnakeGameStart:0000000000000312 .L57
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:815    .text.SnakeGameStart:00000000000002d6 .L56
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:844    .text.SnakeGameStart:0000000000000306 .L30
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:839    .text.SnakeGameStart:00000000000002fe .L31
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:894    .text.SnakeGameStart:0000000000000350 .L32
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:885    .text.SnakeGameStart:0000000000000344 .L34
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:880    .text.SnakeGameStart:000000000000033c .L35
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:3224   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5569   .debug_str:000000000000032d .LASF149
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5567   .debug_str:000000000000031e .LASF150
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5415   .debug_str:000000000000000c .LASF151
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5353   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5411   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5461   .debug_str:000000000000012e .LASF0
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5429   .debug_str:000000000000006a .LASF5
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5607   .debug_str:0000000000000480 .LASF1
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5615   .debug_str:00000000000004a2 .LASF2
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5551   .debug_str:00000000000002cc .LASF3
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5483   .debug_str:000000000000018d .LASF4
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5505   .debug_str:00000000000001f1 .LASF6
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5531   .debug_str:0000000000000263 .LASF7
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5459   .debug_str:0000000000000120 .LASF8
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5441   .debug_str:00000000000000b7 .LASF9
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5523   .debug_str:000000000000023f .LASF10
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5697   .debug_str:0000000000000613 .LASF11
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5655   .debug_str:0000000000000557 .LASF12
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5587   .debug_str:0000000000000416 .LASF13
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5605   .debug_str:000000000000046e .LASF14
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5599   .debug_str:000000000000044f .LASF15
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5661   .debug_str:0000000000000572 .LASF16
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5543   .debug_str:000000000000029e .LASF17
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5571   .debug_str:00000000000003cf .LASF18
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5471   .debug_str:0000000000000155 .LASF19
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5525   .debug_str:000000000000024c .LASF20
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5653   .debug_str:000000000000054f .LASF21
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5675   .debug_str:00000000000005a8 .LASF22
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5625   .debug_str:00000000000004ca .LASF23
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5509   .debug_str:0000000000000202 .LASF24
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5665   .debug_str:0000000000000581 .LASF25
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5681   .debug_str:00000000000005be .LASF26
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5513   .debug_str:0000000000000213 .LASF31
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5671   .debug_str:0000000000000595 .LASF27
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5647   .debug_str:000000000000053a .LASF28
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5507   .debug_str:00000000000001fc .LASF29
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5691   .debug_str:00000000000005fe .LASF30
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5521   .debug_str:000000000000023a .LASF32
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5453   .debug_str:000000000000010b .LASF33
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5667   .debug_str:0000000000000586 .LASF34
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5469   .debug_str:000000000000014b .LASF35
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5721   .debug_str:0000000000000689 .LASF36
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5591   .debug_str:0000000000000429 .LASF37
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5583   .debug_str:0000000000000403 .LASF38
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5693   .debug_str:0000000000000603 .LASF39
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5617   .debug_str:00000000000004ac .LASF40
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5707   .debug_str:000000000000063d .LASF41
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5475   .debug_str:0000000000000160 .LASF42
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5501   .debug_str:00000000000001e4 .LASF43
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5413   .debug_str:0000000000000000 .LASF44
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5677   .debug_str:00000000000005b0 .LASF45
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5487   .debug_str:000000000000019d .LASF46
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5593   .debug_str:0000000000000432 .LASF47
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5639   .debug_str:000000000000050a .LASF48
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5503   .debug_str:00000000000001ec .LASF49
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5619   .debug_str:00000000000004b6 .LASF50
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5467   .debug_str:0000000000000145 .LASF51
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5423   .debug_str:0000000000000051 .LASF52
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5627   .debug_str:00000000000004d5 .LASF53
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5485   .debug_str:0000000000000196 .LASF54
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5533   .debug_str:0000000000000275 .LASF55
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5443   .debug_str:00000000000000ce .LASF56
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5479   .debug_str:000000000000017d .LASF57
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5517   .debug_str:000000000000022a .LASF58
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5581   .debug_str:00000000000003fc .LASF59
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5657   .debug_str:0000000000000560 .LASF60
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5711   .debug_str:0000000000000657 .LASF61
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5465   .debug_str:000000000000013f .LASF62
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5703   .debug_str:000000000000062f .LASF63
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5491   .debug_str:00000000000001ac .LASF64
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5495   .debug_str:00000000000001bd .LASF65
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5433   .debug_str:000000000000007e .LASF66
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5573   .debug_str:00000000000003d6 .LASF67
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5629   .debug_str:00000000000004dd .LASF68
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5575   .debug_str:00000000000003dc .LASF69
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5649   .debug_str:0000000000000542 .LASF70
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5663   .debug_str:000000000000057a .LASF71
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5489   .debug_str:00000000000001a5 .LASF72
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5527   .debug_str:0000000000000253 .LASF73
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5511   .debug_str:000000000000020b .LASF74
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5637   .debug_str:0000000000000505 .LASF75
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5427   .debug_str:000000000000005f .LASF76
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5645   .debug_str:0000000000000521 .LASF77
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5641   .debug_str:000000000000050f .LASF78
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5597   .debug_str:0000000000000444 .LASF79
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5643   .debug_str:0000000000000517 .LASF80
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5565   .debug_str:0000000000000316 .LASF81
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5519   .debug_str:0000000000000230 .LASF82
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5719   .debug_str:0000000000000684 .LASF83
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5603   .debug_str:0000000000000464 .LASF84
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5529   .debug_str:000000000000025b .LASF85
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5493   .debug_str:00000000000001b5 .LASF86
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5609   .debug_str:000000000000048e .LASF87
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5555   .debug_str:00000000000002e7 .LASF88
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5701   .debug_str:0000000000000625 .LASF89
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5481   .debug_str:0000000000000185 .LASF90
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5473   .debug_str:000000000000015b .LASF91
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5623   .debug_str:00000000000004c3 .LASF92
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5695   .debug_str:000000000000060d .LASF93
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5545   .debug_str:00000000000002a7 .LASF94
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5621   .debug_str:00000000000004bd .LASF95
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5425   .debug_str:0000000000000057 .LASF96
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5651   .debug_str:0000000000000549 .LASF97
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5669   .debug_str:000000000000058f .LASF98
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5679   .debug_str:00000000000005b9 .LASF99
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5689   .debug_str:00000000000005f1 .LASF100
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5673   .debug_str:000000000000059b .LASF101
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5559   .debug_str:00000000000002fc .LASF102
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5709   .debug_str:0000000000000648 .LASF103
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5515   .debug_str:000000000000021b .LASF104
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5631   .debug_str:00000000000004e6 .LASF105
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5713   .debug_str:000000000000065e .LASF106
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5635   .debug_str:00000000000004f8 .LASF107
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5717   .debug_str:0000000000000676 .LASF108
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5451   .debug_str:00000000000000fd .LASF109
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5699   .debug_str:000000000000061b .LASF110
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5557   .debug_str:00000000000002f0 .LASF111
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5683   .debug_str:00000000000005c6 .LASF112
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5499   .debug_str:00000000000001d6 .LASF113
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5449   .debug_str:00000000000000ee .LASF114
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5497   .debug_str:00000000000001c5 .LASF115
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5435   .debug_str:0000000000000084 .LASF116
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5437   .debug_str:0000000000000093 .LASF117
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5613   .debug_str:0000000000000499 .LASF118
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5589   .debug_str:0000000000000422 .LASF119
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5585   .debug_str:000000000000040d .LASF120
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5705   .debug_str:0000000000000635 .LASF121
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5447   .debug_str:00000000000000e3 .LASF152
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5659   .debug_str:0000000000000566 .LASF122
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5685   .debug_str:00000000000005d3 .LASF123
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5595   .debug_str:000000000000043a .LASF124
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5563   .debug_str:0000000000000310 .LASF125
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5549   .debug_str:00000000000002c1 .LASF126
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5535   .debug_str:000000000000027b .LASF127
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5579   .debug_str:00000000000003ed .LASF153
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:346    .text.SnakeGameStart:0000000000000000 .LFB11
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:916    .text.SnakeGameStart:000000000000037a .LFE11
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4136   .debug_loc:0000000000000000 .LLST47
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5561   .debug_str:0000000000000309 .LASF128
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4163   .debug_loc:0000000000000043 .LLST48
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5457   .debug_str:0000000000000119 .LASF129
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4198   .debug_loc:000000000000008e .LLST49
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5455   .debug_str:0000000000000114 .LASF130
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5463   .debug_str:000000000000013a .LASF131
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5421   .debug_str:000000000000004a .LASF132
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5553   .debug_str:00000000000002df .LASF133
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4232   .debug_loc:00000000000000d8 .LLST50
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:422    .text.SnakeGameStart:000000000000006a .LBB114
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:445    .text.SnakeGameStart:000000000000008c .LBE114
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4245   .debug_loc:00000000000000f8 .LLST51
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4253   .debug_loc:000000000000010c .LLST52
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4260   .debug_loc:000000000000011f .LLST53
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:423    .text.SnakeGameStart:000000000000006a .LBB115
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:444    .text.SnakeGameStart:000000000000008c .LBE115
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4269   .debug_loc:0000000000000137 .LLST54
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:431    .text.SnakeGameStart:0000000000000076 .LBB116
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:440    .text.SnakeGameStart:0000000000000088 .LBE116
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4277   .debug_loc:000000000000014b .LLST55
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4285   .debug_loc:000000000000015f .LLST56
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4298   .debug_loc:000000000000017f .LLST57
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:438    .text.SnakeGameStart:0000000000000088 .LVL44
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:475    .text.SnakeGameStart:00000000000000c8 .LBB118
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:482    .text.SnakeGameStart:00000000000000d4 .LBE118
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4311   .debug_loc:000000000000019f .LLST58
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4319   .debug_loc:00000000000001b3 .LLST59
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4327   .debug_loc:00000000000001c7 .LLST60
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:480    .text.SnakeGameStart:00000000000000d4 .LVL51
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:517    .text.SnakeGameStart:000000000000012a .LBB120
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4335   .debug_loc:00000000000001db .LLST61
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4370   .debug_loc:0000000000000217 .LLST62
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:527    .text.SnakeGameStart:0000000000000132 .LBB124
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4405   .debug_loc:0000000000000253 .LLST63
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4413   .debug_loc:0000000000000267 .LLST64
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:555    .text.SnakeGameStart:0000000000000162 .LBB126
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4429   .debug_loc:0000000000000291 .LLST65
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4437   .debug_loc:00000000000002a5 .LLST66
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4449   .debug_loc:00000000000002c7 .LLST67
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:557    .text.SnakeGameStart:0000000000000162 .LBB128
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4461   .debug_loc:00000000000002e9 .LLST68
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4479   .debug_loc:0000000000000311 .LLST69
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:573    .text.SnakeGameStart:0000000000000176 .LBB133
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:587    .text.SnakeGameStart:0000000000000188 .LBE133
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4497   .debug_loc:0000000000000339 .LLST70
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4516   .debug_loc:000000000000035b .LLST71
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:574    .text.SnakeGameStart:0000000000000176 .LBB134
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:586    .text.SnakeGameStart:0000000000000188 .LBE134
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:659    .text.SnakeGameStart:00000000000001e6 .LBB136
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4535   .debug_loc:000000000000037d .LLST72
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4553   .debug_loc:00000000000003a5 .LLST73
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:670    .text.SnakeGameStart:00000000000001f4 .LBB139
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4567   .debug_loc:00000000000003c2 .LLST74
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4575   .debug_loc:00000000000003d6 .LLST75
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:686    .text.SnakeGameStart:0000000000000204 .LVL73
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:694    .text.SnakeGameStart:0000000000000218 .LVL74
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:827    .text.SnakeGameStart:00000000000002ec .LBB148
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:855    .text.SnakeGameStart:0000000000000312 .LBE148
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4583   .debug_loc:00000000000003ea .LLST76
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:828    .text.SnakeGameStart:00000000000002ec .LBB149
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:854    .text.SnakeGameStart:0000000000000312 .LBE149
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4590   .debug_loc:00000000000003fd .LLST77
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:868    .text.SnakeGameStart:000000000000032a .LBB150
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:896    .text.SnakeGameStart:0000000000000350 .LBE150
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4606   .debug_loc:0000000000000427 .LLST78
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4613   .debug_loc:000000000000043a .LLST79
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:869    .text.SnakeGameStart:000000000000032a .LBB151
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:895    .text.SnakeGameStart:0000000000000350 .LBE151
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4620   .debug_loc:000000000000044d .LLST80
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:897    .text.SnakeGameStart:0000000000000350 .LBB152
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:904    .text.SnakeGameStart:000000000000035c .LBE152
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4636   .debug_loc:0000000000000477 .LLST81
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4644   .debug_loc:000000000000048b .LLST82
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4651   .debug_loc:000000000000049e .LLST83
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:902    .text.SnakeGameStart:000000000000035c .LVL101
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:448    .text.SnakeGameStart:0000000000000094 .LVL46
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:453    .text.SnakeGameStart:000000000000009e .LVL48
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:474    .text.SnakeGameStart:00000000000000c8 .LVL50
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:550    .text.SnakeGameStart:000000000000015e .LVL55
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:730    .text.SnakeGameStart:0000000000000262 .LVL76
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:735    .text.SnakeGameStart:0000000000000272 .LVL77
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:814    .text.SnakeGameStart:00000000000002d6 .LVL84
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:818    .text.SnakeGameStart:00000000000002de .LVL85
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:858    .text.SnakeGameStart:000000000000031a .LVL93
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:911    .text.SnakeGameStart:0000000000000370 .LVL102
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5687   .debug_str:00000000000005e6 .LASF136
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5439   .debug_str:00000000000000a4 .LASF134
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5715   .debug_str:0000000000000663 .LASF135
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5547   .debug_str:00000000000002ae .LASF137
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5601   .debug_str:0000000000000456 .LASF154
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:244    .text.draw_gameover:0000000000000000 .LFB6
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:339    .text.draw_gameover:000000000000005e .LFE6
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:248    .text.draw_gameover:0000000000000000 .LBB70
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:259    .text.draw_gameover:000000000000000e .LBE70
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4658   .debug_loc:00000000000004b1 .LLST23
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4666   .debug_loc:00000000000004c5 .LLST24
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4674   .debug_loc:00000000000004d9 .LLST25
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:249    .text.draw_gameover:0000000000000000 .LBB71
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:258    .text.draw_gameover:000000000000000e .LBE71
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:260    .text.draw_gameover:000000000000000e .LBB72
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:270    .text.draw_gameover:000000000000001a .LBE72
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4682   .debug_loc:00000000000004ed .LLST26
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4690   .debug_loc:0000000000000501 .LLST27
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4698   .debug_loc:0000000000000515 .LLST28
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:261    .text.draw_gameover:000000000000000e .LBB73
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:269    .text.draw_gameover:000000000000001a .LBE73
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:271    .text.draw_gameover:000000000000001a .LBB74
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:281    .text.draw_gameover:0000000000000026 .LBE74
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4706   .debug_loc:0000000000000529 .LLST29
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4714   .debug_loc:000000000000053d .LLST30
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4722   .debug_loc:0000000000000551 .LLST31
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:272    .text.draw_gameover:000000000000001a .LBB75
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:280    .text.draw_gameover:0000000000000026 .LBE75
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:282    .text.draw_gameover:0000000000000026 .LBB76
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:292    .text.draw_gameover:0000000000000032 .LBE76
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4730   .debug_loc:0000000000000565 .LLST32
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4738   .debug_loc:0000000000000579 .LLST33
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4746   .debug_loc:000000000000058d .LLST34
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:283    .text.draw_gameover:0000000000000026 .LBB77
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:291    .text.draw_gameover:0000000000000032 .LBE77
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:293    .text.draw_gameover:0000000000000032 .LBB78
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:303    .text.draw_gameover:000000000000003e .LBE78
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4754   .debug_loc:00000000000005a1 .LLST35
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4762   .debug_loc:00000000000005b5 .LLST36
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4770   .debug_loc:00000000000005c9 .LLST37
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:294    .text.draw_gameover:0000000000000032 .LBB79
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:302    .text.draw_gameover:000000000000003e .LBE79
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:304    .text.draw_gameover:000000000000003e .LBB80
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:314    .text.draw_gameover:000000000000004a .LBE80
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4778   .debug_loc:00000000000005dd .LLST38
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4786   .debug_loc:00000000000005f1 .LLST39
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4794   .debug_loc:0000000000000605 .LLST40
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:305    .text.draw_gameover:000000000000003e .LBB81
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:313    .text.draw_gameover:000000000000004a .LBE81
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:315    .text.draw_gameover:000000000000004a .LBB82
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:324    .text.draw_gameover:0000000000000052 .LBE82
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4802   .debug_loc:0000000000000619 .LLST41
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4810   .debug_loc:000000000000062d .LLST42
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4818   .debug_loc:0000000000000641 .LLST43
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:316    .text.draw_gameover:000000000000004a .LBB83
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:323    .text.draw_gameover:0000000000000052 .LBE83
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:325    .text.draw_gameover:0000000000000052 .LBB84
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:335    .text.draw_gameover:000000000000005c .LBE84
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4826   .debug_loc:0000000000000655 .LLST44
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4834   .debug_loc:0000000000000669 .LLST45
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4842   .debug_loc:000000000000067d .LLST46
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:326    .text.draw_gameover:0000000000000052 .LBB85
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:334    .text.draw_gameover:000000000000005c .LBE85
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5633   .debug_str:00000000000004f1 .LASF140
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5431   .debug_str:0000000000000074 .LASF138
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5541   .debug_str:0000000000000294 .LASF139
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5611   .debug_str:0000000000000493 .LASF141
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5417   .debug_str:000000000000003d .LASF142
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5445   .debug_str:00000000000000d7 .LASF143
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5577   .debug_str:00000000000003e4 .LASF144
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5539   .debug_str:0000000000000289 .LASF145
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5477   .debug_str:000000000000016e .LASF146
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:10     .text.HDMI_DrawPoint.part.0:0000000000000000 .LFB12
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:52     .text.HDMI_DrawPoint.part.0:000000000000002c .LFE12
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4850   .debug_loc:0000000000000691 .LLST0
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4864   .debug_loc:00000000000006b2 .LLST1
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:15     .text.HDMI_DrawPoint.part.0:0000000000000000 .LBB64
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:48     .text.HDMI_DrawPoint.part.0:000000000000002a .LBE64
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4878   .debug_loc:00000000000006d3 .LLST2
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4892   .debug_loc:00000000000006f4 .LLST3
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:16     .text.HDMI_DrawPoint.part.0:0000000000000000 .LBB65
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:47     .text.HDMI_DrawPoint.part.0:000000000000002a .LBE65
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4906   .debug_loc:0000000000000715 .LLST4
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4972   .debug_loc:0000000000000771 .LLST5
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:59     .text.HDMI_DrawPoint:0000000000000000 .LFB1
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:93     .text.HDMI_DrawPoint:0000000000000024 .LFE1
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:4999   .debug_loc:00000000000007b0 .LLST6
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5017   .debug_loc:00000000000007dc .LLST7
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5035   .debug_loc:0000000000000808 .LLST8
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:68     .text.HDMI_DrawPoint:000000000000000a .LBB68
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:89     .text.HDMI_DrawPoint:0000000000000022 .LBE68
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:69     .text.HDMI_DrawPoint:000000000000000a .LBB69
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:88     .text.HDMI_DrawPoint:0000000000000022 .LBE69
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5053   .debug_loc:0000000000000834 .LLST9
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:66     .text.HDMI_DrawPoint:000000000000000a .LVL7
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:100    .text.draw_point:0000000000000000 .LFB2
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:121    .text.draw_point:0000000000000014 .LFE2
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5079   .debug_loc:000000000000086f .LLST10
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5093   .debug_loc:0000000000000890 .LLST11
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:128    .text.clear_point:0000000000000000 .LFB3
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:156    .text.clear_point:000000000000001a .LFE3
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5121   .debug_loc:00000000000008bf .LLST12
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5135   .debug_loc:00000000000008e0 .LLST13
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5163   .debug_loc:000000000000090f .LLST14
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:163    .text.delay:0000000000000000 .LFB4
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:200    .text.delay:0000000000000026 .LFE4
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5189   .debug_loc:000000000000094a .LLST15
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5209   .debug_loc:0000000000000978 .LLST16
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5223   .debug_loc:0000000000000999 .LLST17
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5237   .debug_loc:00000000000009ba .LLST18
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:207    .text.draw_c:0000000000000000 .LFB5
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:237    .text.draw_c:000000000000001c .LFE5
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5248   .debug_loc:00000000000009d8 .LLST19
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5262   .debug_loc:00000000000009f9 .LLST20
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5276   .debug_loc:0000000000000a1a .LLST21
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5304   .debug_loc:0000000000000a49 .LLST22
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5419   .debug_str:0000000000000043 .LASF147
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:5537   .debug_str:0000000000000284 .LASF148
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:349    .text.SnakeGameStart:0000000000000000 .LVL39
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:414    .text.SnakeGameStart:0000000000000060 .LVL40
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:531    .text.SnakeGameStart:0000000000000134 .LVL53
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:539    .text.SnakeGameStart:0000000000000140 .LVL54
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:771    .text.SnakeGameStart:0000000000000296 .LVL78
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:776    .text.SnakeGameStart:000000000000029a .LVL79
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:450    .text.SnakeGameStart:0000000000000096 .LVL47
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:726    .text.SnakeGameStart:000000000000025a .LVL75
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:820    .text.SnakeGameStart:00000000000002e2 .LVL86
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:826    .text.SnakeGameStart:00000000000002ec .LVL87
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:462    .text.SnakeGameStart:00000000000000b0 .LVL49
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:861    .text.SnakeGameStart:0000000000000320 .LVL94
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:867    .text.SnakeGameStart:000000000000032a .LVL95
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:488    .text.SnakeGameStart:00000000000000de .LVL52
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:421    .text.SnakeGameStart:000000000000006a .LVL41
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:443    .text.SnakeGameStart:000000000000008c .LVL45
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:429    .text.SnakeGameStart:0000000000000076 .LVL42
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:436    .text.SnakeGameStart:0000000000000080 .LVL43
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:782    .text.SnakeGameStart:00000000000002a4 .LVL80
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:784    .text.SnakeGameStart:00000000000002a6 .LVL81
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:800    .text.SnakeGameStart:00000000000002c2 .LVL83
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:620    .text.SnakeGameStart:00000000000001ac .LVL65
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:634    .text.SnakeGameStart:00000000000001c2 .LVL66
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:636    .text.SnakeGameStart:00000000000001c6 .LVL67
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:644    .text.SnakeGameStart:00000000000001d4 .LVL68
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:585    .text.SnakeGameStart:0000000000000188 .LVL59
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:602    .text.SnakeGameStart:000000000000019a .LVL62
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:592    .text.SnakeGameStart:000000000000018c .LVL60
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:594    .text.SnakeGameStart:0000000000000190 .LVL61
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:567    .text.SnakeGameStart:0000000000000166 .LVL56
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:582    .text.SnakeGameStart:0000000000000184 .LVL58
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:650    .text.SnakeGameStart:00000000000001da .LVL69
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:653    .text.SnakeGameStart:00000000000001de .LVL70
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:680    .text.SnakeGameStart:00000000000001fc .LVL72
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:656    .text.SnakeGameStart:00000000000001e2 .LVL71
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:852    .text.SnakeGameStart:0000000000000312 .LVL92
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:838    .text.SnakeGameStart:00000000000002fe .LVL88
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:847    .text.SnakeGameStart:0000000000000308 .LVL90
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:849    .text.SnakeGameStart:000000000000030c .LVL91
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:893    .text.SnakeGameStart:0000000000000350 .LVL100
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:879    .text.SnakeGameStart:000000000000033c .LVL96
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:888    .text.SnakeGameStart:0000000000000346 .LVL98
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:890    .text.SnakeGameStart:000000000000034a .LVL99
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:247    .text.draw_gameover:0000000000000000 .LVL30
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:257    .text.draw_gameover:000000000000000e .LVL31
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:268    .text.draw_gameover:000000000000001a .LVL32
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:279    .text.draw_gameover:0000000000000026 .LVL33
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:290    .text.draw_gameover:0000000000000032 .LVL34
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:301    .text.draw_gameover:000000000000003e .LVL35
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:312    .text.draw_gameover:000000000000004a .LVL36
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:322    .text.draw_gameover:0000000000000052 .LVL37
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:333    .text.draw_gameover:000000000000005c .LVL38
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:14     .text.HDMI_DrawPoint.part.0:0000000000000000 .LVL0
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:24     .text.HDMI_DrawPoint.part.0:000000000000000c .LVL2
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:19     .text.HDMI_DrawPoint.part.0:0000000000000002 .LVL1
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:36     .text.HDMI_DrawPoint.part.0:0000000000000022 .LVL3
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:42     .text.HDMI_DrawPoint.part.0:0000000000000026 .LVL4
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:44     .text.HDMI_DrawPoint.part.0:0000000000000028 .LVL5
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:62     .text.HDMI_DrawPoint:0000000000000000 .LVL6
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:78     .text.HDMI_DrawPoint:0000000000000018 .LVL8
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:83     .text.HDMI_DrawPoint:000000000000001e .LVL9
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:85     .text.HDMI_DrawPoint:0000000000000020 .LVL10
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:103    .text.draw_point:0000000000000000 .LVL11
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:107    .text.draw_point:0000000000000006 .LVL12
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:131    .text.clear_point:0000000000000000 .LVL13
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:137    .text.clear_point:000000000000000a .LVL14
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:142    .text.clear_point:000000000000000e .LVL15
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:148    .text.clear_point:0000000000000014 .LVL16
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:150    .text.clear_point:0000000000000016 .LVL17
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:166    .text.delay:0000000000000000 .LVL18
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:182    .text.delay:0000000000000016 .LVL22
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:186    .text.delay:000000000000001a .LVL23
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:173    .text.delay:000000000000000a .LVL20
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:170    .text.delay:0000000000000006 .LVL19
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:176    .text.delay:000000000000000e .LVL21
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:210    .text.draw_c:0000000000000000 .LVL25
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:215    .text.draw_c:0000000000000006 .LVL27
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:226    .text.draw_c:0000000000000014 .LVL28
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:213    .text.draw_c:0000000000000004 .LVL26
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:231    .text.draw_c:0000000000000018 .LVL29
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:959    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:524    .text.SnakeGameStart:000000000000012e .LBE120
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:791    .text.SnakeGameStart:00000000000002b4 .LBB146
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:802    .text.SnakeGameStart:00000000000002c2 .LBE146
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:805    .text.SnakeGameStart:00000000000002c6 .LBB147
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:810    .text.SnakeGameStart:00000000000002ca .LBE147
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:536    .text.SnakeGameStart:000000000000013c .LBE124
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:551    .text.SnakeGameStart:000000000000015e .LBB145
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:696    .text.SnakeGameStart:0000000000000218 .LBE145
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:564    .text.SnakeGameStart:0000000000000164 .LBE126
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:588    .text.SnakeGameStart:0000000000000188 .LBB135
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:616    .text.SnakeGameStart:00000000000001a6 .LBE135
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:562    .text.SnakeGameStart:0000000000000164 .LBE128
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:595    .text.SnakeGameStart:0000000000000190 .LBB131
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:614    .text.SnakeGameStart:00000000000001a6 .LBE131
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:669    .text.SnakeGameStart:00000000000001f4 .LBE136
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:676    .text.SnakeGameStart:00000000000001f8 .LBB142
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:682    .text.SnakeGameStart:00000000000001fc .LBE142
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:675    .text.SnakeGameStart:00000000000001f8 .LBE139
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:683    .text.SnakeGameStart:00000000000001fc .LBB143
+C:\Users\rana\AppData\Local\Temp\ccBVFnrn.s:688    .text.SnakeGameStart:0000000000000204 .LBE143
+
+UNDEFINED SYMBOLS
+rand
+printk
