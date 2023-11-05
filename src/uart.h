@@ -11,8 +11,8 @@
 // a pointer to this is a null pointer, but the compiler does not
 // know that because "sram" is a linker symbol from sections.lds.
 
-#define reg_uart_clkdiv (*(volatile uint32_t*)0x00008000)
-#define reg_uart_data   (*(volatile uint32_t*)0x00008010)
+#define reg_uart_clkdiv (*(volatile uint32_t*)0x00040000)
+#define reg_uart_data   (*(volatile uint32_t*)0x00040010)
 
 void put_char(char c);
 void print_num(uint32_t num, int base);

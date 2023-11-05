@@ -102,7 +102,7 @@
   66              	.LBB86:
   67              	.LBB82:
   68              		.loc 1 31 0
-  69 002c 6389E700 		beq	a5,a4,.L8
+  69 002c 638AE700 		beq	a5,a4,.L8
   70              	.LBE82:
   71              	.LBE86:
   20:../src/uart.c **** 
@@ -117,18 +117,18 @@
   32:../src/uart.c **** 		put_char('\r');
   33:../src/uart.c **** 	reg_uart_data = c;
   80              		.loc 1 33 0
-  81 0034 2167     		li	a4,32768
-  82 0036 1CCB     		sw	a5,16(a4)
+  81 0034 37070400 		li	a4,262144
+  82 0038 1CCB     		sw	a5,16(a4)
   83              	.LBE83:
   84              	.LBE87:
   20:../src/uart.c **** 
   85              		.loc 1 20 0
-  86 0038 9244     		lw	s1,4(sp)
+  86 003a 9244     		lw	s1,4(sp)
   87              		.cfi_restore 9
   88              	.LVL7:
-  89 003a 4101     		addi	sp,sp,16
+  89 003c 4101     		addi	sp,sp,16
   90              		.cfi_def_cfa_offset 0
-  91 003c 8280     		jr	ra
+  91 003e 8280     		jr	ra
   92              	.LVL8:
   93              	.L8:
   94              		.cfi_restore_state
@@ -137,38 +137,38 @@
   97              	.LBB78:
   98              	.LBB79:
   99              		.loc 1 33 0
- 100 003e 2167     		li	a4,32768
+ 100 0040 37070400 		li	a4,262144
  101              	.LBE79:
  102              	.LBE78:
  103              	.LBE84:
  104              	.LBE88:
   20:../src/uart.c **** 
  105              		.loc 1 20 0
- 106 0040 B240     		lw	ra,12(sp)
+ 106 0044 B240     		lw	ra,12(sp)
  107              		.cfi_restore 1
- 108 0042 2244     		lw	s0,8(sp)
+ 108 0046 2244     		lw	s0,8(sp)
  109              		.cfi_restore 8
  110              	.LBB89:
  111              	.LBB85:
  112              	.LBB81:
  113              	.LBB80:
  114              		.loc 1 33 0
- 115 0044 B546     		li	a3,13
- 116 0046 14CB     		sw	a3,16(a4)
+ 115 0048 B546     		li	a3,13
+ 116 004a 14CB     		sw	a3,16(a4)
  117              	.LBE80:
  118              	.LBE81:
- 119 0048 2167     		li	a4,32768
- 120 004a 1CCB     		sw	a5,16(a4)
+ 119 004c 37070400 		li	a4,262144
+ 120 0050 1CCB     		sw	a5,16(a4)
  121              	.LBE85:
  122              	.LBE89:
   20:../src/uart.c **** 
  123              		.loc 1 20 0
- 124 004c 9244     		lw	s1,4(sp)
+ 124 0052 9244     		lw	s1,4(sp)
  125              		.cfi_restore 9
  126              	.LVL9:
- 127 004e 4101     		addi	sp,sp,16
+ 127 0054 4101     		addi	sp,sp,16
  128              		.cfi_def_cfa_offset 0
- 129 0050 8280     		jr	ra
+ 129 0056 8280     		jr	ra
  130              		.cfi_endproc
  131              	.LFE11:
  133              		.section	.text.put_char,"ax",@progbits
@@ -194,33 +194,33 @@
  151 0008 2A84     		mv	s0,a0
   31:../src/uart.c **** 		put_char('\r');
  152              		.loc 1 31 0
- 153 000a 6308F500 		beq	a0,a5,.L12
+ 153 000a 6309F500 		beq	a0,a5,.L12
  154              	.LVL11:
  155              	.L10:
  156              		.loc 1 33 0
- 157 000e A167     		li	a5,32768
- 158 0010 80CB     		sw	s0,16(a5)
+ 157 000e B7070400 		li	a5,262144
+ 158 0012 80CB     		sw	s0,16(a5)
   34:../src/uart.c **** }
  159              		.loc 1 34 0
- 160 0012 B240     		lw	ra,12(sp)
+ 160 0014 B240     		lw	ra,12(sp)
  161              		.cfi_remember_state
  162              		.cfi_restore 1
- 163 0014 2244     		lw	s0,8(sp)
+ 163 0016 2244     		lw	s0,8(sp)
  164              		.cfi_restore 8
- 165 0016 4101     		addi	sp,sp,16
+ 165 0018 4101     		addi	sp,sp,16
  166              		.cfi_def_cfa_offset 0
- 167 0018 8280     		jr	ra
+ 167 001a 8280     		jr	ra
  168              	.LVL12:
  169              	.L12:
  170              		.cfi_restore_state
   32:../src/uart.c **** 	reg_uart_data = c;
  171              		.loc 1 32 0
- 172 001a 3545     		li	a0,13
+ 172 001c 3545     		li	a0,13
  173              	.LVL13:
- 174 001c 97000000 		call	put_char
+ 174 001e 97000000 		call	put_char
  174      E7800000 
  175              	.LVL14:
- 176 0024 EDB7     		j	.L10
+ 176 0026 E5B7     		j	.L10
  177              		.cfi_endproc
  178              	.LFE2:
  180              		.section	.text.print_str,"ax",@progbits
@@ -244,7 +244,7 @@
   45:../src/uart.c **** 	while (*p)
  189              		.loc 1 45 0
  190 0000 83070500 		lb	a5,0(a0)
- 191 0004 8DC3     		beqz	a5,.L13
+ 191 0004 95C3     		beqz	a5,.L13
  192              	.LBB94:
  193              	.LBB95:
   31:../src/uart.c **** 		put_char('\r');
@@ -254,51 +254,51 @@
  197              	.LBB97:
   33:../src/uart.c **** }
  198              		.loc 1 33 0
- 199 0008 2167     		li	a4,32768
- 200 000a 3546     		li	a2,13
- 201 000c 29A0     		j	.L16
+ 199 0008 37070400 		li	a4,262144
+ 200 000c 3546     		li	a2,13
+ 201 000e 29A0     		j	.L16
  202              	.LVL16:
  203              	.L15:
  204              	.LBE97:
  205              	.LBE96:
- 206 000e 1CCB     		sw	a5,16(a4)
+ 206 0010 1CCB     		sw	a5,16(a4)
  207              	.LBE95:
  208              	.LBE94:
  209              		.loc 1 45 0
- 210 0010 83070500 		lb	a5,0(a0)
+ 210 0012 83070500 		lb	a5,0(a0)
  211              	.LVL17:
- 212 0014 89CB     		beqz	a5,.L13
+ 212 0016 89CB     		beqz	a5,.L13
  213              	.L16:
   46:../src/uart.c **** 		put_char(*(p++));
  214              		.loc 1 46 0
- 215 0016 0505     		addi	a0,a0,1
+ 215 0018 0505     		addi	a0,a0,1
  216              	.LVL18:
  217              	.LBB101:
  218              	.LBB100:
   31:../src/uart.c **** 		put_char('\r');
  219              		.loc 1 31 0
- 220 0018 E39BD7FE 		bne	a5,a3,.L15
+ 220 001a E39BD7FE 		bne	a5,a3,.L15
  221              	.LVL19:
  222              	.LBB99:
  223              	.LBB98:
   33:../src/uart.c **** }
  224              		.loc 1 33 0
- 225 001c 10CB     		sw	a2,16(a4)
+ 225 001e 10CB     		sw	a2,16(a4)
  226              	.LBE98:
  227              	.LBE99:
- 228 001e 1CCB     		sw	a5,16(a4)
+ 228 0020 1CCB     		sw	a5,16(a4)
  229              	.LBE100:
  230              	.LBE101:
   45:../src/uart.c **** 		put_char(*(p++));
  231              		.loc 1 45 0
- 232 0020 83070500 		lb	a5,0(a0)
+ 232 0022 83070500 		lb	a5,0(a0)
  233              	.LVL20:
- 234 0024 EDFB     		bnez	a5,.L16
+ 234 0026 EDFB     		bnez	a5,.L16
  235              	.LVL21:
  236              	.L13:
   47:../src/uart.c **** }
  237              		.loc 1 47 0
- 238 0026 8280     		ret
+ 238 0028 8280     		ret
  239              		.cfi_endproc
  240              	.LFE3:
  242              		.section	.text.print_hex,"ax",@progbits
@@ -336,15 +336,15 @@
  260              	.LBB111:
   33:../src/uart.c **** }
  261              		.loc 1 33 0
- 262 000e 2166     		li	a2,32768
+ 262 000e 37060400 		li	a2,262144
   31:../src/uart.c **** 		put_char('\r');
  263              		.loc 1 31 0
- 264 0010 2943     		li	t1,10
+ 264 0012 2943     		li	t1,10
  265              	.LBB112:
  266              	.LBB113:
   33:../src/uart.c **** }
  267              		.loc 1 33 0
- 268 0012 354E     		li	t3,13
+ 268 0014 354E     		li	t3,13
  269              	.LBE113:
  270              	.LBE112:
  271              	.LBE111:
@@ -352,8 +352,8 @@
  273              	.LBE109:
   59:../src/uart.c **** 	{
  274              		.loc 1 59 0
- 275 0014 7D58     		li	a6,-1
- 276 0016 01A8     		j	.L25
+ 275 0016 7D58     		li	a6,-1
+ 276 0018 01A8     		j	.L25
  277              	.LVL23:
  278              	.L22:
  279              	.LBB120:
@@ -361,43 +361,43 @@
  281              	.LBB116:
   31:../src/uart.c **** 		put_char('\r');
  282              		.loc 1 31 0
- 283 0018 63876702 		beq	a5,t1,.L27
+ 283 001a 63876702 		beq	a5,t1,.L27
  284              	.L24:
   33:../src/uart.c **** }
  285              		.loc 1 33 0
- 286 001c BA85     		mv	a1,a4
+ 286 001e BA85     		mv	a1,a4
  287              	.LVL24:
- 288 001e 1CCA     		sw	a5,16(a2)
+ 288 0020 1CCA     		sw	a5,16(a2)
  289              	.LVL25:
  290              	.LBE116:
  291              	.LBE118:
  292              	.LBE120:
   59:../src/uart.c **** 	{
  293              		.loc 1 59 0
- 294 0020 7D17     		addi	a4,a4,-1
+ 294 0022 7D17     		addi	a4,a4,-1
  295              	.LVL26:
- 296 0022 63010703 		beq	a4,a6,.L28
+ 296 0024 63010703 		beq	a4,a6,.L28
  297              	.LVL27:
  298              	.L25:
  299              	.LBB121:
   61:../src/uart.c **** 		if (c == '0' && i >= digits)
  300              		.loc 1 61 0
- 301 0026 93172700 		slli	a5,a4,2
- 302 002a B357F500 		srl	a5,a0,a5
- 303 002e BD8B     		andi	a5,a5,15
- 304 0030 B697     		add	a5,a3,a5
- 305 0032 83870700 		lb	a5,0(a5)
+ 301 0028 93172700 		slli	a5,a4,2
+ 302 002c B357F500 		srl	a5,a0,a5
+ 303 0030 BD8B     		andi	a5,a5,15
+ 304 0032 B697     		add	a5,a3,a5
+ 305 0034 83870700 		lb	a5,0(a5)
  306              	.LVL28:
  307              		.loc 1 62 0
- 308 0036 E39117FF 		bne	a5,a7,.L22
+ 308 0038 E39117FF 		bne	a5,a7,.L22
  309              		.loc 1 62 0 is_stmt 0 discriminator 1
- 310 003a E341B7FE 		bgt	a1,a4,.L24
+ 310 003c E341B7FE 		bgt	a1,a4,.L24
  311              	.LBE121:
   59:../src/uart.c **** 	{
  312              		.loc 1 59 0 is_stmt 1
- 313 003e 7D17     		addi	a4,a4,-1
+ 313 0040 7D17     		addi	a4,a4,-1
  314              	.LVL29:
- 315 0040 E31307FF 		bne	a4,a6,.L25
+ 315 0042 E31307FF 		bne	a4,a6,.L25
  316              	.LVL30:
  317              	.L28:
  318              	.LBE108:
@@ -407,7 +407,7 @@
   66:../src/uart.c **** 	}
   67:../src/uart.c **** }
  319              		.loc 1 67 0
- 320 0044 8280     		ret
+ 320 0046 8280     		ret
  321              	.LVL31:
  322              	.L27:
  323              	.LBB123:
@@ -418,8 +418,8 @@
  328              	.LBB114:
   33:../src/uart.c **** }
  329              		.loc 1 33 0
- 330 0046 2328C601 		sw	t3,16(a2)
- 331 004a C9BF     		j	.L24
+ 330 0048 2328C601 		sw	t3,16(a2)
+ 331 004c C9BF     		j	.L24
  332              	.LBE114:
  333              	.LBE115:
  334              	.LBE117:
@@ -448,15 +448,15 @@
  349              	.LVL32:
   78:../src/uart.c **** 	if(0 == hex)
  350              		.loc 1 78 0
- 351 0000 11E5     		bnez	a0,.L30
+ 351 0000 19E5     		bnez	a0,.L30
  352              	.LVL33:
  353              	.LBB124:
  354              	.LBB125:
   33:../src/uart.c **** }
  355              		.loc 1 33 0
- 356 0002 A167     		li	a5,32768
- 357 0004 13070003 		li	a4,48
- 358 0008 98CB     		sw	a4,16(a5)
+ 356 0002 B7070400 		li	a5,262144
+ 357 0006 13070003 		li	a4,48
+ 358 000a 98CB     		sw	a4,16(a5)
  359              	.LBE125:
  360              	.LBE124:
   79:../src/uart.c **** 	{
@@ -469,13 +469,13 @@
   86:../src/uart.c **** 	}
   87:../src/uart.c **** }
  361              		.loc 1 87 0
- 362 000a 8280     		ret
+ 362 000c 8280     		ret
  363              	.LVL34:
  364              	.L30:
  365              	.LBB126:
  366              	.LBB127:
- 367 000c C145     		li	a1,16
- 368 000e 17030000 		tail	print_num.part.0
+ 367 000e C145     		li	a1,16
+ 368 0010 17030000 		tail	print_num.part.0
  368      67000300 
  369              	.LVL35:
  370              	.LBE127:
@@ -501,15 +501,15 @@
  383              	.LVL36:
   97:../src/uart.c **** 	if(0 == v)
  384              		.loc 1 97 0
- 385 0000 11E5     		bnez	a0,.L34
+ 385 0000 19E5     		bnez	a0,.L34
  386              	.LVL37:
  387              	.LBB128:
  388              	.LBB129:
   33:../src/uart.c **** }
  389              		.loc 1 33 0
- 390 0002 A167     		li	a5,32768
- 391 0004 13070003 		li	a4,48
- 392 0008 98CB     		sw	a4,16(a5)
+ 390 0002 B7070400 		li	a5,262144
+ 391 0006 13070003 		li	a4,48
+ 392 000a 98CB     		sw	a4,16(a5)
  393              	.LBE129:
  394              	.LBE128:
   98:../src/uart.c **** 	{
@@ -522,13 +522,13 @@
  105:../src/uart.c **** 	}
  106:../src/uart.c **** }
  395              		.loc 1 106 0
- 396 000a 8280     		ret
+ 396 000c 8280     		ret
  397              	.LVL38:
  398              	.L34:
  399              	.LBB130:
  400              	.LBB131:
- 401 000c A945     		li	a1,10
- 402 000e 17030000 		tail	print_num.part.0
+ 401 000e A945     		li	a1,10
+ 402 0010 17030000 		tail	print_num.part.0
  402      67000300 
  403              	.LVL39:
  404              	.LBE131:
@@ -586,15 +586,15 @@
  443              	.LBB133:
   97:../src/uart.c **** 	{
  444              		.loc 1 97 0
- 445 001a 35E9     		bnez	a0,.L38
+ 445 001a 25ED     		bnez	a0,.L38
  446              	.LVL43:
  447              	.LBB134:
  448              	.LBB135:
   33:../src/uart.c **** }
  449              		.loc 1 33 0
- 450 001c A167     		li	a5,32768
- 451 001e 13070003 		li	a4,48
- 452 0022 98CB     		sw	a4,16(a5)
+ 450 001c B7070400 		li	a5,262144
+ 451 0020 13070003 		li	a4,48
+ 452 0024 98CB     		sw	a4,16(a5)
  453              	.LVL44:
  454              	.L39:
  455              	.LBE135:
@@ -603,9 +603,9 @@
  458              	.LBE132:
  459              	.LBB139:
  460              	.LBB140:
- 461 0024 9307E002 		li	a5,46
- 462 0028 A164     		li	s1,32768
- 463 002a 9CC8     		sw	a5,16(s1)
+ 461 0026 9307E002 		li	a5,46
+ 462 002a B7040400 		li	s1,262144
+ 463 002e 9CC8     		sw	a5,16(s1)
  464              	.LVL45:
  465              	.LBE140:
  466              	.LBE139:
@@ -613,43 +613,43 @@
  122:../src/uart.c **** 	put_char('.');
  123:../src/uart.c **** 	flt = flt - tmpint;
  467              		.loc 1 123 0
- 468 002c 2285     		mv	a0,s0
- 469 002e 97000000 		call	__floatunsidf
+ 468 0030 2285     		mv	a0,s0
+ 469 0032 97000000 		call	__floatunsidf
  469      E7800000 
  470              	.LVL46:
- 471 0036 2A86     		mv	a2,a0
- 472 0038 AE86     		mv	a3,a1
- 473 003a 4A85     		mv	a0,s2
- 474 003c CE85     		mv	a1,s3
- 475 003e 97000000 		call	__subdf3
+ 471 003a 2A86     		mv	a2,a0
+ 472 003c AE86     		mv	a3,a1
+ 473 003e 4A85     		mv	a0,s2
+ 474 0040 CE85     		mv	a1,s3
+ 475 0042 97000000 		call	__subdf3
  475      E7800000 
  476              	.LVL47:
  124:../src/uart.c **** 	tmpint = (int)(flt * 1000000);
  477              		.loc 1 124 0
- 478 0046 B7070000 		lui	a5,%hi(.LC1)
- 479 004a 03A60700 		lw	a2,%lo(.LC1)(a5)
- 480 004e 83A64700 		lw	a3,%lo(.LC1+4)(a5)
- 481 0052 97000000 		call	__muldf3
+ 478 004a B7070000 		lui	a5,%hi(.LC1)
+ 479 004e 03A60700 		lw	a2,%lo(.LC1)(a5)
+ 480 0052 83A64700 		lw	a3,%lo(.LC1+4)(a5)
+ 481 0056 97000000 		call	__muldf3
  481      E7800000 
  482              	.LVL48:
- 483 005a 97000000 		call	__fixdfsi
+ 483 005e 97000000 		call	__fixdfsi
  483      E7800000 
  484              	.LVL49:
  485              	.LBB141:
  486              	.LBB142:
   97:../src/uart.c **** 	{
  487              		.loc 1 97 0
- 488 0062 19E9     		bnez	a0,.L40
+ 488 0066 19E9     		bnez	a0,.L40
  489              	.LVL50:
  490              	.LBE142:
  491              	.LBE141:
  125:../src/uart.c **** 	print_dec(tmpint);
  126:../src/uart.c **** }
  492              		.loc 1 126 0
- 493 0064 F240     		lw	ra,28(sp)
+ 493 0068 F240     		lw	ra,28(sp)
  494              		.cfi_remember_state
  495              		.cfi_restore 1
- 496 0066 6244     		lw	s0,24(sp)
+ 496 006a 6244     		lw	s0,24(sp)
  497              		.cfi_restore 8
  498              	.LVL51:
  499              	.LBB152:
@@ -658,53 +658,53 @@
  502              	.LBB144:
   33:../src/uart.c **** }
  503              		.loc 1 33 0
- 504 0068 93070003 		li	a5,48
- 505 006c 9CC8     		sw	a5,16(s1)
+ 504 006c 93070003 		li	a5,48
+ 505 0070 9CC8     		sw	a5,16(s1)
  506              	.LBE144:
  507              	.LBE143:
  508              	.LBE149:
  509              	.LBE152:
  510              		.loc 1 126 0
- 511 006e 4249     		lw	s2,16(sp)
+ 511 0072 4249     		lw	s2,16(sp)
  512              		.cfi_restore 18
- 513 0070 D244     		lw	s1,20(sp)
+ 513 0074 D244     		lw	s1,20(sp)
  514              		.cfi_restore 9
- 515 0072 B249     		lw	s3,12(sp)
+ 515 0076 B249     		lw	s3,12(sp)
  516              		.cfi_restore 19
- 517 0074 0561     		addi	sp,sp,32
+ 517 0078 0561     		addi	sp,sp,32
  518              		.cfi_def_cfa_offset 0
- 519 0076 8280     		jr	ra
+ 519 007a 8280     		jr	ra
  520              	.LVL52:
  521              	.L40:
  522              		.cfi_restore_state
- 523 0078 6244     		lw	s0,24(sp)
+ 523 007c 6244     		lw	s0,24(sp)
  524              		.cfi_remember_state
  525              		.cfi_restore 8
  526              	.LVL53:
- 527 007a F240     		lw	ra,28(sp)
+ 527 007e F240     		lw	ra,28(sp)
  528              		.cfi_restore 1
- 529 007c D244     		lw	s1,20(sp)
+ 529 0080 D244     		lw	s1,20(sp)
  530              		.cfi_restore 9
- 531 007e 4249     		lw	s2,16(sp)
+ 531 0082 4249     		lw	s2,16(sp)
  532              		.cfi_restore 18
- 533 0080 B249     		lw	s3,12(sp)
+ 533 0084 B249     		lw	s3,12(sp)
  534              		.cfi_restore 19
  535              	.LBB153:
  536              	.LBB150:
  537              	.LBB145:
  538              	.LBB146:
- 539 0082 A945     		li	a1,10
+ 539 0086 A945     		li	a1,10
  540              	.LBE146:
  541              	.LBE145:
  542              	.LBE150:
  543              	.LBE153:
- 544 0084 0561     		addi	sp,sp,32
+ 544 0088 0561     		addi	sp,sp,32
  545              		.cfi_def_cfa_offset 0
  546              	.LBB154:
  547              	.LBB151:
  548              	.LBB148:
  549              	.LBB147:
- 550 0086 17030000 		tail	print_num.part.0
+ 550 008a 17030000 		tail	print_num.part.0
  550      67000300 
  551              	.LVL54:
  552              	.L38:
@@ -717,11 +717,11 @@
  559              	.LBB138:
  560              	.LBB136:
  561              	.LBB137:
- 562 008e A945     		li	a1,10
- 563 0090 97000000 		call	print_num.part.0
+ 562 0092 A945     		li	a1,10
+ 563 0094 97000000 		call	print_num.part.0
  563      E7800000 
  564              	.LVL55:
- 565 0098 71B7     		j	.L39
+ 565 009c 69B7     		j	.L39
  566              	.LBE137:
  567              	.LBE136:
  568              	.LBE138:
@@ -787,7 +787,7 @@
  612 0026 3AC6     		sw	a4,12(sp)
  613              	.LVL57:
  614              		.loc 1 143 0
- 615 0028 A1C7     		beqz	a5,.L44
+ 615 0028 A9C7     		beqz	a5,.L44
  144:../src/uart.c **** 	{
  145:../src/uart.c **** 		switch(*pfmt)
  146:../src/uart.c **** 		{
@@ -806,46 +806,46 @@
  624              	.LBB197:
   33:../src/uart.c **** }
  625              		.loc 1 33 0
- 626 0032 A169     		li	s3,32768
- 627 0034 354B     		li	s6,13
+ 626 0032 B7090400 		li	s3,262144
+ 627 0036 354B     		li	s6,13
  628              	.LBE197:
  629              	.LBE196:
  630              	.LBE195:
  631              	.LBE194:
  145:../src/uart.c **** 		{
  632              		.loc 1 145 0
- 633 0036 130A5002 		li	s4,37
+ 633 0038 130A5002 		li	s4,37
  634              		.loc 1 149 0
- 635 003a 938A0A00 		addi	s5,s5,%lo(.L52)
- 636 003e 19A8     		j	.L67
+ 635 003c 938A0A00 		addi	s5,s5,%lo(.L52)
+ 636 0040 19A8     		j	.L67
  637              	.LVL58:
  638              	.L79:
  145:../src/uart.c **** 		{
  639              		.loc 1 145 0
- 640 0040 63824705 		beq	a5,s4,.L48
+ 640 0042 63824705 		beq	a5,s4,.L48
  641              	.LVL59:
  642              	.LBB201:
  643              	.LBB202:
   33:../src/uart.c **** }
  644              		.loc 1 33 0
- 645 0044 2287     		mv	a4,s0
- 646 0046 23A8F900 		sw	a5,16(s3)
- 647 004a 2684     		mv	s0,s1
- 648 004c BA84     		mv	s1,a4
+ 645 0046 2287     		mv	a4,s0
+ 646 0048 23A8F900 		sw	a5,16(s3)
+ 647 004c 2684     		mv	s0,s1
+ 648 004e BA84     		mv	s1,a4
  649              	.LVL60:
  650              	.L59:
  651              	.LBE202:
  652              	.LBE201:
  143:../src/uart.c **** 	{
  653              		.loc 1 143 0
- 654 004e 83071400 		lb	a5,1(s0)
- 655 0052 99CF     		beqz	a5,.L44
+ 654 0050 83071400 		lb	a5,1(s0)
+ 655 0054 99CF     		beqz	a5,.L44
  656              	.LVL61:
  657              	.L67:
- 658 0054 13841400 		addi	s0,s1,1
+ 658 0056 13841400 		addi	s0,s1,1
  145:../src/uart.c **** 		{
  659              		.loc 1 145 0
- 660 0058 E39427FF 		bne	a5,s2,.L79
+ 660 005a E39427FF 		bne	a5,s2,.L79
  661              	.LVL62:
  662              	.LBB203:
  663              	.LBB200:
@@ -853,21 +853,21 @@
  665              	.LBB198:
   33:../src/uart.c **** }
  666              		.loc 1 33 0
- 667 005c 23A86901 		sw	s6,16(s3)
+ 667 005e 23A86901 		sw	s6,16(s3)
  668              	.LVL63:
  669              	.LBE198:
  670              	.LBE199:
- 671 0060 A287     		mv	a5,s0
- 672 0062 23A82901 		sw	s2,16(s3)
- 673 0066 2684     		mv	s0,s1
- 674 0068 BE84     		mv	s1,a5
+ 671 0062 A287     		mv	a5,s0
+ 672 0064 23A82901 		sw	s2,16(s3)
+ 673 0068 2684     		mv	s0,s1
+ 674 006a BE84     		mv	s1,a5
  675              	.LVL64:
  676              	.LBE200:
  677              	.LBE203:
  143:../src/uart.c **** 	{
  678              		.loc 1 143 0
- 679 006a 83071400 		lb	a5,1(s0)
- 680 006e FDF3     		bnez	a5,.L67
+ 679 006c 83071400 		lb	a5,1(s0)
+ 680 0070 FDF3     		bnez	a5,.L67
  681              	.LVL65:
  682              	.L44:
  150:../src/uart.c **** 				{
@@ -923,40 +923,40 @@
  200:../src/uart.c **** 	va_end(vp);
  201:../src/uart.c **** }
  683              		.loc 1 201 0
- 684 0070 B250     		lw	ra,44(sp)
+ 684 0072 B250     		lw	ra,44(sp)
  685              		.cfi_remember_state
  686              		.cfi_restore 1
- 687 0072 2254     		lw	s0,40(sp)
+ 687 0074 2254     		lw	s0,40(sp)
  688              		.cfi_restore 8
- 689 0074 9254     		lw	s1,36(sp)
+ 689 0076 9254     		lw	s1,36(sp)
  690              		.cfi_restore 9
- 691 0076 0259     		lw	s2,32(sp)
+ 691 0078 0259     		lw	s2,32(sp)
  692              		.cfi_restore 18
- 693 0078 F249     		lw	s3,28(sp)
+ 693 007a F249     		lw	s3,28(sp)
  694              		.cfi_restore 19
- 695 007a 624A     		lw	s4,24(sp)
+ 695 007c 624A     		lw	s4,24(sp)
  696              		.cfi_restore 20
- 697 007c D24A     		lw	s5,20(sp)
+ 697 007e D24A     		lw	s5,20(sp)
  698              		.cfi_restore 21
- 699 007e 424B     		lw	s6,16(sp)
+ 699 0080 424B     		lw	s6,16(sp)
  700              		.cfi_restore 22
- 701 0080 6161     		addi	sp,sp,80
+ 701 0082 6161     		addi	sp,sp,80
  702              		.cfi_def_cfa_offset 0
- 703 0082 8280     		jr	ra
+ 703 0084 8280     		jr	ra
  704              	.LVL66:
  705              	.L48:
  706              		.cfi_restore_state
  149:../src/uart.c **** 				{
  707              		.loc 1 149 0
- 708 0084 83C71400 		lbu	a5,1(s1)
- 709 0088 13073005 		li	a4,83
- 710 008c 9387B7FD 		addi	a5,a5,-37
- 711 0090 93F7F70F 		andi	a5,a5,0xff
- 712 0094 6366F700 		bgtu	a5,a4,.L50
- 713 0098 8A07     		slli	a5,a5,2
- 714 009a D697     		add	a5,a5,s5
- 715 009c 9C43     		lw	a5,0(a5)
- 716 009e 8287     		jr	a5
+ 708 0086 83C71400 		lbu	a5,1(s1)
+ 709 008a 13073005 		li	a4,83
+ 710 008e 9387B7FD 		addi	a5,a5,-37
+ 711 0092 93F7F70F 		andi	a5,a5,0xff
+ 712 0096 6366F700 		bgtu	a5,a4,.L50
+ 713 009a 8A07     		slli	a5,a5,2
+ 714 009c D697     		add	a5,a5,s5
+ 715 009e 9C43     		lw	a5,0(a5)
+ 716 00a0 8287     		jr	a5
  717              		.section	.rodata.printk,"a",@progbits
  718              		.align	2
  719              		.align	2
@@ -1052,65 +1052,65 @@
  809              	.LBB205:
   33:../src/uart.c **** }
  810              		.loc 1 33 0
- 811 00a0 A287     		mv	a5,s0
- 812 00a2 23A84901 		sw	s4,16(s3)
- 813 00a6 2684     		mv	s0,s1
- 814 00a8 BE84     		mv	s1,a5
+ 811 00a2 A287     		mv	a5,s0
+ 812 00a4 23A84901 		sw	s4,16(s3)
+ 813 00a8 2684     		mv	s0,s1
+ 814 00aa BE84     		mv	s1,a5
  815              	.LVL68:
- 816 00aa 55B7     		j	.L59
+ 816 00ac 55B7     		j	.L59
  817              	.LVL69:
  818              	.L56:
  819              	.LBE205:
  820              	.LBE204:
  152:../src/uart.c **** 						pfmt++;
  821              		.loc 1 152 0
- 822 00ac B247     		lw	a5,12(sp)
- 823 00ae 03870700 		lb	a4,0(a5)
+ 822 00ae B247     		lw	a5,12(sp)
+ 823 00b0 03870700 		lb	a4,0(a5)
  824              	.LVL70:
- 825 00b2 9107     		addi	a5,a5,4
- 826 00b4 3EC6     		sw	a5,12(sp)
+ 825 00b4 9107     		addi	a5,a5,4
+ 826 00b6 3EC6     		sw	a5,12(sp)
  827              	.LBB206:
  828              	.LBB207:
   31:../src/uart.c **** 		put_char('\r');
  829              		.loc 1 31 0
- 830 00b6 63062709 		beq	a4,s2,.L80
+ 830 00b8 63062709 		beq	a4,s2,.L80
  831              	.L58:
   33:../src/uart.c **** }
  832              		.loc 1 33 0
- 833 00ba 23A8E900 		sw	a4,16(s3)
+ 833 00bc 23A8E900 		sw	a4,16(s3)
  834              	.LVL71:
- 835 00be 8904     		addi	s1,s1,2
+ 835 00c0 8904     		addi	s1,s1,2
  836              	.LVL72:
  837              	.LBE207:
  838              	.LBE206:
  154:../src/uart.c **** 					case 'd':
  839              		.loc 1 154 0
- 840 00c0 79B7     		j	.L59
+ 840 00c2 79B7     		j	.L59
  841              	.LVL73:
  842              	.L55:
  175:../src/uart.c **** 						pfmt++;
  843              		.loc 1 175 0
- 844 00c2 B247     		lw	a5,12(sp)
- 845 00c4 8843     		lw	a0,0(a5)
+ 844 00c4 B247     		lw	a5,12(sp)
+ 845 00c6 8843     		lw	a0,0(a5)
  846              	.LVL74:
- 847 00c6 9107     		addi	a5,a5,4
- 848 00c8 3EC6     		sw	a5,12(sp)
+ 847 00c8 9107     		addi	a5,a5,4
+ 848 00ca 3EC6     		sw	a5,12(sp)
  849              	.LBB211:
  850              	.LBB212:
   78:../src/uart.c **** 	{
  851              		.loc 1 78 0
- 852 00ca 2DE5     		bnez	a0,.L65
+ 852 00cc 2DE5     		bnez	a0,.L65
  853              	.LVL75:
  854              	.L78:
  855              	.LBB213:
  856              	.LBB214:
   33:../src/uart.c **** }
  857              		.loc 1 33 0
- 858 00cc 93070003 		li	a5,48
- 859 00d0 23A8F900 		sw	a5,16(s3)
+ 858 00ce 93070003 		li	a5,48
+ 859 00d2 23A8F900 		sw	a5,16(s3)
  860              	.LVL76:
  861              	.L66:
- 862 00d4 8904     		addi	s1,s1,2
+ 862 00d6 8904     		addi	s1,s1,2
  863              	.LVL77:
  864              	.LBE214:
  865              	.LBE213:
@@ -1118,31 +1118,31 @@
  867              	.LBE211:
  177:../src/uart.c **** 					case '%':
  868              		.loc 1 177 0
- 869 00d6 A5BF     		j	.L59
+ 869 00d8 A5BF     		j	.L59
  870              	.LVL78:
  871              	.L53:
  158:../src/uart.c **** 						pfmt++;
  872              		.loc 1 158 0
- 873 00d8 B247     		lw	a5,12(sp)
- 874 00da 8843     		lw	a0,0(a5)
+ 873 00da B247     		lw	a5,12(sp)
+ 874 00dc 8843     		lw	a0,0(a5)
  875              	.LVL79:
- 876 00dc 9107     		addi	a5,a5,4
- 877 00de 3EC6     		sw	a5,12(sp)
+ 876 00de 9107     		addi	a5,a5,4
+ 877 00e0 3EC6     		sw	a5,12(sp)
  878              	.LBB218:
  879              	.LBB219:
   97:../src/uart.c **** 	{
  880              		.loc 1 97 0
- 881 00e0 75D5     		beqz	a0,.L78
+ 881 00e2 75D5     		beqz	a0,.L78
  882              	.LVL80:
  883              	.LBB220:
  884              	.LBB221:
- 885 00e2 A945     		li	a1,10
- 886 00e4 97000000 		call	print_num.part.0
+ 885 00e4 A945     		li	a1,10
+ 886 00e6 97000000 		call	print_num.part.0
  886      E7800000 
  887              	.LVL81:
- 888 00ec 8904     		addi	s1,s1,2
+ 888 00ee 8904     		addi	s1,s1,2
  889              	.LVL82:
- 890 00ee 85B7     		j	.L59
+ 890 00f0 85B7     		j	.L59
  891              	.LVL83:
  892              	.L54:
  893              	.LBE221:
@@ -1151,54 +1151,54 @@
  896              	.LBE218:
  169:../src/uart.c **** 						pfmt++;
  897              		.loc 1 169 0
- 898 00f0 B247     		lw	a5,12(sp)
- 899 00f2 9843     		lw	a4,0(a5)
+ 898 00f2 B247     		lw	a5,12(sp)
+ 899 00f4 9843     		lw	a4,0(a5)
  900              	.LVL84:
- 901 00f4 9107     		addi	a5,a5,4
- 902 00f6 3EC6     		sw	a5,12(sp)
+ 901 00f6 9107     		addi	a5,a5,4
+ 902 00f8 3EC6     		sw	a5,12(sp)
  903              	.LBB222:
  904              	.LBB223:
   45:../src/uart.c **** 		put_char(*(p++));
  905              		.loc 1 45 0
- 906 00f8 83070700 		lb	a5,0(a4)
- 907 00fc E1DF     		beqz	a5,.L66
+ 906 00fa 83070700 		lb	a5,0(a4)
+ 907 00fe E1DF     		beqz	a5,.L66
   46:../src/uart.c **** }
  908              		.loc 1 46 0
- 909 00fe 0507     		addi	a4,a4,1
+ 909 0100 0507     		addi	a4,a4,1
  910              	.LVL85:
  911              	.LBB224:
  912              	.LBB225:
   31:../src/uart.c **** 		put_char('\r');
  913              		.loc 1 31 0
- 914 0100 638A2701 		beq	a5,s2,.L81
+ 914 0102 638A2701 		beq	a5,s2,.L81
  915              	.L63:
   33:../src/uart.c **** }
  916              		.loc 1 33 0
- 917 0104 23A8F900 		sw	a5,16(s3)
+ 917 0106 23A8F900 		sw	a5,16(s3)
  918              	.LBE225:
  919              	.LBE224:
   45:../src/uart.c **** 		put_char(*(p++));
  920              		.loc 1 45 0
- 921 0108 83070700 		lb	a5,0(a4)
+ 921 010a 83070700 		lb	a5,0(a4)
  922              	.LVL86:
- 923 010c E1D7     		beqz	a5,.L66
+ 923 010e E1D7     		beqz	a5,.L66
   46:../src/uart.c **** }
  924              		.loc 1 46 0
- 925 010e 0507     		addi	a4,a4,1
+ 925 0110 0507     		addi	a4,a4,1
  926              	.LVL87:
  927              	.LBB229:
  928              	.LBB228:
   31:../src/uart.c **** 		put_char('\r');
  929              		.loc 1 31 0
- 930 0110 E39A27FF 		bne	a5,s2,.L63
+ 930 0112 E39A27FF 		bne	a5,s2,.L63
  931              	.L81:
  932              	.LVL88:
  933              	.LBB226:
  934              	.LBB227:
   33:../src/uart.c **** }
  935              		.loc 1 33 0
- 936 0114 23A86901 		sw	s6,16(s3)
- 937 0118 F5B7     		j	.L63
+ 936 0116 23A86901 		sw	s6,16(s3)
+ 937 011a F5B7     		j	.L63
  938              	.LVL89:
  939              	.L57:
  940              	.LBE227:
@@ -1209,34 +1209,34 @@
  945              	.LBE222:
  163:../src/uart.c **** 						pfmt++;
  946              		.loc 1 163 0
- 947 011a B247     		lw	a5,12(sp)
- 948 011c 8904     		addi	s1,s1,2
+ 947 011c B247     		lw	a5,12(sp)
+ 948 011e 8904     		addi	s1,s1,2
  949              	.LVL90:
- 950 011e 9D07     		addi	a5,a5,7
- 951 0120 E19B     		andi	a5,a5,-8
- 952 0122 8843     		lw	a0,0(a5)
- 953 0124 CC43     		lw	a1,4(a5)
- 954 0126 A107     		addi	a5,a5,8
- 955 0128 3EC6     		sw	a5,12(sp)
- 956 012a 97000000 		call	print_flt
+ 950 0120 9D07     		addi	a5,a5,7
+ 951 0122 E19B     		andi	a5,a5,-8
+ 952 0124 8843     		lw	a0,0(a5)
+ 953 0126 CC43     		lw	a1,4(a5)
+ 954 0128 A107     		addi	a5,a5,8
+ 955 012a 3EC6     		sw	a5,12(sp)
+ 956 012c 97000000 		call	print_flt
  956      E7800000 
  957              	.LVL91:
  165:../src/uart.c **** 
  958              		.loc 1 165 0
- 959 0132 31BF     		j	.L59
+ 959 0134 31BF     		j	.L59
  960              	.LVL92:
  961              	.L65:
  962              	.LBB230:
  963              	.LBB217:
  964              	.LBB215:
  965              	.LBB216:
- 966 0134 C145     		li	a1,16
- 967 0136 97000000 		call	print_num.part.0
+ 966 0136 C145     		li	a1,16
+ 967 0138 97000000 		call	print_num.part.0
  967      E7800000 
  968              	.LVL93:
- 969 013e 8904     		addi	s1,s1,2
+ 969 0140 8904     		addi	s1,s1,2
  970              	.LVL94:
- 971 0140 39B7     		j	.L59
+ 971 0142 39B7     		j	.L59
  972              	.LVL95:
  973              	.L80:
  974              	.LBE216:
@@ -1249,8 +1249,8 @@
  981              	.LBB209:
   33:../src/uart.c **** }
  982              		.loc 1 33 0
- 983 0142 23A86901 		sw	s6,16(s3)
- 984 0146 95BF     		j	.L58
+ 983 0144 23A86901 		sw	s6,16(s3)
+ 984 0148 95BF     		j	.L58
  985              	.LBE209:
  986              	.LBE208:
  987              	.LBE210:
@@ -1289,14 +1289,14 @@
  217:../src/uart.c **** 	if (prompt)
  1007              		.loc 1 217 0
  1008              	 #NO_APP
- 1009 0004 15C5     		beqz	a0,.L83
+ 1009 0004 1DC5     		beqz	a0,.L83
  1010              	.LVL98:
  1011              	.LBB244:
  1012              	.LBB245:
   45:../src/uart.c **** 		put_char(*(p++));
  1013              		.loc 1 45 0
  1014 0006 83070500 		lb	a5,0(a0)
- 1015 000a 9DC3     		beqz	a5,.L83
+ 1015 000a 85C7     		beqz	a5,.L83
  1016 000c 2A87     		mv	a4,a0
  1017              	.LBB246:
  1018              	.LBB247:
@@ -1307,47 +1307,47 @@
  1022              	.LBB249:
   33:../src/uart.c **** }
  1023              		.loc 1 33 0
- 1024 0010 A166     		li	a3,32768
- 1025 0012 3548     		li	a6,13
- 1026 0014 29A0     		j	.L85
+ 1024 0010 B7060400 		li	a3,262144
+ 1025 0014 3548     		li	a6,13
+ 1026 0016 29A0     		j	.L85
  1027              	.LVL99:
  1028              	.L84:
  1029              	.LBE249:
  1030              	.LBE248:
- 1031 0016 9CCA     		sw	a5,16(a3)
+ 1031 0018 9CCA     		sw	a5,16(a3)
  1032              	.LBE247:
  1033              	.LBE246:
   45:../src/uart.c **** 		put_char(*(p++));
  1034              		.loc 1 45 0
- 1035 0018 83070700 		lb	a5,0(a4)
+ 1035 001a 83070700 		lb	a5,0(a4)
  1036              	.LVL100:
- 1037 001c 91CB     		beqz	a5,.L83
+ 1037 001e 91CB     		beqz	a5,.L83
  1038              	.L85:
   46:../src/uart.c **** }
  1039              		.loc 1 46 0
- 1040 001e 0507     		addi	a4,a4,1
+ 1040 0020 0507     		addi	a4,a4,1
  1041              	.LVL101:
  1042              	.LBB253:
  1043              	.LBB252:
   31:../src/uart.c **** 		put_char('\r');
  1044              		.loc 1 31 0
- 1045 0020 E39BC7FE 		bne	a5,a2,.L84
+ 1045 0022 E39BC7FE 		bne	a5,a2,.L84
  1046              	.LVL102:
  1047              	.LBB251:
  1048              	.LBB250:
   33:../src/uart.c **** }
  1049              		.loc 1 33 0
- 1050 0024 23A80601 		sw	a6,16(a3)
+ 1050 0026 23A80601 		sw	a6,16(a3)
  1051              	.LBE250:
  1052              	.LBE251:
- 1053 0028 9CCA     		sw	a5,16(a3)
+ 1053 002a 9CCA     		sw	a5,16(a3)
  1054              	.LBE252:
  1055              	.LBE253:
   45:../src/uart.c **** 		put_char(*(p++));
  1056              		.loc 1 45 0
- 1057 002a 83070700 		lb	a5,0(a4)
+ 1057 002c 83070700 		lb	a5,0(a4)
  1058              	.LVL103:
- 1059 002e E5FB     		bnez	a5,.L85
+ 1059 0030 E5FB     		bnez	a5,.L85
  1060              	.LVL104:
  1061              	.L83:
  1062              	.LBE245:
@@ -1360,21 +1360,21 @@
  223:../src/uart.c **** 		cycles = cycles_now - cycles_begin;
  224:../src/uart.c **** 		if (cycles > 12000000)
  1064              		.loc 1 224 0
- 1065 0030 B728B700 		li	a7,12001280
- 1066 0034 938808B0 		addi	a7,a7,-1280
+ 1065 0032 B728B700 		li	a7,12001280
+ 1066 0036 938808B0 		addi	a7,a7,-1280
  1067              	.LBB254:
  1068              	.LBB255:
  1069              	.LBB256:
  1070              	.LBB257:
   31:../src/uart.c **** 		put_char('\r');
  1071              		.loc 1 31 0
- 1072 0038 2948     		li	a6,10
+ 1072 003a 2948     		li	a6,10
  1073              	.LBB258:
  1074              	.LBB259:
   33:../src/uart.c **** }
  1075              		.loc 1 33 0
- 1076 003a A166     		li	a3,32768
- 1077 003c 354E     		li	t3,13
+ 1076 003c B7060400 		li	a3,262144
+ 1077 0040 354E     		li	t3,13
  1078              	.LBE259:
  1079              	.LBE258:
  1080              	.LBE257:
@@ -1383,7 +1383,7 @@
  1083              	.LBE254:
  220:../src/uart.c **** 	{
  1084              		.loc 1 220 0
- 1085 003e 7D53     		li	t1,-1
+ 1085 0042 7D53     		li	t1,-1
  1086              	.LVL105:
  1087              	.L89:
  222:../src/uart.c **** 		cycles = cycles_now - cycles_begin;
@@ -1396,10 +1396,10 @@
  223:../src/uart.c **** 		if (cycles > 12000000)
  1094              		.loc 1 223 0
  1095              	 #NO_APP
- 1096 0044 B307B640 		sub	a5,a2,a1
+ 1096 0048 B307B640 		sub	a5,a2,a1
  1097              	.LVL107:
  1098              		.loc 1 224 0
- 1099 0048 63F7F802 		bleu	a5,a7,.L86
+ 1099 004c 63F7F802 		bleu	a5,a7,.L86
  225:../src/uart.c **** 		{
  226:../src/uart.c **** 			if (prompt)
  227:../src/uart.c **** 			{
@@ -1407,86 +1407,86 @@
  229:../src/uart.c **** 			}
  230:../src/uart.c **** 			cycles_begin = cycles_now;
  1100              		.loc 1 230 0
- 1101 004c B285     		mv	a1,a2
+ 1101 0050 B285     		mv	a1,a2
  1102              	.LVL108:
  226:../src/uart.c **** 			{
  1103              		.loc 1 226 0
- 1104 004e 05C5     		beqz	a0,.L86
+ 1104 0052 05C5     		beqz	a0,.L86
  1105              	.LVL109:
  1106              	.LBB267:
  1107              	.LBB266:
   45:../src/uart.c **** 		put_char(*(p++));
  1108              		.loc 1 45 0
- 1109 0050 83070500 		lb	a5,0(a0)
+ 1109 0054 83070500 		lb	a5,0(a0)
  1110              	.LVL110:
- 1111 0054 8DC3     		beqz	a5,.L86
- 1112 0056 2A87     		mv	a4,a0
- 1113 0058 29A0     		j	.L88
+ 1111 0058 8DC3     		beqz	a5,.L86
+ 1112 005a 2A87     		mv	a4,a0
+ 1113 005c 29A0     		j	.L88
  1114              	.LVL111:
  1115              	.L87:
  1116              	.LBB264:
  1117              	.LBB262:
   33:../src/uart.c **** }
  1118              		.loc 1 33 0
- 1119 005a 9CCA     		sw	a5,16(a3)
+ 1119 005e 9CCA     		sw	a5,16(a3)
  1120              	.LBE262:
  1121              	.LBE264:
   45:../src/uart.c **** 		put_char(*(p++));
  1122              		.loc 1 45 0
- 1123 005c 83070700 		lb	a5,0(a4)
+ 1123 0060 83070700 		lb	a5,0(a4)
  1124              	.LVL112:
- 1125 0060 91CB     		beqz	a5,.L102
+ 1125 0064 91CB     		beqz	a5,.L102
  1126              	.L88:
   46:../src/uart.c **** }
  1127              		.loc 1 46 0
- 1128 0062 0507     		addi	a4,a4,1
+ 1128 0066 0507     		addi	a4,a4,1
  1129              	.LVL113:
  1130              	.LBB265:
  1131              	.LBB263:
   31:../src/uart.c **** 		put_char('\r');
  1132              		.loc 1 31 0
- 1133 0064 E39B07FF 		bne	a5,a6,.L87
+ 1133 0068 E39B07FF 		bne	a5,a6,.L87
  1134              	.LVL114:
  1135              	.LBB261:
  1136              	.LBB260:
   33:../src/uart.c **** }
  1137              		.loc 1 33 0
- 1138 0068 23A8C601 		sw	t3,16(a3)
+ 1138 006c 23A8C601 		sw	t3,16(a3)
  1139              	.LBE260:
  1140              	.LBE261:
- 1141 006c 9CCA     		sw	a5,16(a3)
+ 1141 0070 9CCA     		sw	a5,16(a3)
  1142              	.LBE263:
  1143              	.LBE265:
   45:../src/uart.c **** 		put_char(*(p++));
  1144              		.loc 1 45 0
- 1145 006e 83070700 		lb	a5,0(a4)
+ 1145 0072 83070700 		lb	a5,0(a4)
  1146              	.LVL115:
- 1147 0072 E5FB     		bnez	a5,.L88
+ 1147 0076 E5FB     		bnez	a5,.L88
  1148              	.LVL116:
  1149              	.L102:
  1150              	.LBE266:
  1151              	.LBE267:
  1152              		.loc 1 230 0
- 1153 0074 B285     		mv	a1,a2
+ 1153 0078 B285     		mv	a1,a2
  1154              	.LVL117:
  1155              	.L86:
  231:../src/uart.c **** 		}
  232:../src/uart.c **** 		c = reg_uart_data;
  1156              		.loc 1 232 0
- 1157 0076 9C4A     		lw	a5,16(a3)
+ 1157 007a 9C4A     		lw	a5,16(a3)
  1158              	.LVL118:
  220:../src/uart.c **** 	{
  1159              		.loc 1 220 0
- 1160 0078 E38467FC 		beq	a5,t1,.L89
+ 1160 007c E38467FC 		beq	a5,t1,.L89
  233:../src/uart.c **** 	}
  234:../src/uart.c **** 
  235:../src/uart.c **** 	return c;
  236:../src/uart.c **** }
  1161              		.loc 1 236 0
- 1162 007c 13958701 		slli	a0,a5,24
+ 1162 0080 13958701 		slli	a0,a5,24
  1163              	.LVL119:
- 1164 0080 6185     		srai	a0,a0,24
- 1165 0082 8280     		ret
+ 1164 0084 6185     		srai	a0,a0,24
+ 1165 0086 8280     		ret
  1166              		.cfi_endproc
  1167              	.LFE9:
  1169              		.section	.text.get_char,"ax",@progbits
@@ -1534,7 +1534,7 @@
  1197              	.LBB278:
   31:../src/uart.c **** 		put_char('\r');
  1198              		.loc 1 31 0
- 1199 0012 6307E500 		beq	a0,a4,.L106
+ 1199 0012 6308E500 		beq	a0,a4,.L106
  1200              	.LBE278:
  1201              	.LBE282:
  249:../src/uart.c **** }
@@ -1546,15 +1546,15 @@
  1207              	.LBB279:
   33:../src/uart.c **** }
  1208              		.loc 1 33 0
- 1209 0018 2167     		li	a4,32768
- 1210 001a 1CCB     		sw	a5,16(a4)
+ 1209 0018 37070400 		li	a4,262144
+ 1210 001c 1CCB     		sw	a5,16(a4)
  1211              	.LVL122:
  1212              	.LBE279:
  1213              	.LBE283:
  1214              		.loc 1 249 0
- 1215 001c 4101     		addi	sp,sp,16
+ 1215 001e 4101     		addi	sp,sp,16
  1216              		.cfi_def_cfa_offset 0
- 1217 001e 8280     		jr	ra
+ 1217 0020 8280     		jr	ra
  1218              	.LVL123:
  1219              	.L106:
  1220              		.cfi_restore_state
@@ -1564,13 +1564,13 @@
  1224              	.LBB275:
   33:../src/uart.c **** }
  1225              		.loc 1 33 0
- 1226 0020 2167     		li	a4,32768
+ 1226 0022 37070400 		li	a4,262144
  1227              	.LBE275:
  1228              	.LBE274:
  1229              	.LBE280:
  1230              	.LBE284:
  1231              		.loc 1 249 0
- 1232 0022 B240     		lw	ra,12(sp)
+ 1232 0026 B240     		lw	ra,12(sp)
  1233              		.cfi_restore 1
  1234              	.LBB285:
  1235              	.LBB281:
@@ -1578,19 +1578,19 @@
  1237              	.LBB276:
   33:../src/uart.c **** }
  1238              		.loc 1 33 0
- 1239 0024 B546     		li	a3,13
- 1240 0026 14CB     		sw	a3,16(a4)
+ 1239 0028 B546     		li	a3,13
+ 1240 002a 14CB     		sw	a3,16(a4)
  1241              	.LBE276:
  1242              	.LBE277:
- 1243 0028 2167     		li	a4,32768
- 1244 002a 1CCB     		sw	a5,16(a4)
+ 1243 002c 37070400 		li	a4,262144
+ 1244 0030 1CCB     		sw	a5,16(a4)
  1245              	.LVL124:
  1246              	.LBE281:
  1247              	.LBE285:
  1248              		.loc 1 249 0
- 1249 002c 4101     		addi	sp,sp,16
+ 1249 0032 4101     		addi	sp,sp,16
  1250              		.cfi_def_cfa_offset 0
- 1251 002e 8280     		jr	ra
+ 1251 0034 8280     		jr	ra
  1252              		.cfi_endproc
  1253              	.LFE10:
  1255              		.section	.rodata.print_flt.cst8,"aM",@progbits,8
@@ -1618,824 +1618,824 @@
  1273              		.file 9 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 uart.c
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:10     .text.print_num:0000000000000000 print_num
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:14     .text.print_num:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:16     .text.print_num:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:17     .text.print_num:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:19     .text.print_num:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:29     .text.print_num.part.0:0000000000000000 print_num.part.0
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:23     .text.print_num:000000000000000c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:32     .text.print_num.part.0:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:34     .text.print_num.part.0:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:35     .text.print_num.part.0:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:37     .text.print_num.part.0:0000000000000004 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:40     .text.print_num.part.0:0000000000000006 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:43     .text.print_num.part.0:000000000000000a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:44     .text.print_num.part.0:000000000000000c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:47     .text.print_num.part.0:0000000000000010 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:49     .text.print_num.part.0:0000000000000010 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:52     .text.print_num.part.0:0000000000000018 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:59     .text.print_num.part.0:0000000000000024 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:63     .text.print_num.part.0:0000000000000026 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:69     .text.print_num.part.0:000000000000002c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:73     .text.print_num.part.0:0000000000000030 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:74     .text.print_num.part.0:0000000000000032 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:75     .text.print_num.part.0:0000000000000032 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:77     .text.print_num.part.0:0000000000000034 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:81     .text.print_num.part.0:0000000000000034 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:86     .text.print_num.part.0:0000000000000038 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:87     .text.print_num.part.0:000000000000003a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:90     .text.print_num.part.0:000000000000003c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:94     .text.print_num.part.0:000000000000003e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:100    .text.print_num.part.0:000000000000003e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:106    .text.print_num.part.0:0000000000000040 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:107    .text.print_num.part.0:0000000000000042 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:109    .text.print_num.part.0:0000000000000044 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:115    .text.print_num.part.0:0000000000000044 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:124    .text.print_num.part.0:000000000000004c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:125    .text.print_num.part.0:000000000000004e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:128    .text.print_num.part.0:0000000000000050 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:130    .text.print_num.part.0:0000000000000052 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:137    .text.put_char:0000000000000000 put_char
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:140    .text.put_char:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:142    .text.put_char:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:143    .text.put_char:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:146    .text.put_char:0000000000000006 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:147    .text.put_char:0000000000000006 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:149    .text.put_char:0000000000000006 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:151    .text.put_char:0000000000000008 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:153    .text.put_char:000000000000000a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:157    .text.put_char:000000000000000e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:160    .text.put_char:0000000000000012 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:161    .text.put_char:0000000000000014 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:162    .text.put_char:0000000000000014 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:164    .text.put_char:0000000000000016 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:166    .text.put_char:0000000000000018 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:170    .text.put_char:000000000000001a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:172    .text.put_char:000000000000001a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:177    .text.put_char:0000000000000026 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:184    .text.print_str:0000000000000000 print_str
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:187    .text.print_str:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:189    .text.print_str:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:190    .text.print_str:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:195    .text.print_str:0000000000000006 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:199    .text.print_str:0000000000000008 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:210    .text.print_str:0000000000000010 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:215    .text.print_str:0000000000000016 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:220    .text.print_str:0000000000000018 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:225    .text.print_str:000000000000001c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:232    .text.print_str:0000000000000020 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:238    .text.print_str:0000000000000026 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:239    .text.print_str:0000000000000028 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:246    .text.print_hex:0000000000000000 print_hex
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:249    .text.print_hex:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:251    .text.print_hex:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:254    .text.print_hex:0000000000000004 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:258    .text.print_hex:000000000000000a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:262    .text.print_hex:000000000000000e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:264    .text.print_hex:0000000000000010 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:268    .text.print_hex:0000000000000012 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:275    .text.print_hex:0000000000000014 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:283    .text.print_hex:0000000000000018 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:286    .text.print_hex:000000000000001c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:294    .text.print_hex:0000000000000020 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:301    .text.print_hex:0000000000000026 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:308    .text.print_hex:0000000000000036 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:310    .text.print_hex:000000000000003a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:313    .text.print_hex:000000000000003e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:320    .text.print_hex:0000000000000044 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:330    .text.print_hex:0000000000000046 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:338    .text.print_hex:000000000000004c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:345    .text.print_hex2:0000000000000000 print_hex2
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:348    .text.print_hex2:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:350    .text.print_hex2:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:351    .text.print_hex2:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:356    .text.print_hex2:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:362    .text.print_hex2:000000000000000a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:372    .text.print_hex2:0000000000000016 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:379    .text.print_dec:0000000000000000 print_dec
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:382    .text.print_dec:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:384    .text.print_dec:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:385    .text.print_dec:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:390    .text.print_dec:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:396    .text.print_dec:000000000000000a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:406    .text.print_dec:0000000000000016 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:417    .text.print_flt:0000000000000000 print_flt
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:420    .text.print_flt:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:422    .text.print_flt:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:423    .text.print_flt:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:429    .text.print_flt:000000000000000c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:430    .text.print_flt:000000000000000c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:431    .text.print_flt:000000000000000c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:432    .text.print_flt:000000000000000c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:433    .text.print_flt:000000000000000c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:435    .text.print_flt:000000000000000c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:438    .text.print_flt:0000000000000010 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:445    .text.print_flt:000000000000001a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:450    .text.print_flt:000000000000001c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:468    .text.print_flt:000000000000002c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:478    .text.print_flt:0000000000000046 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:488    .text.print_flt:0000000000000062 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:493    .text.print_flt:0000000000000064 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:494    .text.print_flt:0000000000000066 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:495    .text.print_flt:0000000000000066 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:497    .text.print_flt:0000000000000068 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:504    .text.print_flt:0000000000000068 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:511    .text.print_flt:000000000000006e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:512    .text.print_flt:0000000000000070 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:514    .text.print_flt:0000000000000072 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:516    .text.print_flt:0000000000000074 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:518    .text.print_flt:0000000000000076 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:522    .text.print_flt:0000000000000078 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:524    .text.print_flt:000000000000007a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:525    .text.print_flt:000000000000007a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:528    .text.print_flt:000000000000007c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:530    .text.print_flt:000000000000007e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:532    .text.print_flt:0000000000000080 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:534    .text.print_flt:0000000000000082 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:545    .text.print_flt:0000000000000086 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:553    .text.print_flt:000000000000008e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:570    .text.print_flt:000000000000009a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:577    .text.printk:0000000000000000 printk
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:580    .text.printk:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:582    .text.printk:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:583    .text.printk:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:593    .text.printk:0000000000000014 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:594    .text.printk:0000000000000014 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:595    .text.printk:0000000000000014 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:596    .text.printk:0000000000000014 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:597    .text.printk:0000000000000014 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:598    .text.printk:0000000000000014 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:599    .text.printk:0000000000000014 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:600    .text.printk:0000000000000014 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:602    .text.printk:0000000000000014 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:609    .text.printk:0000000000000020 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:611    .text.printk:0000000000000024 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:615    .text.printk:0000000000000028 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:617    .text.printk:000000000000002a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:620    .text.printk:0000000000000030 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:626    .text.printk:0000000000000032 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:633    .text.printk:0000000000000036 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:635    .text.printk:000000000000003a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:640    .text.printk:0000000000000040 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:645    .text.printk:0000000000000044 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:654    .text.printk:000000000000004e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:660    .text.printk:0000000000000058 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:667    .text.printk:000000000000005c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:679    .text.printk:000000000000006a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:684    .text.printk:0000000000000070 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:685    .text.printk:0000000000000072 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:686    .text.printk:0000000000000072 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:688    .text.printk:0000000000000074 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:690    .text.printk:0000000000000076 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:692    .text.printk:0000000000000078 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:694    .text.printk:000000000000007a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:696    .text.printk:000000000000007c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:698    .text.printk:000000000000007e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:700    .text.printk:0000000000000080 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:702    .text.printk:0000000000000082 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:706    .text.printk:0000000000000084 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:708    .text.printk:0000000000000084 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:811    .text.printk:00000000000000a0 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:822    .text.printk:00000000000000ac .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:830    .text.printk:00000000000000b6 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:833    .text.printk:00000000000000ba .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:840    .text.printk:00000000000000c0 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:844    .text.printk:00000000000000c2 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:852    .text.printk:00000000000000ca .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:858    .text.printk:00000000000000cc .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:869    .text.printk:00000000000000d6 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:873    .text.printk:00000000000000d8 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:881    .text.printk:00000000000000e0 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:898    .text.printk:00000000000000f0 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:906    .text.printk:00000000000000f8 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:909    .text.printk:00000000000000fe .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:914    .text.printk:0000000000000100 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:917    .text.printk:0000000000000104 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:921    .text.printk:0000000000000108 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:925    .text.printk:000000000000010e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:930    .text.printk:0000000000000110 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:936    .text.printk:0000000000000114 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:947    .text.printk:000000000000011a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:959    .text.printk:0000000000000132 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:983    .text.printk:0000000000000142 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:989    .text.printk:0000000000000148 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:996    .text.getchar_prompt:0000000000000000 getchar_prompt
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:999    .text.getchar_prompt:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1001   .text.getchar_prompt:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:10     .text.print_num:0000000000000000 print_num
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:14     .text.print_num:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:16     .text.print_num:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:17     .text.print_num:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:19     .text.print_num:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:29     .text.print_num.part.0:0000000000000000 print_num.part.0
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:23     .text.print_num:000000000000000c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:32     .text.print_num.part.0:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:34     .text.print_num.part.0:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:35     .text.print_num.part.0:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:37     .text.print_num.part.0:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:40     .text.print_num.part.0:0000000000000006 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:43     .text.print_num.part.0:000000000000000a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:44     .text.print_num.part.0:000000000000000c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:47     .text.print_num.part.0:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:49     .text.print_num.part.0:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:52     .text.print_num.part.0:0000000000000018 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:59     .text.print_num.part.0:0000000000000024 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:63     .text.print_num.part.0:0000000000000026 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:69     .text.print_num.part.0:000000000000002c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:73     .text.print_num.part.0:0000000000000030 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:74     .text.print_num.part.0:0000000000000032 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:75     .text.print_num.part.0:0000000000000032 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:77     .text.print_num.part.0:0000000000000034 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:81     .text.print_num.part.0:0000000000000034 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:86     .text.print_num.part.0:000000000000003a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:87     .text.print_num.part.0:000000000000003c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:90     .text.print_num.part.0:000000000000003e .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:94     .text.print_num.part.0:0000000000000040 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:100    .text.print_num.part.0:0000000000000040 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:106    .text.print_num.part.0:0000000000000044 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:107    .text.print_num.part.0:0000000000000046 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:109    .text.print_num.part.0:0000000000000048 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:115    .text.print_num.part.0:0000000000000048 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:124    .text.print_num.part.0:0000000000000052 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:125    .text.print_num.part.0:0000000000000054 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:128    .text.print_num.part.0:0000000000000056 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:130    .text.print_num.part.0:0000000000000058 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:137    .text.put_char:0000000000000000 put_char
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:140    .text.put_char:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:142    .text.put_char:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:143    .text.put_char:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:146    .text.put_char:0000000000000006 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:147    .text.put_char:0000000000000006 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:149    .text.put_char:0000000000000006 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:151    .text.put_char:0000000000000008 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:153    .text.put_char:000000000000000a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:157    .text.put_char:000000000000000e .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:160    .text.put_char:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:161    .text.put_char:0000000000000016 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:162    .text.put_char:0000000000000016 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:164    .text.put_char:0000000000000018 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:166    .text.put_char:000000000000001a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:170    .text.put_char:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:172    .text.put_char:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:177    .text.put_char:0000000000000028 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:184    .text.print_str:0000000000000000 print_str
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:187    .text.print_str:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:189    .text.print_str:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:190    .text.print_str:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:195    .text.print_str:0000000000000006 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:199    .text.print_str:0000000000000008 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:210    .text.print_str:0000000000000012 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:215    .text.print_str:0000000000000018 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:220    .text.print_str:000000000000001a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:225    .text.print_str:000000000000001e .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:232    .text.print_str:0000000000000022 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:238    .text.print_str:0000000000000028 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:239    .text.print_str:000000000000002a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:246    .text.print_hex:0000000000000000 print_hex
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:249    .text.print_hex:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:251    .text.print_hex:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:254    .text.print_hex:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:258    .text.print_hex:000000000000000a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:262    .text.print_hex:000000000000000e .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:264    .text.print_hex:0000000000000012 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:268    .text.print_hex:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:275    .text.print_hex:0000000000000016 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:283    .text.print_hex:000000000000001a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:286    .text.print_hex:000000000000001e .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:294    .text.print_hex:0000000000000022 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:301    .text.print_hex:0000000000000028 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:308    .text.print_hex:0000000000000038 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:310    .text.print_hex:000000000000003c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:313    .text.print_hex:0000000000000040 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:320    .text.print_hex:0000000000000046 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:330    .text.print_hex:0000000000000048 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:338    .text.print_hex:000000000000004e .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:345    .text.print_hex2:0000000000000000 print_hex2
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:348    .text.print_hex2:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:350    .text.print_hex2:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:351    .text.print_hex2:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:356    .text.print_hex2:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:362    .text.print_hex2:000000000000000c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:372    .text.print_hex2:0000000000000018 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:379    .text.print_dec:0000000000000000 print_dec
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:382    .text.print_dec:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:384    .text.print_dec:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:385    .text.print_dec:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:390    .text.print_dec:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:396    .text.print_dec:000000000000000c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:406    .text.print_dec:0000000000000018 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:417    .text.print_flt:0000000000000000 print_flt
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:420    .text.print_flt:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:422    .text.print_flt:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:423    .text.print_flt:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:429    .text.print_flt:000000000000000c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:430    .text.print_flt:000000000000000c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:431    .text.print_flt:000000000000000c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:432    .text.print_flt:000000000000000c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:433    .text.print_flt:000000000000000c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:435    .text.print_flt:000000000000000c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:438    .text.print_flt:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:445    .text.print_flt:000000000000001a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:450    .text.print_flt:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:468    .text.print_flt:0000000000000030 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:478    .text.print_flt:000000000000004a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:488    .text.print_flt:0000000000000066 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:493    .text.print_flt:0000000000000068 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:494    .text.print_flt:000000000000006a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:495    .text.print_flt:000000000000006a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:497    .text.print_flt:000000000000006c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:504    .text.print_flt:000000000000006c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:511    .text.print_flt:0000000000000072 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:512    .text.print_flt:0000000000000074 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:514    .text.print_flt:0000000000000076 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:516    .text.print_flt:0000000000000078 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:518    .text.print_flt:000000000000007a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:522    .text.print_flt:000000000000007c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:524    .text.print_flt:000000000000007e .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:525    .text.print_flt:000000000000007e .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:528    .text.print_flt:0000000000000080 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:530    .text.print_flt:0000000000000082 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:532    .text.print_flt:0000000000000084 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:534    .text.print_flt:0000000000000086 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:545    .text.print_flt:000000000000008a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:553    .text.print_flt:0000000000000092 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:570    .text.print_flt:000000000000009e .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:577    .text.printk:0000000000000000 printk
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:580    .text.printk:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:582    .text.printk:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:583    .text.printk:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:593    .text.printk:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:594    .text.printk:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:595    .text.printk:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:596    .text.printk:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:597    .text.printk:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:598    .text.printk:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:599    .text.printk:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:600    .text.printk:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:602    .text.printk:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:609    .text.printk:0000000000000020 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:611    .text.printk:0000000000000024 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:615    .text.printk:0000000000000028 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:617    .text.printk:000000000000002a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:620    .text.printk:0000000000000030 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:626    .text.printk:0000000000000032 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:633    .text.printk:0000000000000038 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:635    .text.printk:000000000000003c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:640    .text.printk:0000000000000042 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:645    .text.printk:0000000000000046 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:654    .text.printk:0000000000000050 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:660    .text.printk:000000000000005a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:667    .text.printk:000000000000005e .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:679    .text.printk:000000000000006c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:684    .text.printk:0000000000000072 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:685    .text.printk:0000000000000074 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:686    .text.printk:0000000000000074 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:688    .text.printk:0000000000000076 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:690    .text.printk:0000000000000078 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:692    .text.printk:000000000000007a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:694    .text.printk:000000000000007c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:696    .text.printk:000000000000007e .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:698    .text.printk:0000000000000080 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:700    .text.printk:0000000000000082 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:702    .text.printk:0000000000000084 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:706    .text.printk:0000000000000086 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:708    .text.printk:0000000000000086 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:811    .text.printk:00000000000000a2 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:822    .text.printk:00000000000000ae .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:830    .text.printk:00000000000000b8 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:833    .text.printk:00000000000000bc .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:840    .text.printk:00000000000000c2 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:844    .text.printk:00000000000000c4 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:852    .text.printk:00000000000000cc .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:858    .text.printk:00000000000000ce .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:869    .text.printk:00000000000000d8 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:873    .text.printk:00000000000000da .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:881    .text.printk:00000000000000e2 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:898    .text.printk:00000000000000f2 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:906    .text.printk:00000000000000fa .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:909    .text.printk:0000000000000100 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:914    .text.printk:0000000000000102 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:917    .text.printk:0000000000000106 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:921    .text.printk:000000000000010a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:925    .text.printk:0000000000000110 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:930    .text.printk:0000000000000112 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:936    .text.printk:0000000000000116 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:947    .text.printk:000000000000011c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:959    .text.printk:0000000000000134 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:983    .text.printk:0000000000000144 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:989    .text.printk:000000000000014a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:996    .text.getchar_prompt:0000000000000000 getchar_prompt
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:999    .text.getchar_prompt:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1001   .text.getchar_prompt:0000000000000000 .L0 
        ../src/uart.c:215    .text.getchar_prompt:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1009   .text.getchar_prompt:0000000000000004 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1014   .text.getchar_prompt:0000000000000006 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1020   .text.getchar_prompt:000000000000000e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1024   .text.getchar_prompt:0000000000000010 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1035   .text.getchar_prompt:0000000000000018 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1040   .text.getchar_prompt:000000000000001e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1045   .text.getchar_prompt:0000000000000020 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1050   .text.getchar_prompt:0000000000000024 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1057   .text.getchar_prompt:000000000000002a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1065   .text.getchar_prompt:0000000000000030 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1072   .text.getchar_prompt:0000000000000038 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1076   .text.getchar_prompt:000000000000003a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1085   .text.getchar_prompt:000000000000003e .L0 
-       ../src/uart.c:222    .text.getchar_prompt:0000000000000040 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1096   .text.getchar_prompt:0000000000000044 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1099   .text.getchar_prompt:0000000000000048 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1101   .text.getchar_prompt:000000000000004c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1104   .text.getchar_prompt:000000000000004e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1109   .text.getchar_prompt:0000000000000050 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1119   .text.getchar_prompt:000000000000005a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1123   .text.getchar_prompt:000000000000005c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1128   .text.getchar_prompt:0000000000000062 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1133   .text.getchar_prompt:0000000000000064 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1138   .text.getchar_prompt:0000000000000068 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1145   .text.getchar_prompt:000000000000006e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1153   .text.getchar_prompt:0000000000000074 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1157   .text.getchar_prompt:0000000000000076 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1160   .text.getchar_prompt:0000000000000078 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1162   .text.getchar_prompt:000000000000007c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1166   .text.getchar_prompt:0000000000000084 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1173   .text.get_char:0000000000000000 get_char
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1176   .text.get_char:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1177   .text.get_char:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1178   .text.get_char:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1180   .text.get_char:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1182   .text.get_char:0000000000000004 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1183   .text.get_char:0000000000000006 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1185   .text.get_char:0000000000000006 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1190   .text.get_char:000000000000000e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1194   .text.get_char:0000000000000010 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1199   .text.get_char:0000000000000012 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1203   .text.get_char:0000000000000016 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1204   .text.get_char:0000000000000018 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1205   .text.get_char:0000000000000018 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1209   .text.get_char:0000000000000018 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1215   .text.get_char:000000000000001c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1216   .text.get_char:000000000000001e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1220   .text.get_char:0000000000000020 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1226   .text.get_char:0000000000000020 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1232   .text.get_char:0000000000000022 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1233   .text.get_char:0000000000000024 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1239   .text.get_char:0000000000000024 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1249   .text.get_char:000000000000002c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1250   .text.get_char:000000000000002e .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1252   .text.get_char:0000000000000030 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:26     .text.print_num:000000000000000c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:133    .text.print_num.part.0:0000000000000052 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:180    .text.put_char:0000000000000026 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:242    .text.print_str:0000000000000028 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:341    .text.print_hex:000000000000004c .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:375    .text.print_hex2:0000000000000016 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:413    .text.print_dec:0000000000000016 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:573    .text.print_flt:000000000000009a .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:992    .text.printk:0000000000000148 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1169   .text.getchar_prompt:0000000000000084 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1255   .text.get_char:0000000000000030 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1009   .text.getchar_prompt:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1014   .text.getchar_prompt:0000000000000006 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1020   .text.getchar_prompt:000000000000000e .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1024   .text.getchar_prompt:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1035   .text.getchar_prompt:000000000000001a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1040   .text.getchar_prompt:0000000000000020 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1045   .text.getchar_prompt:0000000000000022 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1050   .text.getchar_prompt:0000000000000026 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1057   .text.getchar_prompt:000000000000002c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1065   .text.getchar_prompt:0000000000000032 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1072   .text.getchar_prompt:000000000000003a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1076   .text.getchar_prompt:000000000000003c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1085   .text.getchar_prompt:0000000000000042 .L0 
+       ../src/uart.c:222    .text.getchar_prompt:0000000000000044 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1096   .text.getchar_prompt:0000000000000048 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1099   .text.getchar_prompt:000000000000004c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1101   .text.getchar_prompt:0000000000000050 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1104   .text.getchar_prompt:0000000000000052 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1109   .text.getchar_prompt:0000000000000054 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1119   .text.getchar_prompt:000000000000005e .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1123   .text.getchar_prompt:0000000000000060 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1128   .text.getchar_prompt:0000000000000066 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1133   .text.getchar_prompt:0000000000000068 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1138   .text.getchar_prompt:000000000000006c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1145   .text.getchar_prompt:0000000000000072 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1153   .text.getchar_prompt:0000000000000078 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1157   .text.getchar_prompt:000000000000007a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1160   .text.getchar_prompt:000000000000007c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1162   .text.getchar_prompt:0000000000000080 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1166   .text.getchar_prompt:0000000000000088 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1173   .text.get_char:0000000000000000 get_char
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1176   .text.get_char:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1177   .text.get_char:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1178   .text.get_char:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1180   .text.get_char:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1182   .text.get_char:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1183   .text.get_char:0000000000000006 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1185   .text.get_char:0000000000000006 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1190   .text.get_char:000000000000000e .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1194   .text.get_char:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1199   .text.get_char:0000000000000012 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1203   .text.get_char:0000000000000016 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1204   .text.get_char:0000000000000018 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1205   .text.get_char:0000000000000018 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1209   .text.get_char:0000000000000018 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1215   .text.get_char:000000000000001e .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1216   .text.get_char:0000000000000020 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1220   .text.get_char:0000000000000022 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1226   .text.get_char:0000000000000022 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1232   .text.get_char:0000000000000026 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1233   .text.get_char:0000000000000028 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1239   .text.get_char:0000000000000028 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1249   .text.get_char:0000000000000032 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1250   .text.get_char:0000000000000034 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1252   .text.get_char:0000000000000036 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:26     .text.print_num:000000000000000c .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:133    .text.print_num.part.0:0000000000000058 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:180    .text.put_char:0000000000000028 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:242    .text.print_str:000000000000002a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:341    .text.print_hex:000000000000004e .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:375    .text.print_hex2:0000000000000018 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:413    .text.print_dec:0000000000000018 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:573    .text.print_flt:000000000000009e .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:992    .text.printk:000000000000014a .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1169   .text.getchar_prompt:0000000000000088 .L0 
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1255   .text.get_char:0000000000000036 .L0 
                      .debug_frame:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:20     .text.print_num:0000000000000004 .L4
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1262   .rodata.print_num.part.0.str1.4:0000000000000000 .LC0
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:93     .text.print_num.part.0:000000000000003e .L8
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:169    .text.put_char:000000000000001a .L12
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:155    .text.put_char:000000000000000e .L10
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:236    .text.print_str:0000000000000026 .L13
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:213    .text.print_str:0000000000000016 .L16
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:203    .text.print_str:000000000000000e .L15
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:298    .text.print_hex:0000000000000026 .L25
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:322    .text.print_hex:0000000000000046 .L27
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:317    .text.print_hex:0000000000000044 .L28
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:278    .text.print_hex:0000000000000018 .L22
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:284    .text.print_hex:000000000000001c .L24
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:364    .text.print_hex2:000000000000000c .L30
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:398    .text.print_dec:000000000000000c .L34
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1257   .rodata.print_flt.cst8:0000000000000000 .LC1
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:552    .text.print_flt:000000000000008e .L38
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:521    .text.print_flt:0000000000000078 .L40
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:454    .text.print_flt:0000000000000024 .L39
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:720    .rodata.printk:0000000000000000 .L52
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:682    .text.printk:0000000000000070 .L44
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:657    .text.printk:0000000000000054 .L67
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:705    .text.printk:0000000000000084 .L48
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:638    .text.printk:0000000000000040 .L79
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:806    .text.printk:00000000000000a0 .L50
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:650    .text.printk:000000000000004e .L59
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:973    .text.printk:0000000000000142 .L80
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:961    .text.printk:0000000000000134 .L65
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:854    .text.printk:00000000000000cc .L78
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:861    .text.printk:00000000000000d4 .L66
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:931    .text.printk:0000000000000114 .L81
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:915    .text.printk:0000000000000104 .L63
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:831    .text.printk:00000000000000ba .L58
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:871    .text.printk:00000000000000d8 .L53
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:892    .text.printk:00000000000000f0 .L54
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:842    .text.printk:00000000000000c2 .L55
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:818    .text.printk:00000000000000ac .L56
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:939    .text.printk:000000000000011a .L57
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1061   .text.getchar_prompt:0000000000000030 .L83
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1038   .text.getchar_prompt:000000000000001e .L85
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1028   .text.getchar_prompt:0000000000000016 .L84
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1155   .text.getchar_prompt:0000000000000076 .L86
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1126   .text.getchar_prompt:0000000000000062 .L88
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1149   .text.getchar_prompt:0000000000000074 .L102
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1115   .text.getchar_prompt:000000000000005a .L87
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1087   .text.getchar_prompt:0000000000000040 .L89
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1219   .text.get_char:0000000000000020 .L106
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:3175   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5109   .debug_str:00000000000002ba .LASF145
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5229   .debug_str:0000000000000575 .LASF146
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4977   .debug_str:000000000000000c .LASF147
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4785   .debug_ranges:0000000000000000 .Ldebug_ranges0
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4973   .debug_line:0000000000000000 .Ldebug_line0
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5047   .debug_str:000000000000018f .LASF0
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5079   .debug_str:0000000000000220 .LASF1
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5017   .debug_str:0000000000000107 .LASF2
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5155   .debug_str:000000000000042c .LASF3
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5163   .debug_str:0000000000000452 .LASF4
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5097   .debug_str:0000000000000277 .LASF5
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5217   .debug_str:0000000000000541 .LASF7
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5035   .debug_str:0000000000000155 .LASF6
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5061   .debug_str:00000000000001d2 .LASF8
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5087   .debug_str:0000000000000244 .LASF9
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5015   .debug_str:00000000000000f9 .LASF10
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5003   .debug_str:00000000000000a8 .LASF11
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5153   .debug_str:0000000000000424 .LASF12
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5203   .debug_str:0000000000000509 .LASF13
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5129   .debug_str:00000000000003ac .LASF14
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5131   .debug_str:00000000000003b8 .LASF15
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5041   .debug_str:000000000000016d .LASF148
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4993   .debug_str:0000000000000070 .LASF16
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5147   .debug_str:0000000000000402 .LASF17
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5143   .debug_str:00000000000003f1 .LASF18
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5209   .debug_str:0000000000000524 .LASF19
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5251   .debug_str:00000000000005e4 .LASF20
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5111   .debug_str:000000000000035c .LASF21
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5107   .debug_str:00000000000002b4 .LASF22
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5081   .debug_str:000000000000022d .LASF23
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5201   .debug_str:0000000000000501 .LASF24
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5225   .debug_str:0000000000000564 .LASF25
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5175   .debug_str:0000000000000483 .LASF26
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5065   .debug_str:00000000000001e3 .LASF27
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5235   .debug_str:0000000000000593 .LASF28
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5069   .debug_str:00000000000001f4 .LASF33
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5221   .debug_str:0000000000000551 .LASF29
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5195   .debug_str:00000000000004ec .LASF30
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5063   .debug_str:00000000000001dd .LASF31
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5243   .debug_str:00000000000005c8 .LASF32
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5077   .debug_str:000000000000021b .LASF34
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5013   .debug_str:00000000000000f0 .LASF35
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5215   .debug_str:0000000000000538 .LASF36
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5023   .debug_str:000000000000011f .LASF37
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5275   .debug_str:0000000000000652 .LASF38
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5137   .debug_str:00000000000003d5 .LASF39
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5121   .debug_str:0000000000000385 .LASF40
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5245   .debug_str:00000000000005cd .LASF41
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5165   .debug_str:000000000000045c .LASF42
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5261   .debug_str:000000000000060f .LASF43
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5027   .debug_str:000000000000012e .LASF44
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5057   .debug_str:00000000000001c5 .LASF45
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4975   .debug_str:0000000000000000 .LASF46
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5227   .debug_str:000000000000056c .LASF47
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5039   .debug_str:0000000000000165 .LASF48
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5139   .debug_str:00000000000003de .LASF49
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5187   .debug_str:00000000000004bc .LASF50
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5059   .debug_str:00000000000001cd .LASF51
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5169   .debug_str:000000000000046f .LASF52
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5021   .debug_str:0000000000000119 .LASF53
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4983   .debug_str:000000000000004b .LASF54
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5177   .debug_str:000000000000048e .LASF55
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5037   .debug_str:000000000000015e .LASF56
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5089   .debug_str:0000000000000256 .LASF57
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5005   .debug_str:00000000000000bf .LASF58
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5029   .debug_str:000000000000013c .LASF59
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5073   .debug_str:000000000000020b .LASF60
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5119   .debug_str:000000000000037e .LASF61
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5205   .debug_str:0000000000000512 .LASF62
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5265   .debug_str:0000000000000629 .LASF63
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5019   .debug_str:0000000000000113 .LASF64
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5257   .debug_str:0000000000000601 .LASF65
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5045   .debug_str:0000000000000186 .LASF66
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5051   .debug_str:000000000000019e .LASF67
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4995   .debug_str:0000000000000078 .LASF68
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5113   .debug_str:0000000000000363 .LASF69
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5179   .debug_str:0000000000000496 .LASF70
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5115   .debug_str:0000000000000369 .LASF71
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5197   .debug_str:00000000000004f4 .LASF72
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5211   .debug_str:000000000000052c .LASF73
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5249   .debug_str:00000000000005dd .LASF74
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5083   .debug_str:0000000000000234 .LASF75
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5067   .debug_str:00000000000001ec .LASF76
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5185   .debug_str:00000000000004b7 .LASF77
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4991   .debug_str:0000000000000065 .LASF78
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5193   .debug_str:00000000000004d3 .LASF79
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5189   .debug_str:00000000000004c1 .LASF80
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5141   .debug_str:00000000000003e6 .LASF81
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5191   .debug_str:00000000000004c9 .LASF82
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5105   .debug_str:00000000000002ac .LASF83
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5075   .debug_str:0000000000000211 .LASF84
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5271   .debug_str:0000000000000643 .LASF85
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5145   .debug_str:00000000000003f8 .LASF86
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5085   .debug_str:000000000000023c .LASF87
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5049   .debug_str:0000000000000196 .LASF88
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5157   .debug_str:000000000000043a .LASF89
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5099   .debug_str:000000000000028a .LASF90
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5255   .debug_str:00000000000005f7 .LASF91
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5031   .debug_str:0000000000000144 .LASF92
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5025   .debug_str:0000000000000129 .LASF93
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5213   .debug_str:0000000000000533 .LASF94
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5173   .debug_str:000000000000047c .LASF95
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5247   .debug_str:00000000000005d7 .LASF96
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5093   .debug_str:0000000000000266 .LASF97
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5171   .debug_str:0000000000000476 .LASF98
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4989   .debug_str:000000000000005d .LASF99
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5199   .debug_str:00000000000004fb .LASF100
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5219   .debug_str:000000000000054b .LASF101
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5231   .debug_str:0000000000000583 .LASF102
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5241   .debug_str:00000000000005bb .LASF103
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5223   .debug_str:0000000000000557 .LASF104
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5103   .debug_str:000000000000029f .LASF105
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5263   .debug_str:000000000000061a .LASF106
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5071   .debug_str:00000000000001fc .LASF107
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5181   .debug_str:000000000000049f .LASF108
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5267   .debug_str:0000000000000630 .LASF109
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5183   .debug_str:00000000000004aa .LASF110
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5269   .debug_str:0000000000000635 .LASF111
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5011   .debug_str:00000000000000e2 .LASF112
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5253   .debug_str:00000000000005ed .LASF113
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5101   .debug_str:0000000000000293 .LASF114
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5237   .debug_str:000000000000059b .LASF115
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5055   .debug_str:00000000000001b7 .LASF116
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5009   .debug_str:00000000000000d3 .LASF117
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5053   .debug_str:00000000000001a6 .LASF118
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4999   .debug_str:0000000000000088 .LASF119
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5001   .debug_str:0000000000000097 .LASF120
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5161   .debug_str:0000000000000449 .LASF121
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5133   .debug_str:00000000000003c7 .LASF122
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5123   .debug_str:000000000000038f .LASF123
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5259   .debug_str:0000000000000607 .LASF124
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5007   .debug_str:00000000000000c8 .LASF149
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5207   .debug_str:0000000000000518 .LASF125
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5239   .debug_str:00000000000005a8 .LASF126
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5167   .debug_str:0000000000000466 .LASF130
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1174   .text.get_char:0000000000000000 .LFB10
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1253   .text.get_char:0000000000000030 .LFE10
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1187   .text.get_char:000000000000000e .LBB272
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4027   .debug_loc:0000000000000000 .LLST51
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1223   .text.get_char:0000000000000020 .LBB274
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1186   .text.get_char:000000000000000e .LVL120
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5127   .debug_str:000000000000039d .LASF150
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:997    .text.getchar_prompt:0000000000000000 .LFB9
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1167   .text.getchar_prompt:0000000000000084 .LFE9
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4985   .debug_str:0000000000000051 .LASF132
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4038   .debug_loc:000000000000001e .LLST41
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4052   .debug_loc:000000000000003f .LLST42
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5117   .debug_str:0000000000000371 .LASF127
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4065   .debug_loc:000000000000005f .LLST43
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5149   .debug_str:0000000000000414 .LASF128
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5043   .debug_str:000000000000017f .LASF129
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4076   .debug_loc:000000000000007d .LLST44
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1011   .text.getchar_prompt:0000000000000006 .LBB244
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1063   .text.getchar_prompt:0000000000000030 .LBE244
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4092   .debug_loc:00000000000000a0 .LLST45
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1017   .text.getchar_prompt:000000000000000e .LBB246
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4103   .debug_loc:00000000000000be .LLST46
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1021   .text.getchar_prompt:0000000000000010 .LBB248
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4114   .debug_loc:00000000000000dc .LLST47
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1067   .text.getchar_prompt:0000000000000038 .LBB254
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4122   .debug_loc:00000000000000f0 .LLST48
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1069   .text.getchar_prompt:0000000000000038 .LBB256
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4133   .debug_loc:000000000000010e .LLST49
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1073   .text.getchar_prompt:000000000000003a .LBB258
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4144   .debug_loc:000000000000012c .LLST50
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4979   .debug_str:000000000000003d .LASF131
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:578    .text.printk:0000000000000000 .LFB8
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:990    .text.printk:0000000000000148 .LFE8
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4152   .debug_loc:0000000000000140 .LLST24
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4987   .debug_str:0000000000000058 .LASF133
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4166   .debug_loc:0000000000000161 .LLST25
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:621    .text.printk:0000000000000032 .LBB194
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4270   .debug_loc:0000000000000268 .LLST26
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:623    .text.printk:0000000000000032 .LBB196
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4278   .debug_loc:000000000000027c .LLST27
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:642    .text.printk:0000000000000044 .LBB201
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:652    .text.printk:000000000000004e .LBE201
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4286   .debug_loc:0000000000000290 .LLST28
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:808    .text.printk:00000000000000a0 .LBB204
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:820    .text.printk:00000000000000ac .LBE204
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4293   .debug_loc:00000000000002a3 .LLST29
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:827    .text.printk:00000000000000b6 .LBB206
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4302   .debug_loc:00000000000002b8 .LLST30
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:980    .text.printk:0000000000000142 .LBB208
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:986    .text.printk:0000000000000148 .LBE208
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:849    .text.printk:00000000000000ca .LBB211
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4313   .debug_loc:00000000000002d6 .LLST31
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:855    .text.printk:00000000000000cc .LBB213
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:865    .text.printk:00000000000000d6 .LBE213
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4324   .debug_loc:00000000000002f4 .LLST32
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:964    .text.printk:0000000000000134 .LBB215
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:975    .text.printk:0000000000000142 .LBE215
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4333   .debug_loc:0000000000000309 .LLST33
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4341   .debug_loc:000000000000031d .LLST34
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:968    .text.printk:000000000000013e .LVL93
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:878    .text.printk:00000000000000e0 .LBB218
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:896    .text.printk:00000000000000f0 .LBE218
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4348   .debug_loc:0000000000000330 .LLST35
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:883    .text.printk:00000000000000e2 .LBB220
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:894    .text.printk:00000000000000f0 .LBE220
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4355   .debug_loc:0000000000000343 .LLST36
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4363   .debug_loc:0000000000000357 .LLST37
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:887    .text.printk:00000000000000ec .LVL81
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:903    .text.printk:00000000000000f8 .LBB222
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:945    .text.printk:000000000000011a .LBE222
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4370   .debug_loc:000000000000036a .LLST38
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:911    .text.printk:0000000000000100 .LBB224
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4377   .debug_loc:000000000000037d .LLST39
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:933    .text.printk:0000000000000114 .LBB226
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:941    .text.printk:000000000000011a .LBE226
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4388   .debug_loc:000000000000039b .LLST40
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:957    .text.printk:0000000000000132 .LVL91
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5159   .debug_str:000000000000043f .LASF134
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:418    .text.print_flt:0000000000000000 .LFB7
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:571    .text.print_flt:000000000000009a .LFE7
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4396   .debug_loc:00000000000003af .LLST16
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5125   .debug_str:0000000000000398 .LASF135
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4981   .debug_str:0000000000000044 .LASF136
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4454   .debug_loc:0000000000000411 .LLST17
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:442    .text.print_flt:000000000000001a .LBB132
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4474   .debug_loc:0000000000000446 .LLST18
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:447    .text.print_flt:000000000000001c .LBB134
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:456    .text.print_flt:0000000000000024 .LBE134
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4485   .debug_loc:0000000000000464 .LLST19
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:560    .text.print_flt:000000000000008e .LBB136
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:567    .text.print_flt:000000000000009a .LBE136
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:564    .text.print_flt:0000000000000098 .LVL55
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:459    .text.print_flt:0000000000000024 .LBB139
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:466    .text.print_flt:000000000000002c .LBE139
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4494   .debug_loc:0000000000000479 .LLST20
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:485    .text.print_flt:0000000000000062 .LBB141
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4503   .debug_loc:000000000000048e .LLST21
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:501    .text.print_flt:0000000000000068 .LBB143
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:507    .text.print_flt:000000000000006e .LBE143
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4510   .debug_loc:00000000000004a1 .LLST22
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:537    .text.print_flt:0000000000000082 .LBB145
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4519   .debug_loc:00000000000004b6 .LLST23
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:551    .text.print_flt:000000000000008e .LVL54
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4997   .debug_str:000000000000007e .LASF137
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5233   .debug_str:0000000000000588 .LASF138
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5095   .debug_str:000000000000026d .LASF139
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:247    .text.print_hex:0000000000000000 .LFB4
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:339    .text.print_hex:000000000000004c .LFE4
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5135   .debug_str:00000000000003ce .LASF140
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4527   .debug_loc:00000000000004ca .LLST8
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4538   .debug_loc:00000000000004e8 .LLST9
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4550   .debug_loc:0000000000000507 .LLST10
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:259    .text.print_hex:000000000000000e .LBB110
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4561   .debug_loc:0000000000000525 .LLST11
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:265    .text.print_hex:0000000000000012 .LBB112
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5091   .debug_str:000000000000025c .LASF141
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5033   .debug_str:000000000000014c .LASF142
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5273   .debug_str:0000000000000648 .LASF143
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:5151   .debug_str:000000000000041f .LASF144
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:11     .text.print_num:0000000000000000 .LFB1
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:24     .text.print_num:000000000000000c .LFE1
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4576   .debug_loc:000000000000054e .LLST0
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4590   .debug_loc:000000000000056f .LLST1
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:22     .text.print_num:000000000000000c .LVL1
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:30     .text.print_num.part.0:0000000000000000 .LFB11
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:131    .text.print_num.part.0:0000000000000052 .LFE11
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4604   .debug_loc:0000000000000590 .LLST2
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4622   .debug_loc:00000000000005bc .LLST3
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:56     .text.print_num.part.0:0000000000000024 .LBB76
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:97     .text.print_num.part.0:000000000000003e .LBB78
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:50     .text.print_num.part.0:0000000000000018 .LVL4
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:138    .text.put_char:0000000000000000 .LFB2
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:178    .text.put_char:0000000000000026 .LFE2
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4651   .debug_loc:0000000000000601 .LLST4
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:175    .text.put_char:0000000000000024 .LVL14
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:185    .text.print_str:0000000000000000 .LFB3
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:240    .text.print_str:0000000000000028 .LFE3
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4676   .debug_loc:000000000000063b .LLST5
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:192    .text.print_str:0000000000000006 .LBB94
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4687   .debug_loc:0000000000000659 .LLST6
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:196    .text.print_str:0000000000000008 .LBB96
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4698   .debug_loc:0000000000000677 .LLST7
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:346    .text.print_hex2:0000000000000000 .LFB5
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:373    .text.print_hex2:0000000000000016 .LFE5
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4706   .debug_loc:000000000000068b .LLST12
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:353    .text.print_hex2:0000000000000002 .LBB124
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:360    .text.print_hex2:000000000000000a .LBE124
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4720   .debug_loc:00000000000006ac .LLST13
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:365    .text.print_hex2:000000000000000c .LBB126
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:371    .text.print_hex2:0000000000000016 .LBE126
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:369    .text.print_hex2:0000000000000016 .LVL35
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:380    .text.print_dec:0000000000000000 .LFB6
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:407    .text.print_dec:0000000000000016 .LFE6
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4729   .debug_loc:00000000000006c1 .LLST14
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:387    .text.print_dec:0000000000000002 .LBB128
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:394    .text.print_dec:000000000000000a .LBE128
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:4743   .debug_loc:00000000000006e2 .LLST15
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:399    .text.print_dec:000000000000000c .LBB130
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:405    .text.print_dec:0000000000000016 .LBE130
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:403    .text.print_dec:0000000000000016 .LVL39
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1195   .text.get_char:0000000000000012 .LVL121
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1211   .text.get_char:000000000000001c .LVL122
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1218   .text.get_char:0000000000000020 .LVL123
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1245   .text.get_char:000000000000002c .LVL124
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1000   .text.getchar_prompt:0000000000000000 .LVL96
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1163   .text.getchar_prompt:0000000000000080 .LVL119
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1158   .text.getchar_prompt:0000000000000078 .LVL118
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1006   .text.getchar_prompt:0000000000000004 .LVL97
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1102   .text.getchar_prompt:000000000000004e .LVL108
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1154   .text.getchar_prompt:0000000000000076 .LVL117
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1093   .text.getchar_prompt:0000000000000044 .LVL106
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1097   .text.getchar_prompt:0000000000000048 .LVL107
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1110   .text.getchar_prompt:0000000000000054 .LVL110
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1010   .text.getchar_prompt:0000000000000006 .LVL98
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1027   .text.getchar_prompt:0000000000000016 .LVL99
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1060   .text.getchar_prompt:0000000000000030 .LVL104
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1036   .text.getchar_prompt:000000000000001c .LVL100
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1041   .text.getchar_prompt:0000000000000020 .LVL101
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1058   .text.getchar_prompt:000000000000002e .LVL103
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1046   .text.getchar_prompt:0000000000000024 .LVL102
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1105   .text.getchar_prompt:0000000000000050 .LVL109
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1114   .text.getchar_prompt:000000000000005a .LVL111
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1124   .text.getchar_prompt:0000000000000060 .LVL112
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1129   .text.getchar_prompt:0000000000000064 .LVL113
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1146   .text.getchar_prompt:0000000000000072 .LVL115
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1134   .text.getchar_prompt:0000000000000068 .LVL114
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1148   .text.getchar_prompt:0000000000000074 .LVL116
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:581    .text.printk:0000000000000000 .LVL56
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:637    .text.printk:0000000000000040 .LVL58
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:613    .text.printk:0000000000000028 .LVL57
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:649    .text.printk:000000000000004e .LVL60
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:656    .text.printk:0000000000000054 .LVL61
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:681    .text.printk:0000000000000070 .LVL65
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:704    .text.printk:0000000000000084 .LVL66
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:815    .text.printk:00000000000000aa .LVL68
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:817    .text.printk:00000000000000ac .LVL69
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:834    .text.printk:00000000000000be .LVL71
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:836    .text.printk:00000000000000c0 .LVL72
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:841    .text.printk:00000000000000c2 .LVL73
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:860    .text.printk:00000000000000d4 .LVL76
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:863    .text.printk:00000000000000d6 .LVL77
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:870    .text.printk:00000000000000d8 .LVL78
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:889    .text.printk:00000000000000ee .LVL82
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:891    .text.printk:00000000000000f0 .LVL83
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:949    .text.printk:000000000000011e .LVL90
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:960    .text.printk:0000000000000134 .LVL92
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:970    .text.printk:0000000000000140 .LVL94
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:972    .text.printk:0000000000000142 .LVL95
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:661    .text.printk:000000000000005c .LVL62
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:668    .text.printk:0000000000000060 .LVL63
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:641    .text.printk:0000000000000044 .LVL59
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:807    .text.printk:00000000000000a0 .LVL67
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:824    .text.printk:00000000000000b2 .LVL70
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:846    .text.printk:00000000000000c6 .LVL74
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:853    .text.printk:00000000000000cc .LVL75
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:875    .text.printk:00000000000000dc .LVL79
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:882    .text.printk:00000000000000e2 .LVL80
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:900    .text.printk:00000000000000f4 .LVL84
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:938    .text.printk:000000000000011a .LVL89
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:910    .text.printk:0000000000000100 .LVL85
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:922    .text.printk:000000000000010c .LVL86
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:926    .text.printk:0000000000000110 .LVL87
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:932    .text.printk:0000000000000114 .LVL88
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:421    .text.print_flt:0000000000000000 .LVL40
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:439    .text.print_flt:0000000000000018 .LVL41
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:464    .text.print_flt:000000000000002c .LVL45
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:498    .text.print_flt:0000000000000068 .LVL51
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:520    .text.print_flt:0000000000000078 .LVL52
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:526    .text.print_flt:000000000000007a .LVL53
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:441    .text.print_flt:000000000000001a .LVL42
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:484    .text.print_flt:0000000000000062 .LVL49
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:453    .text.print_flt:0000000000000024 .LVL44
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:446    .text.print_flt:000000000000001c .LVL43
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:489    .text.print_flt:0000000000000064 .LVL50
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:250    .text.print_hex:0000000000000000 .LVL22
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:287    .text.print_hex:000000000000001e .LVL24
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:289    .text.print_hex:0000000000000020 .LVL25
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:277    .text.print_hex:0000000000000018 .LVL23
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:297    .text.print_hex:0000000000000026 .LVL27
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:306    .text.print_hex:0000000000000036 .LVL28
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:316    .text.print_hex:0000000000000044 .LVL30
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:321    .text.print_hex:0000000000000046 .LVL31
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:15     .text.print_num:0000000000000000 .LVL0
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:33     .text.print_num.part.0:0000000000000000 .LVL2
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:41     .text.print_num.part.0:000000000000000a .LVL3
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:53     .text.print_num.part.0:000000000000001c .LVL5
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:88     .text.print_num.part.0:000000000000003a .LVL7
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:92     .text.print_num.part.0:000000000000003e .LVL8
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:126    .text.print_num.part.0:000000000000004e .LVL9
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:141    .text.put_char:0000000000000000 .LVL10
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:154    .text.put_char:000000000000000e .LVL11
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:168    .text.put_char:000000000000001a .LVL12
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:173    .text.put_char:000000000000001c .LVL13
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:188    .text.print_str:0000000000000000 .LVL15
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:216    .text.print_str:0000000000000018 .LVL18
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:202    .text.print_str:000000000000000e .LVL16
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:211    .text.print_str:0000000000000014 .LVL17
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:233    .text.print_str:0000000000000024 .LVL20
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:221    .text.print_str:000000000000001c .LVL19
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:235    .text.print_str:0000000000000026 .LVL21
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:349    .text.print_hex2:0000000000000000 .LVL32
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:352    .text.print_hex2:0000000000000002 .LVL33
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:363    .text.print_hex2:000000000000000c .LVL34
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:383    .text.print_dec:0000000000000000 .LVL36
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:386    .text.print_dec:0000000000000002 .LVL37
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:397    .text.print_dec:000000000000000c .LVL38
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1275   .debug_info:0000000000000000 .Ldebug_info0
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:61     .text.print_num.part.0:0000000000000026 .LBE76
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:66     .text.print_num.part.0:000000000000002c .LBB86
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:71     .text.print_num.part.0:0000000000000030 .LBE86
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:78     .text.print_num.part.0:0000000000000034 .LBB87
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:84     .text.print_num.part.0:0000000000000038 .LBE87
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:95     .text.print_num.part.0:000000000000003e .LBB88
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:104    .text.print_num.part.0:0000000000000040 .LBE88
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:110    .text.print_num.part.0:0000000000000044 .LBB89
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:122    .text.print_num.part.0:000000000000004c .LBE89
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:102    .text.print_num.part.0:0000000000000040 .LBE78
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:112    .text.print_num.part.0:0000000000000044 .LBB81
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:118    .text.print_num.part.0:0000000000000048 .LBE81
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:208    .text.print_str:0000000000000010 .LBE94
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:217    .text.print_str:0000000000000018 .LBB101
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:230    .text.print_str:0000000000000020 .LBE101
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:205    .text.print_str:000000000000000e .LBE96
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:222    .text.print_str:000000000000001c .LBB99
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:227    .text.print_str:000000000000001e .LBE99
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:252    .text.print_hex:0000000000000004 .LBB108
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:318    .text.print_hex:0000000000000044 .LBE108
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:323    .text.print_hex:0000000000000046 .LBB123
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:337    .text.print_hex:000000000000004c .LBE123
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:256    .text.print_hex:000000000000000a .LBB109
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:273    .text.print_hex:0000000000000014 .LBE109
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:279    .text.print_hex:0000000000000018 .LBB120
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:292    .text.print_hex:0000000000000020 .LBE120
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:299    .text.print_hex:0000000000000026 .LBB121
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:311    .text.print_hex:000000000000003e .LBE121
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:324    .text.print_hex:0000000000000046 .LBB122
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:336    .text.print_hex:000000000000004c .LBE122
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:272    .text.print_hex:0000000000000014 .LBE110
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:280    .text.print_hex:0000000000000018 .LBB118
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:291    .text.print_hex:0000000000000020 .LBE118
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:325    .text.print_hex:0000000000000046 .LBB119
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:335    .text.print_hex:000000000000004c .LBE119
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:270    .text.print_hex:0000000000000014 .LBE112
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:327    .text.print_hex:0000000000000046 .LBB115
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:333    .text.print_hex:000000000000004c .LBE115
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:458    .text.print_flt:0000000000000024 .LBE132
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:558    .text.print_flt:000000000000008e .LBB155
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:569    .text.print_flt:000000000000009a .LBE155
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:491    .text.print_flt:0000000000000064 .LBE141
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:499    .text.print_flt:0000000000000068 .LBB152
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:509    .text.print_flt:000000000000006e .LBE152
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:535    .text.print_flt:0000000000000082 .LBB153
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:543    .text.print_flt:0000000000000084 .LBE153
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:546    .text.print_flt:0000000000000086 .LBB154
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:557    .text.print_flt:000000000000008e .LBE154
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:541    .text.print_flt:0000000000000084 .LBE145
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:548    .text.print_flt:0000000000000086 .LBB148
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:555    .text.print_flt:000000000000008e .LBE148
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:631    .text.printk:0000000000000036 .LBE194
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:662    .text.printk:000000000000005c .LBB203
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:677    .text.printk:000000000000006a .LBE203
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:629    .text.printk:0000000000000036 .LBE196
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:664    .text.printk:000000000000005c .LBB199
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:670    .text.printk:0000000000000060 .LBE199
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:838    .text.printk:00000000000000c0 .LBE206
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:978    .text.printk:0000000000000142 .LBB231
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:988    .text.printk:0000000000000148 .LBE231
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:867    .text.printk:00000000000000d6 .LBE211
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:962    .text.printk:0000000000000134 .LBB230
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:977    .text.printk:0000000000000142 .LBE230
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:919    .text.printk:0000000000000108 .LBE224
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:927    .text.printk:0000000000000110 .LBB229
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:943    .text.printk:000000000000011a .LBE229
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1033   .text.getchar_prompt:0000000000000018 .LBE246
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1042   .text.getchar_prompt:0000000000000020 .LBB253
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1055   .text.getchar_prompt:000000000000002a .LBE253
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1030   .text.getchar_prompt:0000000000000016 .LBE248
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1047   .text.getchar_prompt:0000000000000024 .LBB251
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1052   .text.getchar_prompt:0000000000000028 .LBE251
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1083   .text.getchar_prompt:000000000000003e .LBE254
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1106   .text.getchar_prompt:0000000000000050 .LBB267
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1151   .text.getchar_prompt:0000000000000074 .LBE267
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1081   .text.getchar_prompt:000000000000003e .LBE256
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1116   .text.getchar_prompt:000000000000005a .LBB264
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1121   .text.getchar_prompt:000000000000005c .LBE264
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1130   .text.getchar_prompt:0000000000000064 .LBB265
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1143   .text.getchar_prompt:000000000000006e .LBE265
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1079   .text.getchar_prompt:000000000000003e .LBE258
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1135   .text.getchar_prompt:0000000000000068 .LBB261
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1140   .text.getchar_prompt:000000000000006c .LBE261
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1192   .text.get_char:0000000000000010 .LBE272
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1196   .text.get_char:0000000000000012 .LBB282
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1201   .text.get_char:0000000000000016 .LBE282
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1206   .text.get_char:0000000000000018 .LBB283
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1213   .text.get_char:000000000000001c .LBE283
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1221   .text.get_char:0000000000000020 .LBB284
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1230   .text.get_char:0000000000000022 .LBE284
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1234   .text.get_char:0000000000000024 .LBB285
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1247   .text.get_char:000000000000002c .LBE285
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1228   .text.get_char:0000000000000022 .LBE274
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1236   .text.get_char:0000000000000024 .LBB277
-C:\Users\rana\AppData\Local\Temp\ccBnGxXH.s:1242   .text.get_char:0000000000000028 .LBE277
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:20     .text.print_num:0000000000000004 .L4
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1262   .rodata.print_num.part.0.str1.4:0000000000000000 .LC0
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:93     .text.print_num.part.0:0000000000000040 .L8
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:169    .text.put_char:000000000000001c .L12
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:155    .text.put_char:000000000000000e .L10
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:236    .text.print_str:0000000000000028 .L13
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:213    .text.print_str:0000000000000018 .L16
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:203    .text.print_str:0000000000000010 .L15
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:298    .text.print_hex:0000000000000028 .L25
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:322    .text.print_hex:0000000000000048 .L27
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:317    .text.print_hex:0000000000000046 .L28
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:278    .text.print_hex:000000000000001a .L22
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:284    .text.print_hex:000000000000001e .L24
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:364    .text.print_hex2:000000000000000e .L30
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:398    .text.print_dec:000000000000000e .L34
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1257   .rodata.print_flt.cst8:0000000000000000 .LC1
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:552    .text.print_flt:0000000000000092 .L38
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:521    .text.print_flt:000000000000007c .L40
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:454    .text.print_flt:0000000000000026 .L39
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:720    .rodata.printk:0000000000000000 .L52
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:682    .text.printk:0000000000000072 .L44
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:657    .text.printk:0000000000000056 .L67
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:705    .text.printk:0000000000000086 .L48
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:638    .text.printk:0000000000000042 .L79
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:806    .text.printk:00000000000000a2 .L50
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:650    .text.printk:0000000000000050 .L59
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:973    .text.printk:0000000000000144 .L80
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:961    .text.printk:0000000000000136 .L65
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:854    .text.printk:00000000000000ce .L78
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:861    .text.printk:00000000000000d6 .L66
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:931    .text.printk:0000000000000116 .L81
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:915    .text.printk:0000000000000106 .L63
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:831    .text.printk:00000000000000bc .L58
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:871    .text.printk:00000000000000da .L53
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:892    .text.printk:00000000000000f2 .L54
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:842    .text.printk:00000000000000c4 .L55
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:818    .text.printk:00000000000000ae .L56
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:939    .text.printk:000000000000011c .L57
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1061   .text.getchar_prompt:0000000000000032 .L83
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1038   .text.getchar_prompt:0000000000000020 .L85
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1028   .text.getchar_prompt:0000000000000018 .L84
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1155   .text.getchar_prompt:000000000000007a .L86
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1126   .text.getchar_prompt:0000000000000066 .L88
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1149   .text.getchar_prompt:0000000000000078 .L102
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1115   .text.getchar_prompt:000000000000005e .L87
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1087   .text.getchar_prompt:0000000000000044 .L89
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1219   .text.get_char:0000000000000022 .L106
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:3175   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5109   .debug_str:00000000000002ba .LASF145
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5229   .debug_str:0000000000000575 .LASF146
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4977   .debug_str:000000000000000c .LASF147
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4785   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4973   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5047   .debug_str:000000000000018f .LASF0
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5079   .debug_str:0000000000000220 .LASF1
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5017   .debug_str:0000000000000107 .LASF2
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5155   .debug_str:000000000000042c .LASF3
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5163   .debug_str:0000000000000452 .LASF4
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5097   .debug_str:0000000000000277 .LASF5
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5217   .debug_str:0000000000000541 .LASF7
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5035   .debug_str:0000000000000155 .LASF6
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5061   .debug_str:00000000000001d2 .LASF8
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5087   .debug_str:0000000000000244 .LASF9
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5015   .debug_str:00000000000000f9 .LASF10
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5003   .debug_str:00000000000000a8 .LASF11
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5153   .debug_str:0000000000000424 .LASF12
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5203   .debug_str:0000000000000509 .LASF13
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5129   .debug_str:00000000000003ac .LASF14
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5131   .debug_str:00000000000003b8 .LASF15
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5041   .debug_str:000000000000016d .LASF148
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4993   .debug_str:0000000000000070 .LASF16
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5147   .debug_str:0000000000000402 .LASF17
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5143   .debug_str:00000000000003f1 .LASF18
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5209   .debug_str:0000000000000524 .LASF19
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5251   .debug_str:00000000000005e4 .LASF20
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5111   .debug_str:000000000000035c .LASF21
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5107   .debug_str:00000000000002b4 .LASF22
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5081   .debug_str:000000000000022d .LASF23
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5201   .debug_str:0000000000000501 .LASF24
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5225   .debug_str:0000000000000564 .LASF25
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5175   .debug_str:0000000000000483 .LASF26
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5065   .debug_str:00000000000001e3 .LASF27
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5235   .debug_str:0000000000000593 .LASF28
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5069   .debug_str:00000000000001f4 .LASF33
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5221   .debug_str:0000000000000551 .LASF29
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5195   .debug_str:00000000000004ec .LASF30
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5063   .debug_str:00000000000001dd .LASF31
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5243   .debug_str:00000000000005c8 .LASF32
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5077   .debug_str:000000000000021b .LASF34
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5013   .debug_str:00000000000000f0 .LASF35
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5215   .debug_str:0000000000000538 .LASF36
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5023   .debug_str:000000000000011f .LASF37
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5275   .debug_str:0000000000000652 .LASF38
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5137   .debug_str:00000000000003d5 .LASF39
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5121   .debug_str:0000000000000385 .LASF40
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5245   .debug_str:00000000000005cd .LASF41
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5165   .debug_str:000000000000045c .LASF42
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5261   .debug_str:000000000000060f .LASF43
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5027   .debug_str:000000000000012e .LASF44
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5057   .debug_str:00000000000001c5 .LASF45
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4975   .debug_str:0000000000000000 .LASF46
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5227   .debug_str:000000000000056c .LASF47
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5039   .debug_str:0000000000000165 .LASF48
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5139   .debug_str:00000000000003de .LASF49
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5187   .debug_str:00000000000004bc .LASF50
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5059   .debug_str:00000000000001cd .LASF51
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5169   .debug_str:000000000000046f .LASF52
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5021   .debug_str:0000000000000119 .LASF53
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4983   .debug_str:000000000000004b .LASF54
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5177   .debug_str:000000000000048e .LASF55
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5037   .debug_str:000000000000015e .LASF56
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5089   .debug_str:0000000000000256 .LASF57
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5005   .debug_str:00000000000000bf .LASF58
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5029   .debug_str:000000000000013c .LASF59
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5073   .debug_str:000000000000020b .LASF60
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5119   .debug_str:000000000000037e .LASF61
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5205   .debug_str:0000000000000512 .LASF62
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5265   .debug_str:0000000000000629 .LASF63
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5019   .debug_str:0000000000000113 .LASF64
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5257   .debug_str:0000000000000601 .LASF65
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5045   .debug_str:0000000000000186 .LASF66
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5051   .debug_str:000000000000019e .LASF67
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4995   .debug_str:0000000000000078 .LASF68
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5113   .debug_str:0000000000000363 .LASF69
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5179   .debug_str:0000000000000496 .LASF70
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5115   .debug_str:0000000000000369 .LASF71
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5197   .debug_str:00000000000004f4 .LASF72
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5211   .debug_str:000000000000052c .LASF73
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5249   .debug_str:00000000000005dd .LASF74
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5083   .debug_str:0000000000000234 .LASF75
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5067   .debug_str:00000000000001ec .LASF76
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5185   .debug_str:00000000000004b7 .LASF77
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4991   .debug_str:0000000000000065 .LASF78
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5193   .debug_str:00000000000004d3 .LASF79
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5189   .debug_str:00000000000004c1 .LASF80
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5141   .debug_str:00000000000003e6 .LASF81
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5191   .debug_str:00000000000004c9 .LASF82
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5105   .debug_str:00000000000002ac .LASF83
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5075   .debug_str:0000000000000211 .LASF84
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5271   .debug_str:0000000000000643 .LASF85
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5145   .debug_str:00000000000003f8 .LASF86
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5085   .debug_str:000000000000023c .LASF87
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5049   .debug_str:0000000000000196 .LASF88
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5157   .debug_str:000000000000043a .LASF89
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5099   .debug_str:000000000000028a .LASF90
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5255   .debug_str:00000000000005f7 .LASF91
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5031   .debug_str:0000000000000144 .LASF92
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5025   .debug_str:0000000000000129 .LASF93
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5213   .debug_str:0000000000000533 .LASF94
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5173   .debug_str:000000000000047c .LASF95
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5247   .debug_str:00000000000005d7 .LASF96
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5093   .debug_str:0000000000000266 .LASF97
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5171   .debug_str:0000000000000476 .LASF98
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4989   .debug_str:000000000000005d .LASF99
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5199   .debug_str:00000000000004fb .LASF100
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5219   .debug_str:000000000000054b .LASF101
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5231   .debug_str:0000000000000583 .LASF102
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5241   .debug_str:00000000000005bb .LASF103
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5223   .debug_str:0000000000000557 .LASF104
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5103   .debug_str:000000000000029f .LASF105
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5263   .debug_str:000000000000061a .LASF106
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5071   .debug_str:00000000000001fc .LASF107
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5181   .debug_str:000000000000049f .LASF108
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5267   .debug_str:0000000000000630 .LASF109
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5183   .debug_str:00000000000004aa .LASF110
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5269   .debug_str:0000000000000635 .LASF111
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5011   .debug_str:00000000000000e2 .LASF112
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5253   .debug_str:00000000000005ed .LASF113
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5101   .debug_str:0000000000000293 .LASF114
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5237   .debug_str:000000000000059b .LASF115
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5055   .debug_str:00000000000001b7 .LASF116
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5009   .debug_str:00000000000000d3 .LASF117
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5053   .debug_str:00000000000001a6 .LASF118
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4999   .debug_str:0000000000000088 .LASF119
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5001   .debug_str:0000000000000097 .LASF120
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5161   .debug_str:0000000000000449 .LASF121
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5133   .debug_str:00000000000003c7 .LASF122
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5123   .debug_str:000000000000038f .LASF123
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5259   .debug_str:0000000000000607 .LASF124
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5007   .debug_str:00000000000000c8 .LASF149
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5207   .debug_str:0000000000000518 .LASF125
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5239   .debug_str:00000000000005a8 .LASF126
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5167   .debug_str:0000000000000466 .LASF130
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1174   .text.get_char:0000000000000000 .LFB10
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1253   .text.get_char:0000000000000036 .LFE10
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1187   .text.get_char:000000000000000e .LBB272
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4027   .debug_loc:0000000000000000 .LLST51
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1223   .text.get_char:0000000000000022 .LBB274
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1186   .text.get_char:000000000000000e .LVL120
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5127   .debug_str:000000000000039d .LASF150
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:997    .text.getchar_prompt:0000000000000000 .LFB9
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1167   .text.getchar_prompt:0000000000000088 .LFE9
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4985   .debug_str:0000000000000051 .LASF132
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4038   .debug_loc:000000000000001e .LLST41
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4052   .debug_loc:000000000000003f .LLST42
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5117   .debug_str:0000000000000371 .LASF127
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4065   .debug_loc:000000000000005f .LLST43
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5149   .debug_str:0000000000000414 .LASF128
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5043   .debug_str:000000000000017f .LASF129
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4076   .debug_loc:000000000000007d .LLST44
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1011   .text.getchar_prompt:0000000000000006 .LBB244
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1063   .text.getchar_prompt:0000000000000032 .LBE244
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4092   .debug_loc:00000000000000a0 .LLST45
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1017   .text.getchar_prompt:000000000000000e .LBB246
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4103   .debug_loc:00000000000000be .LLST46
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1021   .text.getchar_prompt:0000000000000010 .LBB248
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4114   .debug_loc:00000000000000dc .LLST47
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1067   .text.getchar_prompt:000000000000003a .LBB254
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4122   .debug_loc:00000000000000f0 .LLST48
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1069   .text.getchar_prompt:000000000000003a .LBB256
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4133   .debug_loc:000000000000010e .LLST49
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1073   .text.getchar_prompt:000000000000003c .LBB258
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4144   .debug_loc:000000000000012c .LLST50
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4979   .debug_str:000000000000003d .LASF131
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:578    .text.printk:0000000000000000 .LFB8
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:990    .text.printk:000000000000014a .LFE8
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4152   .debug_loc:0000000000000140 .LLST24
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4987   .debug_str:0000000000000058 .LASF133
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4166   .debug_loc:0000000000000161 .LLST25
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:621    .text.printk:0000000000000032 .LBB194
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4270   .debug_loc:0000000000000268 .LLST26
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:623    .text.printk:0000000000000032 .LBB196
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4278   .debug_loc:000000000000027c .LLST27
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:642    .text.printk:0000000000000046 .LBB201
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:652    .text.printk:0000000000000050 .LBE201
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4286   .debug_loc:0000000000000290 .LLST28
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:808    .text.printk:00000000000000a2 .LBB204
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:820    .text.printk:00000000000000ae .LBE204
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4293   .debug_loc:00000000000002a3 .LLST29
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:827    .text.printk:00000000000000b8 .LBB206
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4302   .debug_loc:00000000000002b8 .LLST30
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:980    .text.printk:0000000000000144 .LBB208
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:986    .text.printk:000000000000014a .LBE208
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:849    .text.printk:00000000000000cc .LBB211
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4313   .debug_loc:00000000000002d6 .LLST31
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:855    .text.printk:00000000000000ce .LBB213
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:865    .text.printk:00000000000000d8 .LBE213
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4324   .debug_loc:00000000000002f4 .LLST32
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:964    .text.printk:0000000000000136 .LBB215
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:975    .text.printk:0000000000000144 .LBE215
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4333   .debug_loc:0000000000000309 .LLST33
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4341   .debug_loc:000000000000031d .LLST34
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:968    .text.printk:0000000000000140 .LVL93
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:878    .text.printk:00000000000000e2 .LBB218
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:896    .text.printk:00000000000000f2 .LBE218
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4348   .debug_loc:0000000000000330 .LLST35
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:883    .text.printk:00000000000000e4 .LBB220
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:894    .text.printk:00000000000000f2 .LBE220
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4355   .debug_loc:0000000000000343 .LLST36
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4363   .debug_loc:0000000000000357 .LLST37
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:887    .text.printk:00000000000000ee .LVL81
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:903    .text.printk:00000000000000fa .LBB222
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:945    .text.printk:000000000000011c .LBE222
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4370   .debug_loc:000000000000036a .LLST38
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:911    .text.printk:0000000000000102 .LBB224
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4377   .debug_loc:000000000000037d .LLST39
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:933    .text.printk:0000000000000116 .LBB226
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:941    .text.printk:000000000000011c .LBE226
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4388   .debug_loc:000000000000039b .LLST40
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:957    .text.printk:0000000000000134 .LVL91
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5159   .debug_str:000000000000043f .LASF134
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:418    .text.print_flt:0000000000000000 .LFB7
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:571    .text.print_flt:000000000000009e .LFE7
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4396   .debug_loc:00000000000003af .LLST16
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5125   .debug_str:0000000000000398 .LASF135
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4981   .debug_str:0000000000000044 .LASF136
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4454   .debug_loc:0000000000000411 .LLST17
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:442    .text.print_flt:000000000000001a .LBB132
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4474   .debug_loc:0000000000000446 .LLST18
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:447    .text.print_flt:000000000000001c .LBB134
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:456    .text.print_flt:0000000000000026 .LBE134
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4485   .debug_loc:0000000000000464 .LLST19
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:560    .text.print_flt:0000000000000092 .LBB136
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:567    .text.print_flt:000000000000009e .LBE136
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:564    .text.print_flt:000000000000009c .LVL55
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:459    .text.print_flt:0000000000000026 .LBB139
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:466    .text.print_flt:0000000000000030 .LBE139
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4494   .debug_loc:0000000000000479 .LLST20
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:485    .text.print_flt:0000000000000066 .LBB141
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4503   .debug_loc:000000000000048e .LLST21
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:501    .text.print_flt:000000000000006c .LBB143
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:507    .text.print_flt:0000000000000072 .LBE143
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4510   .debug_loc:00000000000004a1 .LLST22
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:537    .text.print_flt:0000000000000086 .LBB145
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4519   .debug_loc:00000000000004b6 .LLST23
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:551    .text.print_flt:0000000000000092 .LVL54
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4997   .debug_str:000000000000007e .LASF137
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5233   .debug_str:0000000000000588 .LASF138
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5095   .debug_str:000000000000026d .LASF139
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:247    .text.print_hex:0000000000000000 .LFB4
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:339    .text.print_hex:000000000000004e .LFE4
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5135   .debug_str:00000000000003ce .LASF140
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4527   .debug_loc:00000000000004ca .LLST8
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4538   .debug_loc:00000000000004e8 .LLST9
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4550   .debug_loc:0000000000000507 .LLST10
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:259    .text.print_hex:000000000000000e .LBB110
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4561   .debug_loc:0000000000000525 .LLST11
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:265    .text.print_hex:0000000000000014 .LBB112
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5091   .debug_str:000000000000025c .LASF141
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5033   .debug_str:000000000000014c .LASF142
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5273   .debug_str:0000000000000648 .LASF143
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:5151   .debug_str:000000000000041f .LASF144
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:11     .text.print_num:0000000000000000 .LFB1
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:24     .text.print_num:000000000000000c .LFE1
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4576   .debug_loc:000000000000054e .LLST0
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4590   .debug_loc:000000000000056f .LLST1
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:22     .text.print_num:000000000000000c .LVL1
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:30     .text.print_num.part.0:0000000000000000 .LFB11
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:131    .text.print_num.part.0:0000000000000058 .LFE11
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4604   .debug_loc:0000000000000590 .LLST2
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4622   .debug_loc:00000000000005bc .LLST3
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:56     .text.print_num.part.0:0000000000000024 .LBB76
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:97     .text.print_num.part.0:0000000000000040 .LBB78
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:50     .text.print_num.part.0:0000000000000018 .LVL4
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:138    .text.put_char:0000000000000000 .LFB2
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:178    .text.put_char:0000000000000028 .LFE2
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4651   .debug_loc:0000000000000601 .LLST4
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:175    .text.put_char:0000000000000026 .LVL14
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:185    .text.print_str:0000000000000000 .LFB3
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:240    .text.print_str:000000000000002a .LFE3
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4676   .debug_loc:000000000000063b .LLST5
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:192    .text.print_str:0000000000000006 .LBB94
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4687   .debug_loc:0000000000000659 .LLST6
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:196    .text.print_str:0000000000000008 .LBB96
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4698   .debug_loc:0000000000000677 .LLST7
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:346    .text.print_hex2:0000000000000000 .LFB5
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:373    .text.print_hex2:0000000000000018 .LFE5
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4706   .debug_loc:000000000000068b .LLST12
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:353    .text.print_hex2:0000000000000002 .LBB124
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:360    .text.print_hex2:000000000000000c .LBE124
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4720   .debug_loc:00000000000006ac .LLST13
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:365    .text.print_hex2:000000000000000e .LBB126
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:371    .text.print_hex2:0000000000000018 .LBE126
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:369    .text.print_hex2:0000000000000018 .LVL35
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:380    .text.print_dec:0000000000000000 .LFB6
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:407    .text.print_dec:0000000000000018 .LFE6
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4729   .debug_loc:00000000000006c1 .LLST14
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:387    .text.print_dec:0000000000000002 .LBB128
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:394    .text.print_dec:000000000000000c .LBE128
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:4743   .debug_loc:00000000000006e2 .LLST15
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:399    .text.print_dec:000000000000000e .LBB130
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:405    .text.print_dec:0000000000000018 .LBE130
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:403    .text.print_dec:0000000000000018 .LVL39
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1195   .text.get_char:0000000000000012 .LVL121
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1211   .text.get_char:000000000000001e .LVL122
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1218   .text.get_char:0000000000000022 .LVL123
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1245   .text.get_char:0000000000000032 .LVL124
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1000   .text.getchar_prompt:0000000000000000 .LVL96
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1163   .text.getchar_prompt:0000000000000084 .LVL119
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1158   .text.getchar_prompt:000000000000007c .LVL118
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1006   .text.getchar_prompt:0000000000000004 .LVL97
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1102   .text.getchar_prompt:0000000000000052 .LVL108
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1154   .text.getchar_prompt:000000000000007a .LVL117
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1093   .text.getchar_prompt:0000000000000048 .LVL106
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1097   .text.getchar_prompt:000000000000004c .LVL107
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1110   .text.getchar_prompt:0000000000000058 .LVL110
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1010   .text.getchar_prompt:0000000000000006 .LVL98
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1027   .text.getchar_prompt:0000000000000018 .LVL99
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1060   .text.getchar_prompt:0000000000000032 .LVL104
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1036   .text.getchar_prompt:000000000000001e .LVL100
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1041   .text.getchar_prompt:0000000000000022 .LVL101
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1058   .text.getchar_prompt:0000000000000030 .LVL103
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1046   .text.getchar_prompt:0000000000000026 .LVL102
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1105   .text.getchar_prompt:0000000000000054 .LVL109
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1114   .text.getchar_prompt:000000000000005e .LVL111
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1124   .text.getchar_prompt:0000000000000064 .LVL112
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1129   .text.getchar_prompt:0000000000000068 .LVL113
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1146   .text.getchar_prompt:0000000000000076 .LVL115
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1134   .text.getchar_prompt:000000000000006c .LVL114
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1148   .text.getchar_prompt:0000000000000078 .LVL116
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:581    .text.printk:0000000000000000 .LVL56
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:637    .text.printk:0000000000000042 .LVL58
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:613    .text.printk:0000000000000028 .LVL57
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:649    .text.printk:0000000000000050 .LVL60
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:656    .text.printk:0000000000000056 .LVL61
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:681    .text.printk:0000000000000072 .LVL65
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:704    .text.printk:0000000000000086 .LVL66
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:815    .text.printk:00000000000000ac .LVL68
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:817    .text.printk:00000000000000ae .LVL69
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:834    .text.printk:00000000000000c0 .LVL71
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:836    .text.printk:00000000000000c2 .LVL72
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:841    .text.printk:00000000000000c4 .LVL73
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:860    .text.printk:00000000000000d6 .LVL76
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:863    .text.printk:00000000000000d8 .LVL77
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:870    .text.printk:00000000000000da .LVL78
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:889    .text.printk:00000000000000f0 .LVL82
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:891    .text.printk:00000000000000f2 .LVL83
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:949    .text.printk:0000000000000120 .LVL90
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:960    .text.printk:0000000000000136 .LVL92
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:970    .text.printk:0000000000000142 .LVL94
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:972    .text.printk:0000000000000144 .LVL95
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:661    .text.printk:000000000000005e .LVL62
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:668    .text.printk:0000000000000062 .LVL63
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:641    .text.printk:0000000000000046 .LVL59
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:807    .text.printk:00000000000000a2 .LVL67
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:824    .text.printk:00000000000000b4 .LVL70
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:846    .text.printk:00000000000000c8 .LVL74
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:853    .text.printk:00000000000000ce .LVL75
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:875    .text.printk:00000000000000de .LVL79
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:882    .text.printk:00000000000000e4 .LVL80
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:900    .text.printk:00000000000000f6 .LVL84
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:938    .text.printk:000000000000011c .LVL89
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:910    .text.printk:0000000000000102 .LVL85
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:922    .text.printk:000000000000010e .LVL86
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:926    .text.printk:0000000000000112 .LVL87
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:932    .text.printk:0000000000000116 .LVL88
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:421    .text.print_flt:0000000000000000 .LVL40
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:439    .text.print_flt:0000000000000018 .LVL41
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:464    .text.print_flt:0000000000000030 .LVL45
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:498    .text.print_flt:000000000000006c .LVL51
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:520    .text.print_flt:000000000000007c .LVL52
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:526    .text.print_flt:000000000000007e .LVL53
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:441    .text.print_flt:000000000000001a .LVL42
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:484    .text.print_flt:0000000000000066 .LVL49
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:453    .text.print_flt:0000000000000026 .LVL44
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:446    .text.print_flt:000000000000001c .LVL43
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:489    .text.print_flt:0000000000000068 .LVL50
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:250    .text.print_hex:0000000000000000 .LVL22
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:287    .text.print_hex:0000000000000020 .LVL24
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:289    .text.print_hex:0000000000000022 .LVL25
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:277    .text.print_hex:000000000000001a .LVL23
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:297    .text.print_hex:0000000000000028 .LVL27
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:306    .text.print_hex:0000000000000038 .LVL28
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:316    .text.print_hex:0000000000000046 .LVL30
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:321    .text.print_hex:0000000000000048 .LVL31
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:15     .text.print_num:0000000000000000 .LVL0
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:33     .text.print_num.part.0:0000000000000000 .LVL2
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:41     .text.print_num.part.0:000000000000000a .LVL3
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:53     .text.print_num.part.0:000000000000001c .LVL5
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:88     .text.print_num.part.0:000000000000003c .LVL7
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:92     .text.print_num.part.0:0000000000000040 .LVL8
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:126    .text.print_num.part.0:0000000000000054 .LVL9
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:141    .text.put_char:0000000000000000 .LVL10
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:154    .text.put_char:000000000000000e .LVL11
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:168    .text.put_char:000000000000001c .LVL12
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:173    .text.put_char:000000000000001e .LVL13
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:188    .text.print_str:0000000000000000 .LVL15
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:216    .text.print_str:000000000000001a .LVL18
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:202    .text.print_str:0000000000000010 .LVL16
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:211    .text.print_str:0000000000000016 .LVL17
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:233    .text.print_str:0000000000000026 .LVL20
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:221    .text.print_str:000000000000001e .LVL19
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:235    .text.print_str:0000000000000028 .LVL21
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:349    .text.print_hex2:0000000000000000 .LVL32
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:352    .text.print_hex2:0000000000000002 .LVL33
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:363    .text.print_hex2:000000000000000e .LVL34
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:383    .text.print_dec:0000000000000000 .LVL36
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:386    .text.print_dec:0000000000000002 .LVL37
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:397    .text.print_dec:000000000000000e .LVL38
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1275   .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:61     .text.print_num.part.0:0000000000000026 .LBE76
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:66     .text.print_num.part.0:000000000000002c .LBB86
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:71     .text.print_num.part.0:0000000000000030 .LBE86
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:78     .text.print_num.part.0:0000000000000034 .LBB87
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:84     .text.print_num.part.0:000000000000003a .LBE87
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:95     .text.print_num.part.0:0000000000000040 .LBB88
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:104    .text.print_num.part.0:0000000000000044 .LBE88
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:110    .text.print_num.part.0:0000000000000048 .LBB89
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:122    .text.print_num.part.0:0000000000000052 .LBE89
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:102    .text.print_num.part.0:0000000000000044 .LBE78
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:112    .text.print_num.part.0:0000000000000048 .LBB81
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:118    .text.print_num.part.0:000000000000004c .LBE81
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:208    .text.print_str:0000000000000012 .LBE94
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:217    .text.print_str:000000000000001a .LBB101
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:230    .text.print_str:0000000000000022 .LBE101
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:205    .text.print_str:0000000000000010 .LBE96
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:222    .text.print_str:000000000000001e .LBB99
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:227    .text.print_str:0000000000000020 .LBE99
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:252    .text.print_hex:0000000000000004 .LBB108
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:318    .text.print_hex:0000000000000046 .LBE108
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:323    .text.print_hex:0000000000000048 .LBB123
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:337    .text.print_hex:000000000000004e .LBE123
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:256    .text.print_hex:000000000000000a .LBB109
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:273    .text.print_hex:0000000000000016 .LBE109
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:279    .text.print_hex:000000000000001a .LBB120
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:292    .text.print_hex:0000000000000022 .LBE120
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:299    .text.print_hex:0000000000000028 .LBB121
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:311    .text.print_hex:0000000000000040 .LBE121
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:324    .text.print_hex:0000000000000048 .LBB122
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:336    .text.print_hex:000000000000004e .LBE122
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:272    .text.print_hex:0000000000000016 .LBE110
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:280    .text.print_hex:000000000000001a .LBB118
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:291    .text.print_hex:0000000000000022 .LBE118
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:325    .text.print_hex:0000000000000048 .LBB119
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:335    .text.print_hex:000000000000004e .LBE119
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:270    .text.print_hex:0000000000000016 .LBE112
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:327    .text.print_hex:0000000000000048 .LBB115
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:333    .text.print_hex:000000000000004e .LBE115
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:458    .text.print_flt:0000000000000026 .LBE132
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:558    .text.print_flt:0000000000000092 .LBB155
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:569    .text.print_flt:000000000000009e .LBE155
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:491    .text.print_flt:0000000000000068 .LBE141
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:499    .text.print_flt:000000000000006c .LBB152
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:509    .text.print_flt:0000000000000072 .LBE152
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:535    .text.print_flt:0000000000000086 .LBB153
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:543    .text.print_flt:0000000000000088 .LBE153
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:546    .text.print_flt:000000000000008a .LBB154
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:557    .text.print_flt:0000000000000092 .LBE154
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:541    .text.print_flt:0000000000000088 .LBE145
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:548    .text.print_flt:000000000000008a .LBB148
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:555    .text.print_flt:0000000000000092 .LBE148
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:631    .text.printk:0000000000000038 .LBE194
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:662    .text.printk:000000000000005e .LBB203
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:677    .text.printk:000000000000006c .LBE203
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:629    .text.printk:0000000000000038 .LBE196
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:664    .text.printk:000000000000005e .LBB199
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:670    .text.printk:0000000000000062 .LBE199
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:838    .text.printk:00000000000000c2 .LBE206
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:978    .text.printk:0000000000000144 .LBB231
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:988    .text.printk:000000000000014a .LBE231
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:867    .text.printk:00000000000000d8 .LBE211
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:962    .text.printk:0000000000000136 .LBB230
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:977    .text.printk:0000000000000144 .LBE230
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:919    .text.printk:000000000000010a .LBE224
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:927    .text.printk:0000000000000112 .LBB229
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:943    .text.printk:000000000000011c .LBE229
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1033   .text.getchar_prompt:000000000000001a .LBE246
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1042   .text.getchar_prompt:0000000000000022 .LBB253
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1055   .text.getchar_prompt:000000000000002c .LBE253
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1030   .text.getchar_prompt:0000000000000018 .LBE248
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1047   .text.getchar_prompt:0000000000000026 .LBB251
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1052   .text.getchar_prompt:000000000000002a .LBE251
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1083   .text.getchar_prompt:0000000000000042 .LBE254
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1106   .text.getchar_prompt:0000000000000054 .LBB267
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1151   .text.getchar_prompt:0000000000000078 .LBE267
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1081   .text.getchar_prompt:0000000000000042 .LBE256
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1116   .text.getchar_prompt:000000000000005e .LBB264
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1121   .text.getchar_prompt:0000000000000060 .LBE264
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1130   .text.getchar_prompt:0000000000000068 .LBB265
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1143   .text.getchar_prompt:0000000000000072 .LBE265
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1079   .text.getchar_prompt:0000000000000042 .LBE258
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1135   .text.getchar_prompt:000000000000006c .LBB261
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1140   .text.getchar_prompt:0000000000000070 .LBE261
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1192   .text.get_char:0000000000000010 .LBE272
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1196   .text.get_char:0000000000000012 .LBB282
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1201   .text.get_char:0000000000000016 .LBE282
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1206   .text.get_char:0000000000000018 .LBB283
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1213   .text.get_char:000000000000001e .LBE283
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1221   .text.get_char:0000000000000022 .LBB284
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1230   .text.get_char:0000000000000026 .LBE284
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1234   .text.get_char:0000000000000028 .LBB285
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1247   .text.get_char:0000000000000032 .LBE285
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1228   .text.get_char:0000000000000026 .LBE274
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1236   .text.get_char:0000000000000028 .LBB277
+C:\Users\rana\AppData\Local\Temp\ccWjQB6u.s:1242   .text.get_char:000000000000002c .LBE277
 
 UNDEFINED SYMBOLS
 __fixdfsi

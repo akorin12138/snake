@@ -6,7 +6,6 @@
 C_SRCS += \
 ../src/main.c \
 ../src/snake.c \
-../src/test.c \
 ../src/uart.c 
 
 S_UPPER_SRCS += \
@@ -16,7 +15,6 @@ OBJS += \
 ./src/main.o \
 ./src/snake.o \
 ./src/start.o \
-./src/test.o \
 ./src/uart.o 
 
 S_UPPER_DEPS += \
@@ -25,7 +23,6 @@ S_UPPER_DEPS += \
 C_DEPS += \
 ./src/main.d \
 ./src/snake.d \
-./src/test.d \
 ./src/uart.d 
 
 

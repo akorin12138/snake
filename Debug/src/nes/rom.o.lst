@@ -40988,15 +40988,15 @@
  40990              		.file 1 "../src/nes/rom.c"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 rom.c
-C:\Users\rana\AppData\Local\Temp\ccy9Pv8U.s:11     .rodata.nes_rom:0000000000000000 nes_rom
-C:\Users\rana\AppData\Local\Temp\ccy9Pv8U.s:41032  .debug_abbrev:0000000000000000 .Ldebug_abbrev0
-C:\Users\rana\AppData\Local\Temp\ccy9Pv8U.s:41123  .debug_str:0000000000000058 .LASF2
-C:\Users\rana\AppData\Local\Temp\ccy9Pv8U.s:41121  .debug_str:0000000000000047 .LASF3
-C:\Users\rana\AppData\Local\Temp\ccy9Pv8U.s:41119  .debug_str:0000000000000016 .LASF4
-C:\Users\rana\AppData\Local\Temp\ccy9Pv8U.s:41113  .debug_line:0000000000000000 .Ldebug_line0
-C:\Users\rana\AppData\Local\Temp\ccy9Pv8U.s:41125  .debug_str:00000000000000fa .LASF0
-C:\Users\rana\AppData\Local\Temp\ccy9Pv8U.s:41115  .debug_str:0000000000000000 .LASF1
-C:\Users\rana\AppData\Local\Temp\ccy9Pv8U.s:41117  .debug_str:000000000000000e .LASF5
-C:\Users\rana\AppData\Local\Temp\ccy9Pv8U.s:40992  .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\rana\AppData\Local\Temp\cclFJbVQ.s:11     .rodata.nes_rom:0000000000000000 nes_rom
+C:\Users\rana\AppData\Local\Temp\cclFJbVQ.s:41032  .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\rana\AppData\Local\Temp\cclFJbVQ.s:41123  .debug_str:0000000000000058 .LASF2
+C:\Users\rana\AppData\Local\Temp\cclFJbVQ.s:41121  .debug_str:0000000000000047 .LASF3
+C:\Users\rana\AppData\Local\Temp\cclFJbVQ.s:41119  .debug_str:0000000000000016 .LASF4
+C:\Users\rana\AppData\Local\Temp\cclFJbVQ.s:41113  .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\rana\AppData\Local\Temp\cclFJbVQ.s:41125  .debug_str:00000000000000fa .LASF0
+C:\Users\rana\AppData\Local\Temp\cclFJbVQ.s:41115  .debug_str:0000000000000000 .LASF1
+C:\Users\rana\AppData\Local\Temp\cclFJbVQ.s:41117  .debug_str:000000000000000e .LASF5
+C:\Users\rana\AppData\Local\Temp\cclFJbVQ.s:40992  .debug_info:0000000000000000 .Ldebug_info0
 
 NO UNDEFINED SYMBOLS

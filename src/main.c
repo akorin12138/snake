@@ -1,16 +1,17 @@
 #include "uart.h"
-#include "snake.h"
+#include "nes/infoNES.h"
+//#include "snake.h"
 
-#define led_address 			(*(volatile uint32_t*)0x00008020)
-#define gpio_address 			(*(volatile uint32_t*)0x00008030)
-#define gpio_point   			(volatile uint32_t*)0x00008030
+#define led_address 			(*(volatile uint32_t*)0x00040020)
+#define gpio_address 			(*(volatile uint32_t*)0x00040030)
+#define gpio_point   			(volatile uint32_t*)0x00040030
 
-#define rgb_out_address				(*(volatile uint32_t*)0x00008040)
-#define rgb_in_address				(*(volatile uint32_t*)0x00008050)
-#define rgb_point				    (volatile uint32_t*)0x00008050
-//
-#define user_block_u_address		(*(volatile uint32_t*)0x00008080)
-#define user_block_d_address		(*(volatile uint32_t*)0x00008090)
+//#define rgb_out_address				(*(volatile uint32_t*)0x00008040)
+//#define rgb_in_address				(*(volatile uint32_t*)0x00008050)
+//#define rgb_point				    (volatile uint32_t*)0x00008050
+////
+//#define user_block_u_address		(*(volatile uint32_t*)0x00008080)
+//#define user_block_d_address		(*(volatile uint32_t*)0x00008090)
 
 //
 //#define rgb_r_out				(*(volatile uint32_t*)0x00008090)
@@ -83,10 +84,10 @@ void led_blink(void)
 //	}
 }
 
-void ps2_test(){
-	int getps2 = *ps2ctrl_point;
-	printk("getps2 = %d\n",getps2);
-}
+//void ps2_test(){
+//	int getps2 = *ps2ctrl_point;
+//	printk("getps2 = %d\n",getps2);
+//}
 
 void gpio_test(){
 	int count = 0;
@@ -109,56 +110,56 @@ void gpio_test(){
 }
 
 
-void rgb_test(){
-	int addr = 0;
-	int data = 0;
-	int cut = 0;
-	data= POINT;
-	ram_address = addr;
-	ram_data_address = data;
-	delay(DELAY_CUT,1,1);
-	delay(DELAY_CUT,2,1);
-	clear_point(1,1);
-	delay(DELAY_CUT,18,21);
-	delay(DELAY_CUT,3,1);
-	clear_point(2,1);
-	delay(DELAY_CUT,4,1);
-	clear_point(3,1);
-	delay(DELAY_CUT,5,1);
-	clear_point(4,1);
-	delay(DELAY_CUT,6,1);
-	clear_point(5,1);
-	while(1){
-		cut++;
-		if(cut==1000000){
-			cut = 0;
-			addr++;
-			printk("addr:%x",addr);
-		}
-		ram_address = addr;
-		ram_data_address = 0b00100011;
-	}
-}
+//void rgb_test(){
+//	int addr = 0;
+//	int data = 0;
+//	int cut = 0;
+//	data= POINT;
+//	ram_address = addr;
+//	ram_data_address = data;
+//	delay(DELAY_CUT,1,1);
+//	delay(DELAY_CUT,2,1);
+//	clear_point(1,1);
+//	delay(DELAY_CUT,18,21);
+//	delay(DELAY_CUT,3,1);
+//	clear_point(2,1);
+//	delay(DELAY_CUT,4,1);
+//	clear_point(3,1);
+//	delay(DELAY_CUT,5,1);
+//	clear_point(4,1);
+//	delay(DELAY_CUT,6,1);
+//	clear_point(5,1);
+//	while(1){
+//		cut++;
+//		if(cut==1000000){
+//			cut = 0;
+//			addr++;
+//			printk("addr:%x",addr);
+//		}
+//		ram_address = addr;
+//		ram_data_address = 0b00100011;
+//	}
+//}
 
-void block_test(){
-	draw_c(8,5,2);
-	draw_c(10,5,3);
-	draw_c(12,5,4);
-	draw_c(14,5,5);
-	draw_c(16,5,6);
-	draw_c(18,5,7);
-	draw_c(20,5,5);
-	draw_c(22,5,0);
-}
+//void block_test(){
+//	draw_c(8,5,2);
+//	draw_c(10,5,3);
+//	draw_c(12,5,4);
+//	draw_c(14,5,5);
+//	draw_c(16,5,6);
+//	draw_c(18,5,7);
+//	draw_c(20,5,5);
+//	draw_c(22,5,0);
+//}
 
 int main(void)
 {
-	reg_uart_clkdiv = BAUND_9600;
+	reg_uart_clkdiv = BAUND_115200;
 	printk("Hello Risc-V Pango 2019\n");
 	printk("test data = %d,%f,%s,0x = %x\n", 100,33.456,"2019",100);
 	printk("simple compute : 50*10 = %d,100/3 = %f,100%3 = %d\n", 50*10,(double)100/3,(int)100%3);
 	printk("test/n");
-	gpio_test();
+//	gpio_test();
 //	rgb_test();
 //	delay(10000,40,15);
 //	clear_point(40,15);
@@ -167,6 +168,16 @@ int main(void)
 //loop:
 //	SnakeGameStart();
 //	goto loop;
+
+	if(0!=InfoNES_Load(NULL))
+		{
+			printk("start failed!");
+		}
+		else
+		{
+			printk("start success!");
+			InfoNES_Main();
+		}
 	return 0;
 }
 
