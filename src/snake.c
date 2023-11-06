@@ -162,18 +162,20 @@ u8 SnakeGameStart(void)
   food_y = 15;
   HDMI_DrawPoint(food_x,food_y,1);//绘制实物
   int getps2 = *ps2ctrl_point;//手柄键值接收
-  u8 key_val=0;//取有效键值
+  u8 key_val = (getps2>>4);//取有效键值
   while(1)
   {
+	  snake_info[node_cnt].x=snake_info[node_cnt-1].x;
+	  snake_info[node_cnt].y=snake_info[node_cnt-1].y;
 	  if(stat&1<<0)
-		  snake_info[node_cnt].y=snake_info[node_cnt-1].y+1;
-	  else if(stat&1<<1)
 		  snake_info[node_cnt].y=snake_info[node_cnt-1].y-1;
+	  else if(stat&1<<1)
+		  snake_info[node_cnt].y=snake_info[node_cnt-1].y+1;
 	  else if(stat&1<<2)
 		  snake_info[node_cnt].x=snake_info[node_cnt-1].x-1;
 	  else if(stat&1<<3)
 		  snake_info[node_cnt].x=snake_info[node_cnt-1].x+1;
-    if(snake_info[node_cnt].x>39 || snake_info[node_cnt].y>29 || snake_info[node_cnt-1].x<1 || snake_info[node_cnt-1].y<1)//判断是否撞墙
+    if(snake_info[node_cnt].x>39 || snake_info[node_cnt-1].y>=29 || snake_info[node_cnt-1].x<1 || snake_info[node_cnt-1].y<1)//判断是否撞墙
     {
 //      snprintf(buff,sizeof(buff),"Mark:%d",node_cnt-2);
 //      HDMI_DisplayStr(36,8,8,16,buff);//字符串显示
@@ -189,7 +191,7 @@ u8 SnakeGameStart(void)
 //      {
 //        snake_info[node_cnt].x=food_x;
 //        snake_info[node_cnt].y=food_y+1;
-        if(stat&1<<0) y++;if(stat&1<<1) y--;
+        if(stat&1<<0) y--;if(stat&1<<1) y++;
 //      }
 //      else //向左或向右时x+5
 //      {
@@ -203,19 +205,22 @@ u8 SnakeGameStart(void)
       printk("node_cnt:%d",node_cnt);
       while(1)//保证重新生成的实物不再蛇身上
       {
-    	food_x=(rand()%40)+1;
+    	food_x=(rand()%39)+1;
         if(HDMI_GetSnakeFoodX(food_x,node_cnt)==0)break;
       }
       while(1)
       {
-    	food_y=(rand()%30)+1;
+    	food_y=(rand()%29)+1;
         if(HDMI_GetSnakeFoodY(food_y,node_cnt)==0)break;
       }
       HDMI_DrawPoint(food_x,food_y,1);//绘制实物
-      printk("foodx:%d,foody:%d\n",food_x,food_y);
+//      printk("foodx:%d,foody:%d\n",food_x,food_y);
     }
-    printk("x:%d,y:%d\n",snake_info[node_cnt-1].x,snake_info[node_cnt-1].y);
-    key_val = 0b1000;//用于测试
+    getps2 = *ps2ctrl_point;
+    if((getps2>>4)!=0)
+    	key_val = (getps2>>4);
+//    printk("x:%d,y:%d\n",snake_info[node_cnt-1].x,snake_info[node_cnt-1].y);
+    printk("key_val:%x\n",key_val);
     switch(key_val)
     {
       case 0b0001://上

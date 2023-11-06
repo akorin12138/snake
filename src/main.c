@@ -157,16 +157,29 @@ int main(void)
 	printk("Hello Risc-V Pango 2019\n");
 	printk("test data = %d,%f,%s,0x = %x\n", 100,33.456,"2019",100);
 	printk("simple compute : 50*10 = %d,100/3 = %f,100%3 = %d\n", 50*10,(double)100/3,(int)100%3);
-	printk("test/n");
-	gpio_test();
+	printk("test\n");
+	int cutx = 0;int cuty = 0;
+//	gpio_test();
 //	rgb_test();
 //	delay(10000,40,15);
 //	clear_point(40,15);
-//	ps2_test();
+	ps2_test();
 //	block_test();
-//loop:
-//	SnakeGameStart();
-//	goto loop;
+	u8 getps2 = *ps2ctrl_point;
+loop:
+	SnakeGameStart();
+	while(getps2 != 0b00000010){
+		getps2 = *ps2ctrl_point;
+		if(getps2 == 0b00000010){
+			for(cuty = 0;cuty<30;cuty++){
+				for(cutx = 0;cutx<40;cutx++)
+					clear_point(cutx,cuty);
+			}
+			break;
+		}
+	}//X
+	getps2 = 0;
+	goto loop;
 	return 0;
 }
 
