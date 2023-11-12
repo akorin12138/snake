@@ -69,7 +69,6 @@ int main(void)
 	printk("test data = %d,%f,%s,0x = %x\n", 100,33.456,"2019",100);
 	printk("simple compute : 50*10 = %d,100/3 = %f,100%3 = %d\n", 50*10,(double)100/3,(int)100%3);
 	printk("test\n");
-
 	GameStart();
 //loop:
 //	SnakeGameStart();

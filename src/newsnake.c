@@ -108,6 +108,8 @@ void refresh(){
 			hdmi_draw_dircle_solid(snake.snakeX[i],snake.snakeY[i],5,snakecolor);  //以算的蛇的坐标画半径为5的实心圆
 		}
 		hdmi_draw_dircle_solid(snake.foodX,snake.foodY,5,36);//画食物
+		hdmi_draw_string(250,70,"Score:",22);
+		hdmi_draw_num(260,90,score,2,23);
 	}
 }
 /*
@@ -121,17 +123,19 @@ void refresh(){
  *********************************************/
 void GameStart(){
 	hdmi_drawrectangle(10,10,230,230,25);
+	hdmi_draw_string(250,70,"Score:",22);
+	hdmi_draw_num(260,90,score,2,23);
 	snakeInit();
 	while(1){
 //		getps2 = *ps2ctrl_point;//手柄键值接收
 //		key_val = (getps2>>4);//取有效键值
+		snakeDelay();
 		switch(key_val){
 			case 1:snake.tpdir = 1;break;//上
 			case 2:snake.tpdir = -1;break;//下
 			case 4:snake.tpdir = 2;break;//左
 			case 8:snake.tpdir = -2;break;//右
 		}
-		snakeDelay();
 		snakeGo(snake.tpdir);
 		refresh();
 	}
@@ -200,7 +204,11 @@ void dead(){
 
 	snake.life=0;
 	hdmi_draw_string(80,50,"You dead!!!",20);
-	getps2 = *ps2ctrl_point;
+	hdmi_draw_string(50,70,"Press 'B'to restart",20);
+	hdmi_draw_string(250,70,"Score:",22);
+	hdmi_draw_num(260,90,score,2,23);
+	getps2 = 0;
+	score = 0;
 	while(getps2 == 0){
 		getps2 = *ps2ctrl_point;
 		if(getps2  == 0b00000010){

@@ -49,7 +49,7 @@ typedef   uint8_t     u8;   ///8位
 #define LED_DELAY				500000UL
 #define color_test				0x7E2B43
 #define	POINT				    (0b00010011+(0b1<<31))
-#define	DELAY_CUT				5000000
+#define	DELAY_CUT				300000
 
 
 #endif /* SYS_H_ */
