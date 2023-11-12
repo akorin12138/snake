@@ -3,1177 +3,681 @@
    3              		.text
    4              	.Ltext0:
    5              		.cfi_sections	.debug_frame
-   6              		.section	.text.led_blink,"ax",@progbits
+   6              		.section	.text.ps2_test,"ax",@progbits
    7              		.align	1
-   8              		.globl	led_blink
-  10              	led_blink:
+   8              		.globl	ps2_test
+  10              	ps2_test:
   11              	.LFB1:
   12              		.file 1 "../src/main.c"
-   1:../src/main.c **** #include "uart.h"
-   2:../src/main.c **** #include "snake.h"
-   3:../src/main.c **** 
-   4:../src/main.c **** #define led_address 			(*(volatile uint32_t*)0x00008020)
-   5:../src/main.c **** #define gpio_address 			(*(volatile uint32_t*)0x00008030)
-   6:../src/main.c **** #define gpio_point   			(volatile uint32_t*)0x00008030
+   1:../src/main.c **** #include <stdint.h>
+   2:../src/main.c **** #include <stdlib.h>
+   3:../src/main.c **** #include "sys.h"
+   4:../src/main.c **** 
+   5:../src/main.c **** int uart_data = 0;
+   6:../src/main.c **** int delaycnt = 0;
    7:../src/main.c **** 
-   8:../src/main.c **** #define rgb_out_address				(*(volatile uint32_t*)0x00008040)
-   9:../src/main.c **** #define rgb_in_address				(*(volatile uint32_t*)0x00008050)
-  10:../src/main.c **** #define rgb_point				    (volatile uint32_t*)0x00008050
-  11:../src/main.c **** //
-  12:../src/main.c **** #define user_block_u_address		(*(volatile uint32_t*)0x00008080)
-  13:../src/main.c **** #define user_block_d_address		(*(volatile uint32_t*)0x00008090)
-  14:../src/main.c **** 
-  15:../src/main.c **** //
-  16:../src/main.c **** //#define rgb_r_out				(*(volatile uint32_t*)0x00008090)
-  17:../src/main.c **** //#define rgb_g_out				(*(volatile uint32_t*)0x000080A0)
-  18:../src/main.c **** //#define rgb_b_out				(*(volatile uint32_t*)0x000080B0)
-  19:../src/main.c **** 
-  20:../src/main.c **** //系统时钟↓
-  21:../src/main.c **** #define SYSTEM_CNT_M			50			//系统时钟单位：MHz
-  22:../src/main.c **** 
-  23:../src/main.c **** #define SYSTEM_CLOCK			SYSTEM_CNT_M*1000000UL
-  24:../src/main.c **** #define BAUND_9600				((SYSTEM_CLOCK)/9600)
-  25:../src/main.c **** #define BAUND_115200			(SYSTEM_CLOCK/115200)
-  26:../src/main.c **** #define GPIO_DATA				0xaa55
-  27:../src/main.c **** #define LED_DELAY				500000UL
-  28:../src/main.c **** 
-  29:../src/main.c **** 
-  30:../src/main.c **** int temp_data = 0;
-  31:../src/main.c **** int uart_data = 0;
-  32:../src/main.c **** int delaycnt = 0;
-  33:../src/main.c **** long rgb_data = 0xffcc11;//这里更改颜色，前两位r中间g后两位b
-  34:../src/main.c **** long rgb_data_get_test = 0;
-  35:../src/main.c **** 
-  36:../src/main.c **** void led_blink(void);
-  37:../src/main.c **** /********************************************************************
-  38:../src/main.c ****  ** 函数名称：led_blink
-  39:../src/main.c ****  ** 函数功能：led blin测试（采用计数器的方式）
-  40:../src/main.c ****  ** 输入参数：无
-  41:../src/main.c ****  ** 输出参数：无
-  42:../src/main.c ****  ** 返回参数：无
-  43:../src/main.c ****  ********************************************************************/
-  44:../src/main.c **** void led_blink(void)
-  45:../src/main.c **** {
-  13              		.loc 1 45 0
+   8:../src/main.c **** /********************************************************************
+   9:../src/main.c ****  ** 函数名称：led_blink
+  10:../src/main.c ****  ** 函数功能：led blin测试（采用计数器的方式）
+  11:../src/main.c ****  ** 输入参数：无
+  12:../src/main.c ****  ** 输出参数：无
+  13:../src/main.c ****  ** 返回参数：无
+  14:../src/main.c ****  ********************************************************************/
+  15:../src/main.c **** 
+  16:../src/main.c **** void ps2_test(){
+  13              		.loc 1 16 0
   14              		.cfi_startproc
-  46:../src/main.c **** //	long rgb_count = 0;
-  47:../src/main.c **** //	char c;
-  48:../src/main.c **** //	int cnt = 0;
-  49:../src/main.c **** //	int count = 0;
-  50:../src/main.c **** //	temp_data = *gpio_point;
-  51:../src/main.c **** //	if(GPIO_DATA == temp_data)
-  52:../src/main.c **** //	{
-  53:../src/main.c **** //		printk("gpio success\n");
-  54:../src/main.c **** //	}
-  55:../src/main.c **** //	else
-  56:../src/main.c **** //	{
-  57:../src/main.c **** //		printk("gpio failed\n");
-  58:../src/main.c **** //	}
-  59:../src/main.c **** //
-  60:../src/main.c **** //	led_address = 0xff;
-  61:../src/main.c **** //	while(1)
-  62:../src/main.c **** //	{
-  63:../src/main.c **** //		cnt++;
-  64:../src/main.c **** //		if(cnt == LED_DELAY / 2)
-  65:../src/main.c **** //		{
-  66:../src/main.c **** //			count++;
-  67:../src/main.c **** //
-  68:../src/main.c **** //
-  69:../src/main.c **** ////			printk("%s",get_uart_data);
-  70:../src/main.c **** ////			led_address = 0x00;
-  71:../src/main.c **** //			printk("half\n");
-  72:../src/main.c **** //			printk("%x,%d\n",rgb_data,count);
-  73:../src/main.c **** //		}
-  74:../src/main.c **** //		else if(cnt == LED_DELAY)
-  75:../src/main.c **** //		{
-  76:../src/main.c **** //			cnt = 0;
-  77:../src/main.c **** ////			rgb_data_get_test = *rgb_point;
-  78:../src/main.c **** //			if (rgb_data_get_test == rgb_data)
-  79:../src/main.c **** //				printk("risc-v has found rgb_adress");
-  80:../src/main.c **** //			else printk("%x",rgb_data_get_test);
-  81:../src/main.c **** //		}
-  82:../src/main.c **** //		rgb_out_address = rgb_data;
-  83:../src/main.c **** //	}
-  84:../src/main.c **** }
-  15              		.loc 1 84 0
-  16 0000 8280     		ret
-  17              		.cfi_endproc
-  18              	.LFE1:
-  20              		.section	.text.ps2_test,"ax",@progbits
-  21              		.align	1
-  22              		.globl	ps2_test
-  24              	ps2_test:
-  25              	.LFB2:
-  85:../src/main.c **** 
-  86:../src/main.c **** void ps2_test(){
-  26              		.loc 1 86 0
-  27              		.cfi_startproc
-  87:../src/main.c **** 	int getps2 = *ps2ctrl_point;
-  28              		.loc 1 87 0
-  29 0000 A167     		li	a5,32768
-  30 0002 83A50710 		lw	a1,256(a5)
-  31              	.LVL0:
-  88:../src/main.c **** 	printk("getps2 = %d\n",getps2);
-  32              		.loc 1 88 0
-  33 0006 37050000 		lui	a0,%hi(.LC0)
-  34 000a 13050500 		addi	a0,a0,%lo(.LC0)
-  35 000e 17030000 		tail	printk
-  35      67000300 
-  36              	.LVL1:
-  37              		.cfi_endproc
-  38              	.LFE2:
-  40              		.section	.text.gpio_test,"ax",@progbits
-  41              		.align	1
-  42              		.globl	gpio_test
-  44              	gpio_test:
-  45              	.LFB3:
-  89:../src/main.c **** }
-  90:../src/main.c **** 
-  91:../src/main.c **** void gpio_test(){
-  46              		.loc 1 91 0
-  47              		.cfi_startproc
-  48              	.LVL2:
-  92:../src/main.c **** 	int count = 0;
-  93:../src/main.c **** 	temp_data = *gpio_point;
-  49              		.loc 1 93 0
-  50 0000 A167     		li	a5,32768
-  51 0002 985B     		lw	a4,48(a5)
-  52 0004 B7070000 		lui	a5,%hi(.LANCHOR0)
-  91:../src/main.c **** 	int count = 0;
-  53              		.loc 1 91 0
-  54 0008 4111     		addi	sp,sp,-16
-  55              		.cfi_def_cfa_offset 16
-  56              		.loc 1 93 0
-  57 000a 23A0E700 		sw	a4,%lo(.LANCHOR0)(a5)
-  94:../src/main.c **** 	if(GPIO_DATA == temp_data)
-  58              		.loc 1 94 0
-  59 000e AD67     		li	a5,45056
-  91:../src/main.c **** 	int count = 0;
-  60              		.loc 1 91 0
-  61 0010 06C6     		sw	ra,12(sp)
-  62 0012 22C4     		sw	s0,8(sp)
-  63              		.cfi_offset 1, -4
-  64              		.cfi_offset 8, -8
-  65              		.loc 1 94 0
-  66 0014 938757A5 		addi	a5,a5,-1451
-  67 0018 6303F702 		beq	a4,a5,.L9
-  95:../src/main.c **** 	{
-  96:../src/main.c **** 		printk("gpio success\n");
-  97:../src/main.c **** 	}
-  98:../src/main.c **** 	else
-  99:../src/main.c **** 	{
- 100:../src/main.c **** 		printk("gpio failed\n");
-  68              		.loc 1 100 0
-  69 001c 37050000 		lui	a0,%hi(.LC2)
-  70 0020 13050500 		addi	a0,a0,%lo(.LC2)
-  71 0024 97000000 		call	printk
-  71      E7800000 
-  72              	.LVL3:
-  73              	.L7:
-  74 002c 37040000 		lui	s0,%hi(.LC3)
-  75              	.L6:
- 101:../src/main.c **** 	}
- 102:../src/main.c **** 	while(1){
- 103:../src/main.c **** 		count++;
- 104:../src/main.c **** 		if(count == 10000){
- 105:../src/main.c **** 			count = 0;
- 106:../src/main.c **** 			printk("test\n");
-  76              		.loc 1 106 0
-  77 0030 13050400 		addi	a0,s0,%lo(.LC3)
-  78 0034 97000000 		call	printk
-  78      E7800000 
-  79              	.LVL4:
-  80 003c D5BF     		j	.L6
-  81              	.L9:
-  96:../src/main.c **** 	}
-  82              		.loc 1 96 0
-  83 003e 37050000 		lui	a0,%hi(.LC1)
-  84 0042 13050500 		addi	a0,a0,%lo(.LC1)
-  85 0046 97000000 		call	printk
-  85      E7800000 
-  86              	.LVL5:
-  87 004e F9BF     		j	.L7
-  88              		.cfi_endproc
-  89              	.LFE3:
-  91              		.section	.text.rgb_test,"ax",@progbits
-  92              		.align	1
-  93              		.globl	rgb_test
-  95              	rgb_test:
-  96              	.LFB4:
- 107:../src/main.c **** 		}
- 108:../src/main.c **** 	}
- 109:../src/main.c **** }
- 110:../src/main.c **** 
- 111:../src/main.c **** 
- 112:../src/main.c **** void rgb_test(){
-  97              		.loc 1 112 0
-  98              		.cfi_startproc
-  99              	.LVL6:
- 100 0000 0111     		addi	sp,sp,-32
- 101              		.cfi_def_cfa_offset 32
- 113:../src/main.c **** 	int addr = 0;
- 114:../src/main.c **** 	int data = 0;
- 115:../src/main.c **** 	int cut = 0;
- 116:../src/main.c **** 	data= POINT;
- 117:../src/main.c **** 	ram_address = addr;
- 102              		.loc 1 117 0
- 103 0002 A167     		li	a5,32768
- 112:../src/main.c **** 	int addr = 0;
- 104              		.loc 1 112 0
- 105 0004 06CE     		sw	ra,28(sp)
- 106 0006 22CC     		sw	s0,24(sp)
- 107 0008 26CA     		sw	s1,20(sp)
- 108 000a 4AC8     		sw	s2,16(sp)
- 109 000c 4EC6     		sw	s3,12(sp)
- 110 000e 52C4     		sw	s4,8(sp)
- 111 0010 56C2     		sw	s5,4(sp)
- 112              		.cfi_offset 1, -4
- 113              		.cfi_offset 8, -8
- 114              		.cfi_offset 9, -12
- 115              		.cfi_offset 18, -16
- 116              		.cfi_offset 19, -20
- 117              		.cfi_offset 20, -24
- 118              		.cfi_offset 21, -28
- 119              		.loc 1 117 0
- 120 0012 23A00706 		sw	zero,96(a5)
- 118:../src/main.c **** 	ram_data_address = data;
- 121              		.loc 1 118 0
- 122 0016 4D47     		li	a4,19
- 119:../src/main.c **** 	delay(DELAY_CUT,1,1);
- 123              		.loc 1 119 0
- 124 0018 B7440F00 		li	s1,999424
- 118:../src/main.c **** 	ram_data_address = data;
- 125              		.loc 1 118 0
- 126 001c B8DB     		sw	a4,112(a5)
- 127              		.loc 1 119 0
- 128 001e 13850424 		addi	a0,s1,576
- 129 0022 0546     		li	a2,1
- 130 0024 8545     		li	a1,1
- 131 0026 97000000 		call	delay
+  17:../src/main.c **** 	int getps2 = *ps2ctrl_point;
+  15              		.loc 1 17 0
+  16 0000 A167     		li	a5,32768
+  17 0002 83A50710 		lw	a1,256(a5)
+  18              	.LVL0:
+  18:../src/main.c **** 	printk("getps2 = %d\n",getps2);
+  19              		.loc 1 18 0
+  20 0006 37050000 		lui	a0,%hi(.LC0)
+  21 000a 13050500 		addi	a0,a0,%lo(.LC0)
+  22 000e 17030000 		tail	printk
+  22      67000300 
+  23              	.LVL1:
+  24              		.cfi_endproc
+  25              	.LFE1:
+  27              		.section	.text.draw_point_test,"ax",@progbits
+  28              		.align	1
+  29              		.globl	draw_point_test
+  31              	draw_point_test:
+  32              	.LFB2:
+  19:../src/main.c **** }
+  20:../src/main.c **** 
+  21:../src/main.c **** 
+  22:../src/main.c **** void draw_point_test(int x,int y){
+  33              		.loc 1 22 0
+  34              		.cfi_startproc
+  35              	.LVL2:
+  23:../src/main.c **** 	u32 addr_temp;
+  24:../src/main.c **** 	u32 data_temp;
+  25:../src/main.c **** 	addr_temp = 40*y + x;
+  36              		.loc 1 25 0
+  37 0000 93972500 		slli	a5,a1,2
+  38 0004 BE95     		add	a1,a5,a1
+  39              	.LVL3:
+  40 0006 8E05     		slli	a1,a1,3
+  41 0008 AA95     		add	a1,a1,a0
+  42              	.LVL4:
+  26:../src/main.c **** 	ram_address = addr_temp;
+  43              		.loc 1 26 0
+  44 000a 2167     		li	a4,32768
+  27:../src/main.c **** 	ram_data_address = 0b00010011+(0b1<<31);
+  45              		.loc 1 27 0
+  46 000c B7070080 		li	a5,-2147483648
+  26:../src/main.c **** 	ram_address = addr_temp;
+  47              		.loc 1 26 0
+  48 0010 2CD3     		sw	a1,96(a4)
+  49              		.loc 1 27 0
+  50 0012 CD07     		addi	a5,a5,19
+  28:../src/main.c **** 	data_temp = 0b00010011+(0b1<<31);
+  29:../src/main.c **** 	printk("we_valid:%d",data_temp>>31);
+  51              		.loc 1 29 0
+  52 0014 37050000 		lui	a0,%hi(.LC1)
+  53              	.LVL5:
+  27:../src/main.c **** 	ram_data_address = 0b00010011+(0b1<<31);
+  54              		.loc 1 27 0
+  55 0018 3CDB     		sw	a5,112(a4)
+  56              	.LVL6:
+  57              		.loc 1 29 0
+  58 001a 8545     		li	a1,1
+  59              	.LVL7:
+  60 001c 13050500 		addi	a0,a0,%lo(.LC1)
+  61 0020 17030000 		tail	printk
+  61      67000300 
+  62              	.LVL8:
+  63              		.cfi_endproc
+  64              	.LFE2:
+  66              		.section	.text.rgb_test,"ax",@progbits
+  67              		.align	1
+  68              		.globl	rgb_test
+  70              	rgb_test:
+  71              	.LFB3:
+  30:../src/main.c **** }
+  31:../src/main.c **** 
+  32:../src/main.c **** void rgb_test(){
+  72              		.loc 1 32 0
+  73              		.cfi_startproc
+  74              	.LVL9:
+  75 0000 4111     		addi	sp,sp,-16
+  76              		.cfi_def_cfa_offset 16
+  33:../src/main.c **** 	u32 cut = 0;
+  34:../src/main.c **** 	u32 addr = 0;
+  35:../src/main.c **** 	u32 color = 0;
+  36:../src/main.c **** 	u32 i;
+  37:../src/main.c **** 	for(i = 0;i < 86400;i++){
+  38:../src/main.c **** 		ram_address = i;
+  77              		.loc 1 38 0
+  78 0002 2167     		li	a4,32768
+  37:../src/main.c **** 		ram_address = i;
+  79              		.loc 1 37 0
+  80 0004 D565     		li	a1,86016
+  32:../src/main.c **** 	u32 cut = 0;
+  81              		.loc 1 32 0
+  82 0006 06C6     		sw	ra,12(sp)
+  83              		.cfi_offset 1, -4
+  37:../src/main.c **** 		ram_address = i;
+  84              		.loc 1 37 0
+  85 0008 8147     		li	a5,0
+  39:../src/main.c **** 		ram_data_address = (0+(0b1<<31));
+  86              		.loc 1 39 0
+  87 000a 93060707 		addi	a3,a4,112
+  88 000e 37080080 		li	a6,-2147483648
+  89 0012 37050080 		li	a0,-2147483648
+  37:../src/main.c **** 		ram_address = i;
+  90              		.loc 1 37 0
+  91 0016 93850518 		addi	a1,a1,384
+  92              	.LVL10:
+  93              	.L5:
+  38:../src/main.c **** 		ram_data_address = (0+(0b1<<31));
+  94              		.loc 1 38 0 discriminator 3
+  95 001a 3CD3     		sw	a5,96(a4)
+  96              		.loc 1 39 0 discriminator 3
+  97 001c 88C2     		sw	a0,0(a3)
+  37:../src/main.c **** 		ram_address = i;
+  98              		.loc 1 37 0 discriminator 3
+  99 001e 8507     		addi	a5,a5,1
+ 100              	.LVL11:
+ 101 0020 E39DB7FE 		bne	a5,a1,.L5
+  40:../src/main.c **** 	}
+  41:../src/main.c **** 	ram_address = 0;
+ 102              		.loc 1 41 0
+ 103 0024 23200706 		sw	zero,96(a4)
+  42:../src/main.c **** 	ram_data_address = (5+(0b1<<31));
+ 104              		.loc 1 42 0
+ 105 0028 93075800 		addi	a5,a6,5
+ 106              	.LVL12:
+ 107 002c 9CC2     		sw	a5,0(a3)
+  43:../src/main.c **** 	ram_address = 50;
+ 108              		.loc 1 43 0
+ 109 002e 93072003 		li	a5,50
+ 110 0032 3CD3     		sw	a5,96(a4)
+  44:../src/main.c **** 	ram_data_address = (50+(0b1<<31));
+ 111              		.loc 1 44 0
+ 112 0034 93072803 		addi	a5,a6,50
+ 113 0038 9CC2     		sw	a5,0(a3)
+  45:../src/main.c **** 	ram_address = 20000;
+ 114              		.loc 1 45 0
+ 115 003a 9567     		li	a5,20480
+ 116 003c 938707E2 		addi	a5,a5,-480
+ 117 0040 3CD3     		sw	a5,96(a4)
+  46:../src/main.c **** 	ram_data_address = (150+(0b1<<31));
+ 118              		.loc 1 46 0
+ 119 0042 13086809 		addi	a6,a6,150
+ 120 0046 23A00601 		sw	a6,0(a3)
+  47:../src/main.c **** 	hdmi_draw_point(20,50,1);
+ 121              		.loc 1 47 0
+ 122 004a 0546     		li	a2,1
+ 123 004c 93052003 		li	a1,50
+ 124 0050 5145     		li	a0,20
+ 125 0052 97000000 		call	hdmi_draw_point
+ 125      E7800000 
+ 126              	.LVL13:
+  48:../src/main.c **** 	hdmi_draw_point(20,60,2);
+ 127              		.loc 1 48 0
+ 128 005a 0946     		li	a2,2
+ 129 005c 9305C003 		li	a1,60
+ 130 0060 5145     		li	a0,20
+ 131 0062 97000000 		call	hdmi_draw_point
  131      E7800000 
- 132              	.LVL7:
- 120:../src/main.c **** 	delay(DELAY_CUT,2,1);
- 133              		.loc 1 120 0
- 134 002e 0546     		li	a2,1
- 135 0030 13850424 		addi	a0,s1,576
- 136 0034 8945     		li	a1,2
- 137 0036 97000000 		call	delay
+ 132              	.LVL14:
+  49:../src/main.c **** 	hdmi_draw_point(20,70,3);
+ 133              		.loc 1 49 0
+ 134 006a 0D46     		li	a2,3
+ 135 006c 93056004 		li	a1,70
+ 136 0070 5145     		li	a0,20
+ 137 0072 97000000 		call	hdmi_draw_point
  137      E7800000 
- 138              	.LVL8:
- 121:../src/main.c **** 	clear_point(1,1);
- 139              		.loc 1 121 0
- 140 003e 8545     		li	a1,1
- 141 0040 0545     		li	a0,1
- 142 0042 97000000 		call	clear_point
- 142      E7800000 
- 143              	.LVL9:
- 122:../src/main.c **** 	delay(DELAY_CUT,18,21);
- 144              		.loc 1 122 0
- 145 004a 13850424 		addi	a0,s1,576
- 146 004e 5546     		li	a2,21
- 147 0050 C945     		li	a1,18
- 148 0052 97000000 		call	delay
- 148      E7800000 
- 149              	.LVL10:
- 123:../src/main.c **** 	delay(DELAY_CUT,3,1);
- 150              		.loc 1 123 0
- 151 005a 0546     		li	a2,1
- 152 005c 13850424 		addi	a0,s1,576
- 153 0060 8D45     		li	a1,3
- 154 0062 97000000 		call	delay
- 154      E7800000 
- 155              	.LVL11:
- 124:../src/main.c **** 	clear_point(2,1);
- 156              		.loc 1 124 0
- 157 006a 8545     		li	a1,1
- 158 006c 0945     		li	a0,2
- 159 006e 97000000 		call	clear_point
- 159      E7800000 
- 160              	.LVL12:
- 125:../src/main.c **** 	delay(DELAY_CUT,4,1);
- 161              		.loc 1 125 0
- 162 0076 0546     		li	a2,1
- 163 0078 13850424 		addi	a0,s1,576
- 164 007c 9145     		li	a1,4
- 165 007e 97000000 		call	delay
- 165      E7800000 
- 166              	.LVL13:
- 126:../src/main.c **** 	clear_point(3,1);
- 167              		.loc 1 126 0
- 168 0086 8545     		li	a1,1
- 169 0088 0D45     		li	a0,3
- 170 008a 97000000 		call	clear_point
- 170      E7800000 
- 171              	.LVL14:
- 127:../src/main.c **** 	delay(DELAY_CUT,5,1);
- 172              		.loc 1 127 0
- 173 0092 0546     		li	a2,1
- 174 0094 13850424 		addi	a0,s1,576
- 175 0098 9545     		li	a1,5
- 176 009a 97000000 		call	delay
- 176      E7800000 
- 177              	.LVL15:
- 128:../src/main.c **** 	clear_point(4,1);
- 178              		.loc 1 128 0
- 179 00a2 8545     		li	a1,1
- 180 00a4 1145     		li	a0,4
- 181 00a6 97000000 		call	clear_point
+ 138              	.LVL15:
+  50:../src/main.c **** 	hdmi_draw_point(20,80,4);
+  51:../src/main.c **** //	while(1){
+  52:../src/main.c **** //		cut ++;
+  53:../src/main.c **** //		if(cut == 100000){
+  54:../src/main.c **** //			cut = 0;
+  55:../src/main.c **** //			addr++;
+  56:../src/main.c **** //			color++;
+  57:../src/main.c **** //			if(color == 0xff) color = 0;
+  58:../src/main.c **** //			printk("color:%x\n",(color+1)*(0xffff+1));
+  59:../src/main.c **** //			ram_address = addr;
+  60:../src/main.c **** //			ram_data_address = (color+(0b1<<31));
+  61:../src/main.c **** //		}
+  62:../src/main.c **** //	}
+  63:../src/main.c **** }
+ 139              		.loc 1 63 0
+ 140 007a B240     		lw	ra,12(sp)
+ 141              		.cfi_restore 1
+  50:../src/main.c **** 	hdmi_draw_point(20,80,4);
+ 142              		.loc 1 50 0
+ 143 007c 1146     		li	a2,4
+ 144              		.loc 1 63 0
+  50:../src/main.c **** 	hdmi_draw_point(20,80,4);
+ 145              		.loc 1 50 0
+ 146 007e 93050005 		li	a1,80
+ 147 0082 5145     		li	a0,20
+ 148              		.loc 1 63 0
+ 149 0084 4101     		addi	sp,sp,16
+ 150              		.cfi_def_cfa_offset 0
+  50:../src/main.c **** 	hdmi_draw_point(20,80,4);
+ 151              		.loc 1 50 0
+ 152 0086 17030000 		tail	hdmi_draw_point
+ 152      67000300 
+ 153              	.LVL16:
+ 154              		.cfi_endproc
+ 155              	.LFE3:
+ 157              		.section	.text.startup.main,"ax",@progbits
+ 158              		.align	1
+ 159              		.globl	main
+ 161              	main:
+ 162              	.LFB4:
+  64:../src/main.c **** 
+  65:../src/main.c **** int main(void)
+  66:../src/main.c **** {
+ 163              		.loc 1 66 0
+ 164              		.cfi_startproc
+ 165 0000 4111     		addi	sp,sp,-16
+ 166              		.cfi_def_cfa_offset 16
+  67:../src/main.c **** 	reg_uart_clkdiv = BAUND_9600;
+ 167              		.loc 1 67 0
+ 168 0002 8567     		li	a5,4096
+  66:../src/main.c **** 	reg_uart_clkdiv = BAUND_9600;
+ 169              		.loc 1 66 0
+ 170 0004 06C6     		sw	ra,12(sp)
+ 171              		.cfi_offset 1, -4
+ 172              		.loc 1 67 0
+ 173 0006 2167     		li	a4,32768
+ 174 0008 93878745 		addi	a5,a5,1112
+  68:../src/main.c **** 	printk("Hello Risc-V Pango 2019\n");
+ 175              		.loc 1 68 0
+ 176 000c 37050000 		lui	a0,%hi(.LC2)
+  67:../src/main.c **** 	reg_uart_clkdiv = BAUND_9600;
+ 177              		.loc 1 67 0
+ 178 0010 1CC3     		sw	a5,0(a4)
+ 179              		.loc 1 68 0
+ 180 0012 13050500 		addi	a0,a0,%lo(.LC2)
+ 181 0016 97000000 		call	printk
  181      E7800000 
- 182              	.LVL16:
- 129:../src/main.c **** 	delay(DELAY_CUT,6,1);
- 183              		.loc 1 129 0
- 184 00ae 13850424 		addi	a0,s1,576
- 185 00b2 0546     		li	a2,1
- 186 00b4 9945     		li	a1,6
- 187 00b6 97000000 		call	delay
- 187      E7800000 
- 188              	.LVL17:
- 130:../src/main.c **** 	clear_point(5,1);
- 189              		.loc 1 130 0
- 190 00be 8545     		li	a1,1
- 191 00c0 1545     		li	a0,5
- 131:../src/main.c **** 	while(1){
- 132:../src/main.c **** 		cut++;
- 133:../src/main.c **** 		if(cut==1000000){
- 134:../src/main.c **** 			cut = 0;
- 135:../src/main.c **** 			addr++;
- 136:../src/main.c **** 			printk("addr:%x",addr);
- 137:../src/main.c **** 		}
- 138:../src/main.c **** 		ram_address = addr;
- 192              		.loc 1 138 0
- 193 00c2 2169     		li	s2,32768
- 130:../src/main.c **** 	clear_point(5,1);
- 194              		.loc 1 130 0
- 195 00c4 97000000 		call	clear_point
- 195      E7800000 
- 196              	.LVL18:
- 113:../src/main.c **** 	int data = 0;
- 197              		.loc 1 113 0
- 198 00cc 0144     		li	s0,0
- 132:../src/main.c **** 		if(cut==1000000){
- 199              		.loc 1 132 0
- 200 00ce 8547     		li	a5,1
- 201 00d0 B70A0000 		lui	s5,%hi(.LC4)
- 139:../src/main.c **** 		ram_data_address = 0b00100011;
- 202              		.loc 1 139 0
- 203 00d4 130A0907 		addi	s4,s2,112
- 204 00d8 93093002 		li	s3,35
- 133:../src/main.c **** 			cut = 0;
- 205              		.loc 1 133 0
- 206 00dc 93840424 		addi	s1,s1,576
- 207              	.LVL19:
- 208              	.L11:
- 138:../src/main.c **** 		ram_data_address = 0b00100011;
- 209              		.loc 1 138 0
- 210 00e0 23208906 		sw	s0,96(s2)
- 132:../src/main.c **** 		if(cut==1000000){
- 211              		.loc 1 132 0
- 212 00e4 8507     		addi	a5,a5,1
- 213              	.LVL20:
- 214              		.loc 1 139 0
- 215 00e6 23203A01 		sw	s3,0(s4)
- 216              	.LVL21:
- 133:../src/main.c **** 			cut = 0;
- 217              		.loc 1 133 0
- 218 00ea E39B97FE 		bne	a5,s1,.L11
- 219              	.LVL22:
- 135:../src/main.c **** 			printk("addr:%x",addr);
- 220              		.loc 1 135 0
- 221 00ee 0504     		addi	s0,s0,1
- 222              	.LVL23:
- 136:../src/main.c **** 		}
- 223              		.loc 1 136 0
- 224 00f0 A285     		mv	a1,s0
- 225 00f2 13850A00 		addi	a0,s5,%lo(.LC4)
- 226 00f6 97000000 		call	printk
- 226      E7800000 
- 227              	.LVL24:
- 134:../src/main.c **** 			addr++;
- 228              		.loc 1 134 0
- 229 00fe 8147     		li	a5,0
- 230 0100 C5B7     		j	.L11
- 231              		.cfi_endproc
- 232              	.LFE4:
- 234              		.section	.text.block_test,"ax",@progbits
- 235              		.align	1
- 236              		.globl	block_test
- 238              	block_test:
- 239              	.LFB5:
- 140:../src/main.c **** 	}
- 141:../src/main.c **** }
- 142:../src/main.c **** 
- 143:../src/main.c **** void block_test(){
- 240              		.loc 1 143 0
- 241              		.cfi_startproc
- 242 0000 4111     		addi	sp,sp,-16
- 243              		.cfi_def_cfa_offset 16
- 144:../src/main.c **** 	draw_c(8,5,2);
- 244              		.loc 1 144 0
- 245 0002 0946     		li	a2,2
- 246 0004 9545     		li	a1,5
- 247 0006 2145     		li	a0,8
- 143:../src/main.c **** 	draw_c(8,5,2);
- 248              		.loc 1 143 0
- 249 0008 06C6     		sw	ra,12(sp)
- 250              		.cfi_offset 1, -4
- 251              		.loc 1 144 0
- 252 000a 97000000 		call	draw_c
- 252      E7800000 
- 253              	.LVL25:
- 145:../src/main.c **** 	draw_c(10,5,3);
- 254              		.loc 1 145 0
- 255 0012 0D46     		li	a2,3
- 256 0014 9545     		li	a1,5
- 257 0016 2945     		li	a0,10
- 258 0018 97000000 		call	draw_c
- 258      E7800000 
- 259              	.LVL26:
- 146:../src/main.c **** 	draw_c(12,5,4);
- 260              		.loc 1 146 0
- 261 0020 1146     		li	a2,4
- 262 0022 9545     		li	a1,5
- 263 0024 3145     		li	a0,12
- 264 0026 97000000 		call	draw_c
- 264      E7800000 
- 265              	.LVL27:
- 147:../src/main.c **** 	draw_c(14,5,5);
- 266              		.loc 1 147 0
- 267 002e 1546     		li	a2,5
- 268 0030 9545     		li	a1,5
- 269 0032 3945     		li	a0,14
- 270 0034 97000000 		call	draw_c
- 270      E7800000 
- 271              	.LVL28:
- 148:../src/main.c **** 	draw_c(16,5,6);
- 272              		.loc 1 148 0
- 273 003c 1946     		li	a2,6
- 274 003e 9545     		li	a1,5
- 275 0040 4145     		li	a0,16
- 276 0042 97000000 		call	draw_c
- 276      E7800000 
- 277              	.LVL29:
- 149:../src/main.c **** 	draw_c(18,5,7);
- 278              		.loc 1 149 0
- 279 004a 1D46     		li	a2,7
- 280 004c 9545     		li	a1,5
- 281 004e 4945     		li	a0,18
- 282 0050 97000000 		call	draw_c
- 282      E7800000 
- 283              	.LVL30:
- 150:../src/main.c **** 	draw_c(20,5,5);
- 284              		.loc 1 150 0
- 285 0058 1546     		li	a2,5
- 286 005a 9545     		li	a1,5
- 287 005c 5145     		li	a0,20
- 288 005e 97000000 		call	draw_c
- 288      E7800000 
- 289              	.LVL31:
- 151:../src/main.c **** 	draw_c(22,5,0);
- 152:../src/main.c **** }
- 290              		.loc 1 152 0
- 291 0066 B240     		lw	ra,12(sp)
- 292              		.cfi_restore 1
- 151:../src/main.c **** 	draw_c(22,5,0);
- 293              		.loc 1 151 0
- 294 0068 0146     		li	a2,0
- 295              		.loc 1 152 0
- 151:../src/main.c **** 	draw_c(22,5,0);
- 296              		.loc 1 151 0
- 297 006a 9545     		li	a1,5
- 298 006c 5945     		li	a0,22
- 299              		.loc 1 152 0
- 300 006e 4101     		addi	sp,sp,16
- 301              		.cfi_def_cfa_offset 0
- 151:../src/main.c **** 	draw_c(22,5,0);
- 302              		.loc 1 151 0
- 303 0070 17030000 		tail	draw_c
- 303      67000300 
- 304              	.LVL32:
- 305              		.cfi_endproc
- 306              	.LFE5:
- 308              		.section	.text.startup.main,"ax",@progbits
- 309              		.align	1
- 310              		.globl	main
- 312              	main:
- 313              	.LFB6:
- 153:../src/main.c **** 
- 154:../src/main.c **** int main(void)
- 155:../src/main.c **** {
- 314              		.loc 1 155 0
- 315              		.cfi_startproc
- 316 0000 0111     		addi	sp,sp,-32
- 317              		.cfi_def_cfa_offset 32
- 156:../src/main.c **** 	reg_uart_clkdiv = BAUND_9600;
- 318              		.loc 1 156 0
- 319 0002 8567     		li	a5,4096
- 155:../src/main.c **** 	reg_uart_clkdiv = BAUND_9600;
- 320              		.loc 1 155 0
- 321 0004 06CE     		sw	ra,28(sp)
- 322 0006 22CC     		sw	s0,24(sp)
- 323              		.loc 1 156 0
- 324 0008 93878745 		addi	a5,a5,1112
- 325              		.cfi_offset 1, -4
- 326              		.cfi_offset 8, -8
- 327 000c 2164     		li	s0,32768
- 155:../src/main.c **** 	reg_uart_clkdiv = BAUND_9600;
- 328              		.loc 1 155 0
- 329 000e 26CA     		sw	s1,20(sp)
- 330 0010 4AC8     		sw	s2,16(sp)
- 331 0012 4EC6     		sw	s3,12(sp)
- 332 0014 52C4     		sw	s4,8(sp)
- 333 0016 56C2     		sw	s5,4(sp)
- 334              		.cfi_offset 9, -12
- 335              		.cfi_offset 18, -16
- 336              		.cfi_offset 19, -20
- 337              		.cfi_offset 20, -24
- 338              		.cfi_offset 21, -28
- 157:../src/main.c **** 	printk("Hello Risc-V Pango 2019\n");
- 339              		.loc 1 157 0
- 340 0018 37050000 		lui	a0,%hi(.LC5)
- 156:../src/main.c **** 	reg_uart_clkdiv = BAUND_9600;
- 341              		.loc 1 156 0
- 342 001c 1CC0     		sw	a5,0(s0)
- 343              		.loc 1 157 0
- 344 001e 13050500 		addi	a0,a0,%lo(.LC5)
- 345 0022 97000000 		call	printk
- 345      E7800000 
- 346              	.LVL33:
- 158:../src/main.c **** 	printk("test data = %d,%f,%s,0x = %x\n", 100,33.456,"2019",100);
- 347              		.loc 1 158 0
- 348 002a B7070000 		lui	a5,%hi(.LC7)
- 349 002e 03A60700 		lw	a2,%lo(.LC7)(a5)
- 350 0032 83A64700 		lw	a3,%lo(.LC7+4)(a5)
- 351 0036 37070000 		lui	a4,%hi(.LC6)
- 352 003a 37050000 		lui	a0,%hi(.LC8)
- 353 003e 93074006 		li	a5,100
- 354 0042 13070700 		addi	a4,a4,%lo(.LC6)
- 355 0046 93054006 		li	a1,100
- 356 004a 13050500 		addi	a0,a0,%lo(.LC8)
- 357 004e 97000000 		call	printk
- 357      E7800000 
- 358              	.LVL34:
- 159:../src/main.c **** 	printk("simple compute : 50*10 = %d,100/3 = %f,100%3 = %d\n", 50*10,(double)100/3,(int)100%3);
- 359              		.loc 1 159 0
- 360 0056 B7070000 		lui	a5,%hi(.LC9)
- 361 005a 03A60700 		lw	a2,%lo(.LC9)(a5)
- 362 005e 83A64700 		lw	a3,%lo(.LC9+4)(a5)
- 363 0062 37050000 		lui	a0,%hi(.LC10)
- 364 0066 0547     		li	a4,1
- 365 0068 9305401F 		li	a1,500
- 366 006c 13050500 		addi	a0,a0,%lo(.LC10)
- 367 0070 97000000 		call	printk
- 367      E7800000 
- 368              	.LVL35:
- 160:../src/main.c **** 	printk("test\n");
- 369              		.loc 1 160 0
- 370 0078 37050000 		lui	a0,%hi(.LC3)
- 371 007c 13050500 		addi	a0,a0,%lo(.LC3)
- 372 0080 97000000 		call	printk
- 372      E7800000 
- 373              	.LVL36:
- 374              	.LBB4:
- 375              	.LBB5:
-  87:../src/main.c **** 	printk("getps2 = %d\n",getps2);
- 376              		.loc 1 87 0
- 377 0088 83250410 		lw	a1,256(s0)
- 378              	.LVL37:
-  88:../src/main.c **** }
- 379              		.loc 1 88 0
- 380 008c 37050000 		lui	a0,%hi(.LC0)
- 381 0090 13050500 		addi	a0,a0,%lo(.LC0)
- 382 0094 97000000 		call	printk
- 382      E7800000 
- 383              	.LVL38:
- 384              	.LBE5:
- 385              	.LBE4:
- 161:../src/main.c **** 	int cutx = 0;int cuty = 0;
- 162:../src/main.c **** //	gpio_test();
- 163:../src/main.c **** //	rgb_test();
- 164:../src/main.c **** //	delay(10000,40,15);
- 165:../src/main.c **** //	clear_point(40,15);
- 166:../src/main.c **** 	ps2_test();
- 167:../src/main.c **** //	block_test();
- 168:../src/main.c **** 	u8 getps2 = *ps2ctrl_point;
- 386              		.loc 1 168 0
- 387 009c 03240410 		lw	s0,256(s0)
- 388              	.LDL1:
- 389              	.LVL39:
- 169:../src/main.c **** loop:
- 170:../src/main.c **** 	SnakeGameStart();
- 390              		.loc 1 170 0
- 391 00a0 97000000 		call	SnakeGameStart
- 391      E7800000 
- 392              	.LVL40:
- 171:../src/main.c **** 	while(getps2 != 0b00000010){
- 393              		.loc 1 171 0
- 394 00a8 8947     		li	a5,2
- 395 00aa 1374F40F 		andi	s0,s0,0xff
- 396 00ae 6316F400 		bne	s0,a5,.L18
- 397              	.LVL41:
- 170:../src/main.c **** 	while(getps2 != 0b00000010){
- 398              		.loc 1 170 0
- 399 00b2 97000000 		call	SnakeGameStart
- 399      E7800000 
- 400              	.LVL42:
- 401              	.L18:
- 172:../src/main.c **** 		getps2 = *ps2ctrl_point;
- 402              		.loc 1 172 0
- 403 00ba A16A     		li	s5,32768
- 173:../src/main.c **** 		if(getps2 == 0b00000010){
- 404              		.loc 1 173 0
- 405 00bc 094A     		li	s4,2
- 174:../src/main.c **** 			for(cuty = 0;cuty<30;cuty++){
- 175:../src/main.c **** 				for(cutx = 0;cutx<40;cutx++)
- 406              		.loc 1 175 0
- 407 00be 13098002 		li	s2,40
- 174:../src/main.c **** 			for(cuty = 0;cuty<30;cuty++){
- 408              		.loc 1 174 0
- 409 00c2 F949     		li	s3,30
- 410              	.LVL43:
- 411              	.L23:
- 172:../src/main.c **** 		if(getps2 == 0b00000010){
- 412              		.loc 1 172 0
- 413 00c4 83A70A10 		lw	a5,256(s5)
- 414              	.LVL44:
- 173:../src/main.c **** 		if(getps2 == 0b00000010){
- 415              		.loc 1 173 0
- 416 00c8 93F7F70F 		andi	a5,a5,0xff
- 417 00cc E39C47FF 		bne	a5,s4,.L23
- 418 00d0 8144     		li	s1,0
- 419              	.LVL45:
- 420              	.L22:
- 421              		.loc 1 175 0
- 422 00d2 0144     		li	s0,0
- 423              	.LVL46:
- 424              	.L21:
- 176:../src/main.c **** 					clear_point(cutx,cuty);
- 425              		.loc 1 176 0 discriminator 3
- 426 00d4 2285     		mv	a0,s0
- 427 00d6 A685     		mv	a1,s1
- 175:../src/main.c **** 					clear_point(cutx,cuty);
- 428              		.loc 1 175 0 discriminator 3
- 429 00d8 0504     		addi	s0,s0,1
- 430              	.LVL47:
- 431              		.loc 1 176 0 discriminator 3
- 432 00da 97000000 		call	clear_point
- 432      E7800000 
- 433              	.LVL48:
- 175:../src/main.c **** 					clear_point(cutx,cuty);
- 434              		.loc 1 175 0 discriminator 3
- 435 00e2 E31924FF 		bne	s0,s2,.L21
- 174:../src/main.c **** 				for(cutx = 0;cutx<40;cutx++)
- 436              		.loc 1 174 0 discriminator 2
- 437 00e6 8504     		addi	s1,s1,1
- 438              	.LVL49:
- 439 00e8 E39534FF 		bne	s1,s3,.L22
- 440              	.LVL50:
- 170:../src/main.c **** 	while(getps2 != 0b00000010){
- 441              		.loc 1 170 0
- 442 00ec 97000000 		call	SnakeGameStart
- 442      E7800000 
- 443              	.LVL51:
- 444 00f4 C1BF     		j	.L23
- 445              		.cfi_endproc
- 446              	.LFE6:
- 448              		.globl	rgb_data_get_test
- 449              		.globl	rgb_data
- 450              		.globl	delaycnt
- 451              		.globl	uart_data
- 452              		.globl	temp_data
- 453              		.section	.rodata.gpio_test.str1.4,"aMS",@progbits,1
- 454              		.align	2
- 455              	.LC1:
- 456 0000 6770696F 		.string	"gpio success\n"
- 456      20737563 
- 456      63657373 
- 456      0A00
- 457 000e 0000     		.zero	2
- 458              	.LC2:
- 459 0010 6770696F 		.string	"gpio failed\n"
- 459      20666169 
- 459      6C65640A 
- 459      00
- 460 001d 000000   		.zero	3
- 461              	.LC3:
- 462 0020 74657374 		.string	"test\n"
- 462      0A00
- 463              		.section	.rodata.main.cst8,"aM",@progbits,8
- 464              		.align	3
- 465              	.LC7:
- 466 0000 EE7C3F35 		.word	893353198
- 467 0004 5EBA4040 		.word	1077983838
- 468              	.LC9:
- 469 0008 ABAAAAAA 		.word	-1431655765
- 470 000c AAAA4040 		.word	1077979818
- 471              		.section	.rodata.main.str1.4,"aMS",@progbits,1
- 472              		.align	2
- 473              	.LC5:
- 474 0000 48656C6C 		.string	"Hello Risc-V Pango 2019\n"
- 474      6F205269 
- 474      73632D56 
- 474      2050616E 
- 474      676F2032 
- 475 0019 000000   		.zero	3
- 476              	.LC6:
- 477 001c 32303139 		.string	"2019"
- 477      00
- 478 0021 000000   		.zero	3
- 479              	.LC8:
- 480 0024 74657374 		.string	"test data = %d,%f,%s,0x = %x\n"
- 480      20646174 
- 480      61203D20 
- 480      25642C25 
- 480      662C2573 
- 481 0042 0000     		.zero	2
- 482              	.LC10:
- 483 0044 73696D70 		.string	"simple compute : 50*10 = %d,100/3 = %f,100%3 = %d\n"
- 483      6C652063 
- 483      6F6D7075 
- 483      7465203A 
- 483      2035302A 
- 484              		.section	.rodata.ps2_test.str1.4,"aMS",@progbits,1
- 485              		.align	2
- 486              	.LC0:
- 487 0000 67657470 		.string	"getps2 = %d\n"
- 487      7332203D 
- 487      2025640A 
- 487      00
- 488              		.section	.rodata.rgb_test.str1.4,"aMS",@progbits,1
- 489              		.align	2
- 490              	.LC4:
- 491 0000 61646472 		.string	"addr:%x"
- 491      3A257800 
- 492              		.section	.sbss.delaycnt,"aw",@nobits
- 493              		.align	2
- 496              	delaycnt:
- 497 0000 00000000 		.zero	4
- 498              		.section	.sbss.rgb_data_get_test,"aw",@nobits
- 499              		.align	2
- 502              	rgb_data_get_test:
- 503 0000 00000000 		.zero	4
- 504              		.section	.sbss.temp_data,"aw",@nobits
- 505              		.align	2
- 506              		.set	.LANCHOR0,. + 0
- 509              	temp_data:
- 510 0000 00000000 		.zero	4
- 511              		.section	.sbss.uart_data,"aw",@nobits
- 512              		.align	2
- 515              	uart_data:
- 516 0000 00000000 		.zero	4
- 517              		.section	.sdata.rgb_data,"aw",@progbits
- 518              		.align	2
- 521              	rgb_data:
- 522 0000 11CCFF00 		.word	16763921
- 523              		.text
- 524              	.Letext0:
- 525              		.file 2 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
- 526              		.file 3 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
- 527              		.file 4 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
- 528              		.file 5 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
- 529              		.file 6 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
- 530              		.file 7 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
- 531              		.file 8 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
- 532              		.file 9 "../src/uart.h"
- 533              		.file 10 "../src/snake.h"
+ 182              	.LVL17:
+  69:../src/main.c **** 	printk("test data = %d,%f,%s,0x = %x\n", 100,33.456,"2019",100);
+ 183              		.loc 1 69 0
+ 184 001e B7070000 		lui	a5,%hi(.LC4)
+ 185 0022 03A60700 		lw	a2,%lo(.LC4)(a5)
+ 186 0026 83A64700 		lw	a3,%lo(.LC4+4)(a5)
+ 187 002a 37070000 		lui	a4,%hi(.LC3)
+ 188 002e 37050000 		lui	a0,%hi(.LC5)
+ 189 0032 93074006 		li	a5,100
+ 190 0036 13070700 		addi	a4,a4,%lo(.LC3)
+ 191 003a 93054006 		li	a1,100
+ 192 003e 13050500 		addi	a0,a0,%lo(.LC5)
+ 193 0042 97000000 		call	printk
+ 193      E7800000 
+ 194              	.LVL18:
+  70:../src/main.c **** 	printk("simple compute : 50*10 = %d,100/3 = %f,100%3 = %d\n", 50*10,(double)100/3,(int)100%3);
+ 195              		.loc 1 70 0
+ 196 004a B7070000 		lui	a5,%hi(.LC6)
+ 197 004e 03A60700 		lw	a2,%lo(.LC6)(a5)
+ 198 0052 83A64700 		lw	a3,%lo(.LC6+4)(a5)
+ 199 0056 37050000 		lui	a0,%hi(.LC7)
+ 200 005a 0547     		li	a4,1
+ 201 005c 9305401F 		li	a1,500
+ 202 0060 13050500 		addi	a0,a0,%lo(.LC7)
+ 203 0064 97000000 		call	printk
+ 203      E7800000 
+ 204              	.LVL19:
+  71:../src/main.c **** 	printk("test\n");
+ 205              		.loc 1 71 0
+ 206 006c 37050000 		lui	a0,%hi(.LC8)
+ 207 0070 13050500 		addi	a0,a0,%lo(.LC8)
+ 208 0074 97000000 		call	printk
+ 208      E7800000 
+ 209              	.LVL20:
+  72:../src/main.c **** 
+  73:../src/main.c **** 	GameStart();
+ 210              		.loc 1 73 0
+ 211 007c 97000000 		call	GameStart
+ 211      E7800000 
+ 212              	.LVL21:
+  74:../src/main.c **** //loop:
+  75:../src/main.c **** //	SnakeGameStart();
+  76:../src/main.c **** //	while(getps2 != 0b00000010){
+  77:../src/main.c **** //		getps2 = *ps2ctrl_point;
+  78:../src/main.c **** //		if(getps2 == 0b00000010){
+  79:../src/main.c **** //			for(cuty = 0;cuty<30;cuty++){
+  80:../src/main.c **** //				for(cutx = 0;cutx<40;cutx++)
+  81:../src/main.c **** //					clear_point(cutx,cuty);
+  82:../src/main.c **** //			}
+  83:../src/main.c **** //			break;
+  84:../src/main.c **** //		}
+  85:../src/main.c **** //	}//X
+  86:../src/main.c **** //	getps2 = 0;
+  87:../src/main.c **** //	goto loop;
+  88:../src/main.c **** 	return 0;
+  89:../src/main.c **** }
+ 213              		.loc 1 89 0
+ 214 0084 B240     		lw	ra,12(sp)
+ 215              		.cfi_restore 1
+ 216 0086 0145     		li	a0,0
+ 217 0088 4101     		addi	sp,sp,16
+ 218              		.cfi_def_cfa_offset 0
+ 219 008a 8280     		jr	ra
+ 220              		.cfi_endproc
+ 221              	.LFE4:
+ 223              		.globl	delaycnt
+ 224              		.globl	uart_data
+ 225              		.section	.rodata.draw_point_test.str1.4,"aMS",@progbits,1
+ 226              		.align	2
+ 227              	.LC1:
+ 228 0000 77655F76 		.string	"we_valid:%d"
+ 228      616C6964 
+ 228      3A256400 
+ 229              		.section	.rodata.main.cst8,"aM",@progbits,8
+ 230              		.align	3
+ 231              	.LC4:
+ 232 0000 EE7C3F35 		.word	893353198
+ 233 0004 5EBA4040 		.word	1077983838
+ 234              	.LC6:
+ 235 0008 ABAAAAAA 		.word	-1431655765
+ 236 000c AAAA4040 		.word	1077979818
+ 237              		.section	.rodata.main.str1.4,"aMS",@progbits,1
+ 238              		.align	2
+ 239              	.LC2:
+ 240 0000 48656C6C 		.string	"Hello Risc-V Pango 2019\n"
+ 240      6F205269 
+ 240      73632D56 
+ 240      2050616E 
+ 240      676F2032 
+ 241 0019 000000   		.zero	3
+ 242              	.LC3:
+ 243 001c 32303139 		.string	"2019"
+ 243      00
+ 244 0021 000000   		.zero	3
+ 245              	.LC5:
+ 246 0024 74657374 		.string	"test data = %d,%f,%s,0x = %x\n"
+ 246      20646174 
+ 246      61203D20 
+ 246      25642C25 
+ 246      662C2573 
+ 247 0042 0000     		.zero	2
+ 248              	.LC7:
+ 249 0044 73696D70 		.string	"simple compute : 50*10 = %d,100/3 = %f,100%3 = %d\n"
+ 249      6C652063 
+ 249      6F6D7075 
+ 249      7465203A 
+ 249      2035302A 
+ 250 0077 00       		.zero	1
+ 251              	.LC8:
+ 252 0078 74657374 		.string	"test\n"
+ 252      0A00
+ 253              		.section	.rodata.ps2_test.str1.4,"aMS",@progbits,1
+ 254              		.align	2
+ 255              	.LC0:
+ 256 0000 67657470 		.string	"getps2 = %d\n"
+ 256      7332203D 
+ 256      2025640A 
+ 256      00
+ 257              		.section	.sbss.delaycnt,"aw",@nobits
+ 258              		.align	2
+ 261              	delaycnt:
+ 262 0000 00000000 		.zero	4
+ 263              		.section	.sbss.uart_data,"aw",@nobits
+ 264              		.align	2
+ 267              	uart_data:
+ 268 0000 00000000 		.zero	4
+ 269              		.text
+ 270              	.Letext0:
+ 271              		.file 2 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 272              		.file 3 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 273              		.file 4 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 274              		.file 5 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 275              		.file 6 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 276              		.file 7 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 277              		.file 8 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 278              		.file 9 "../src/bitmap.h"
+ 279              		.file 10 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-20
+ 280              		.file 11 "../src/uart.h"
+ 281              		.file 12 "../src/newsnake.h"
+ 282              		.file 13 "../src/hdmidraw.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 main.c
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:10     .text.led_blink:0000000000000000 led_blink
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:14     .text.led_blink:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:15     .text.led_blink:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:16     .text.led_blink:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:17     .text.led_blink:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:24     .text.ps2_test:0000000000000000 ps2_test
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:27     .text.ps2_test:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:28     .text.ps2_test:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:29     .text.ps2_test:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:33     .text.ps2_test:0000000000000006 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:37     .text.ps2_test:0000000000000016 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:44     .text.gpio_test:0000000000000000 gpio_test
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:47     .text.gpio_test:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:49     .text.gpio_test:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:50     .text.gpio_test:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:54     .text.gpio_test:0000000000000008 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:55     .text.gpio_test:000000000000000a .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:57     .text.gpio_test:000000000000000a .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:59     .text.gpio_test:000000000000000e .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:61     .text.gpio_test:0000000000000010 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:63     .text.gpio_test:0000000000000014 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:64     .text.gpio_test:0000000000000014 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:66     .text.gpio_test:0000000000000014 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:69     .text.gpio_test:000000000000001c .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:77     .text.gpio_test:0000000000000030 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:83     .text.gpio_test:000000000000003e .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:88     .text.gpio_test:0000000000000050 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:95     .text.rgb_test:0000000000000000 rgb_test
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:98     .text.rgb_test:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:100    .text.rgb_test:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:101    .text.rgb_test:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:103    .text.rgb_test:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:105    .text.rgb_test:0000000000000004 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:112    .text.rgb_test:0000000000000012 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:113    .text.rgb_test:0000000000000012 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:114    .text.rgb_test:0000000000000012 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:115    .text.rgb_test:0000000000000012 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:116    .text.rgb_test:0000000000000012 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:117    .text.rgb_test:0000000000000012 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:118    .text.rgb_test:0000000000000012 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:120    .text.rgb_test:0000000000000012 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:122    .text.rgb_test:0000000000000016 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:124    .text.rgb_test:0000000000000018 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:126    .text.rgb_test:000000000000001c .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:128    .text.rgb_test:000000000000001e .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:134    .text.rgb_test:000000000000002e .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:140    .text.rgb_test:000000000000003e .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:145    .text.rgb_test:000000000000004a .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:151    .text.rgb_test:000000000000005a .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:157    .text.rgb_test:000000000000006a .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:162    .text.rgb_test:0000000000000076 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:168    .text.rgb_test:0000000000000086 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:173    .text.rgb_test:0000000000000092 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:179    .text.rgb_test:00000000000000a2 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:184    .text.rgb_test:00000000000000ae .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:190    .text.rgb_test:00000000000000be .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:193    .text.rgb_test:00000000000000c2 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:195    .text.rgb_test:00000000000000c4 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:198    .text.rgb_test:00000000000000cc .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:200    .text.rgb_test:00000000000000ce .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:203    .text.rgb_test:00000000000000d4 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:206    .text.rgb_test:00000000000000dc .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:210    .text.rgb_test:00000000000000e0 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:212    .text.rgb_test:00000000000000e4 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:215    .text.rgb_test:00000000000000e6 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:218    .text.rgb_test:00000000000000ea .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:221    .text.rgb_test:00000000000000ee .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:224    .text.rgb_test:00000000000000f0 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:229    .text.rgb_test:00000000000000fe .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:231    .text.rgb_test:0000000000000102 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:238    .text.block_test:0000000000000000 block_test
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:241    .text.block_test:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:242    .text.block_test:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:243    .text.block_test:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:245    .text.block_test:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:249    .text.block_test:0000000000000008 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:250    .text.block_test:000000000000000a .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:252    .text.block_test:000000000000000a .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:255    .text.block_test:0000000000000012 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:261    .text.block_test:0000000000000020 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:267    .text.block_test:000000000000002e .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:273    .text.block_test:000000000000003c .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:279    .text.block_test:000000000000004a .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:285    .text.block_test:0000000000000058 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:291    .text.block_test:0000000000000066 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:292    .text.block_test:0000000000000068 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:294    .text.block_test:0000000000000068 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:296    .text.block_test:000000000000006a .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:297    .text.block_test:000000000000006a .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:300    .text.block_test:000000000000006e .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:301    .text.block_test:0000000000000070 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:303    .text.block_test:0000000000000070 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:305    .text.block_test:0000000000000078 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:312    .text.startup.main:0000000000000000 main
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:315    .text.startup.main:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:316    .text.startup.main:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:317    .text.startup.main:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:319    .text.startup.main:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:321    .text.startup.main:0000000000000004 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:324    .text.startup.main:0000000000000008 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:325    .text.startup.main:000000000000000c .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:326    .text.startup.main:000000000000000c .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:329    .text.startup.main:000000000000000e .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:334    .text.startup.main:0000000000000018 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:335    .text.startup.main:0000000000000018 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:336    .text.startup.main:0000000000000018 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:337    .text.startup.main:0000000000000018 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:338    .text.startup.main:0000000000000018 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:340    .text.startup.main:0000000000000018 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:342    .text.startup.main:000000000000001c .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:344    .text.startup.main:000000000000001e .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:348    .text.startup.main:000000000000002a .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:360    .text.startup.main:0000000000000056 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:370    .text.startup.main:0000000000000078 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:377    .text.startup.main:0000000000000088 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:380    .text.startup.main:000000000000008c .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:387    .text.startup.main:000000000000009c .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:391    .text.startup.main:00000000000000a0 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:394    .text.startup.main:00000000000000a8 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:399    .text.startup.main:00000000000000b2 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:403    .text.startup.main:00000000000000ba .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:405    .text.startup.main:00000000000000bc .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:407    .text.startup.main:00000000000000be .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:409    .text.startup.main:00000000000000c2 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:413    .text.startup.main:00000000000000c4 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:416    .text.startup.main:00000000000000c8 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:422    .text.startup.main:00000000000000d2 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:426    .text.startup.main:00000000000000d4 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:429    .text.startup.main:00000000000000d8 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:432    .text.startup.main:00000000000000da .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:435    .text.startup.main:00000000000000e2 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:437    .text.startup.main:00000000000000e6 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:442    .text.startup.main:00000000000000ec .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:445    .text.startup.main:00000000000000f6 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:502    .sbss.rgb_data_get_test:0000000000000000 rgb_data_get_test
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:521    .sdata.rgb_data:0000000000000000 rgb_data
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:496    .sbss.delaycnt:0000000000000000 delaycnt
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:515    .sbss.uart_data:0000000000000000 uart_data
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:509    .sbss.temp_data:0000000000000000 temp_data
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:506    .sbss.temp_data:0000000000000000 .LANCHOR0
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:20     .text.led_blink:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:40     .text.ps2_test:0000000000000016 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:91     .text.gpio_test:0000000000000050 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:234    .text.rgb_test:0000000000000102 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:308    .text.block_test:0000000000000078 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:453    .text.startup.main:00000000000000f6 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:10     .text.ps2_test:0000000000000000 ps2_test
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:14     .text.ps2_test:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:15     .text.ps2_test:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:16     .text.ps2_test:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:20     .text.ps2_test:0000000000000006 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:24     .text.ps2_test:0000000000000016 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:31     .text.draw_point_test:0000000000000000 draw_point_test
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:34     .text.draw_point_test:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:36     .text.draw_point_test:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:37     .text.draw_point_test:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:44     .text.draw_point_test:000000000000000a .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:46     .text.draw_point_test:000000000000000c .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:48     .text.draw_point_test:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:50     .text.draw_point_test:0000000000000012 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:52     .text.draw_point_test:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:55     .text.draw_point_test:0000000000000018 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:58     .text.draw_point_test:000000000000001a .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:63     .text.draw_point_test:0000000000000028 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:70     .text.rgb_test:0000000000000000 rgb_test
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:73     .text.rgb_test:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:75     .text.rgb_test:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:76     .text.rgb_test:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:78     .text.rgb_test:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:80     .text.rgb_test:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:82     .text.rgb_test:0000000000000006 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:83     .text.rgb_test:0000000000000008 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:85     .text.rgb_test:0000000000000008 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:87     .text.rgb_test:000000000000000a .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:91     .text.rgb_test:0000000000000016 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:95     .text.rgb_test:000000000000001a .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:97     .text.rgb_test:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:99     .text.rgb_test:000000000000001e .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:103    .text.rgb_test:0000000000000024 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:105    .text.rgb_test:0000000000000028 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:109    .text.rgb_test:000000000000002e .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:112    .text.rgb_test:0000000000000034 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:115    .text.rgb_test:000000000000003a .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:119    .text.rgb_test:0000000000000042 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:122    .text.rgb_test:000000000000004a .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:128    .text.rgb_test:000000000000005a .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:134    .text.rgb_test:000000000000006a .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:140    .text.rgb_test:000000000000007a .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:141    .text.rgb_test:000000000000007c .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:143    .text.rgb_test:000000000000007c .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:145    .text.rgb_test:000000000000007e .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:146    .text.rgb_test:000000000000007e .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:149    .text.rgb_test:0000000000000084 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:150    .text.rgb_test:0000000000000086 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:152    .text.rgb_test:0000000000000086 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:154    .text.rgb_test:000000000000008e .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:161    .text.startup.main:0000000000000000 main
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:164    .text.startup.main:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:165    .text.startup.main:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:166    .text.startup.main:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:168    .text.startup.main:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:170    .text.startup.main:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:171    .text.startup.main:0000000000000006 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:173    .text.startup.main:0000000000000006 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:176    .text.startup.main:000000000000000c .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:178    .text.startup.main:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:180    .text.startup.main:0000000000000012 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:184    .text.startup.main:000000000000001e .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:196    .text.startup.main:000000000000004a .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:206    .text.startup.main:000000000000006c .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:211    .text.startup.main:000000000000007c .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:214    .text.startup.main:0000000000000084 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:215    .text.startup.main:0000000000000086 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:218    .text.startup.main:000000000000008a .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:220    .text.startup.main:000000000000008c .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:261    .sbss.delaycnt:0000000000000000 delaycnt
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:267    .sbss.uart_data:0000000000000000 uart_data
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:27     .text.ps2_test:0000000000000016 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:66     .text.draw_point_test:0000000000000028 .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:157    .text.rgb_test:000000000000008e .L0 
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:225    .text.startup.main:000000000000008c .L0 
                      .debug_frame:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:486    .rodata.ps2_test.str1.4:0000000000000000 .LC0
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:458    .rodata.gpio_test.str1.4:0000000000000010 .LC2
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:461    .rodata.gpio_test.str1.4:0000000000000020 .LC3
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:455    .rodata.gpio_test.str1.4:0000000000000000 .LC1
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:81     .text.gpio_test:000000000000003e .L9
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:75     .text.gpio_test:0000000000000030 .L6
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:73     .text.gpio_test:000000000000002c .L7
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:490    .rodata.rgb_test.str1.4:0000000000000000 .LC4
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:208    .text.rgb_test:00000000000000e0 .L11
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:473    .rodata.main.str1.4:0000000000000000 .LC5
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:465    .rodata.main.cst8:0000000000000000 .LC7
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:476    .rodata.main.str1.4:000000000000001c .LC6
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:479    .rodata.main.str1.4:0000000000000024 .LC8
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:468    .rodata.main.cst8:0000000000000008 .LC9
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:482    .rodata.main.str1.4:0000000000000044 .LC10
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:401    .text.startup.main:00000000000000ba .L18
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:411    .text.startup.main:00000000000000c4 .L23
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:424    .text.startup.main:00000000000000d4 .L21
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:420    .text.startup.main:00000000000000d2 .L22
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:2357   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3377   .debug_str:00000000000002f4 .LASF144
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3335   .debug_str:000000000000021e .LASF145
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3233   .debug_str:000000000000000c .LASF146
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3213   .debug_ranges:0000000000000000 .Ldebug_ranges0
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3229   .debug_line:0000000000000000 .Ldebug_line0
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3277   .debug_str:000000000000011e .LASF0
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3249   .debug_str:0000000000000075 .LASF5
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3417   .debug_str:000000000000044d .LASF1
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3425   .debug_str:000000000000046f .LASF2
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3363   .debug_str:00000000000002a8 .LASF3
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3293   .debug_str:0000000000000163 .LASF4
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3317   .debug_str:00000000000001d0 .LASF6
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3349   .debug_str:0000000000000267 .LASF7
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3275   .debug_str:0000000000000110 .LASF8
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3257   .debug_str:00000000000000a5 .LASF9
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3337   .debug_str:000000000000022c .LASF10
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3505   .debug_str:00000000000005d5 .LASF11
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3465   .debug_str:0000000000000524 .LASF12
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3395   .debug_str:00000000000003dd .LASF13
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3411   .debug_str:0000000000000427 .LASF14
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3407   .debug_str:0000000000000416 .LASF15
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3471   .debug_str:000000000000053f .LASF16
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3355   .debug_str:0000000000000289 .LASF17
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3379   .debug_str:0000000000000396 .LASF18
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3375   .debug_str:00000000000002ee .LASF19
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3341   .debug_str:000000000000024b .LASF20
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3463   .debug_str:000000000000051c .LASF21
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3485   .debug_str:0000000000000575 .LASF22
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3435   .debug_str:0000000000000497 .LASF23
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3321   .debug_str:00000000000001e1 .LASF24
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3491   .debug_str:000000000000058b .LASF25
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3325   .debug_str:00000000000001f2 .LASF30
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3481   .debug_str:0000000000000562 .LASF26
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3457   .debug_str:0000000000000507 .LASF27
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3319   .debug_str:00000000000001db .LASF28
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3499   .debug_str:00000000000005c0 .LASF29
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3333   .debug_str:0000000000000219 .LASF31
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3271   .debug_str:00000000000000fe .LASF32
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3477   .debug_str:0000000000000553 .LASF33
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3283   .debug_str:0000000000000136 .LASF34
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3533   .debug_str:0000000000000647 .LASF35
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3399   .debug_str:00000000000003f0 .LASF36
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3391   .debug_str:00000000000003ca .LASF37
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3501   .debug_str:00000000000005c5 .LASF38
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3427   .debug_str:0000000000000479 .LASF39
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3519   .debug_str:0000000000000609 .LASF40
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3287   .debug_str:0000000000000145 .LASF41
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3311   .debug_str:00000000000001ba .LASF42
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3231   .debug_str:0000000000000000 .LASF43
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3487   .debug_str:000000000000057d .LASF44
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3297   .debug_str:0000000000000173 .LASF45
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3401   .debug_str:00000000000003f9 .LASF46
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3449   .debug_str:00000000000004d7 .LASF47
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3313   .debug_str:00000000000001c2 .LASF48
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3429   .debug_str:0000000000000483 .LASF49
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3281   .debug_str:0000000000000130 .LASF50
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3241   .debug_str:0000000000000051 .LASF51
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3437   .debug_str:00000000000004a2 .LASF52
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3295   .debug_str:000000000000016c .LASF53
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3351   .debug_str:0000000000000279 .LASF54
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3259   .debug_str:00000000000000bc .LASF55
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3289   .debug_str:0000000000000153 .LASF56
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3329   .debug_str:0000000000000209 .LASF57
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3389   .debug_str:00000000000003c3 .LASF58
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3467   .debug_str:000000000000052d .LASF59
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3523   .debug_str:0000000000000623 .LASF60
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3279   .debug_str:000000000000012a .LASF61
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3515   .debug_str:00000000000005fb .LASF62
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3301   .debug_str:0000000000000182 .LASF63
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3305   .debug_str:0000000000000193 .LASF64
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3251   .debug_str:000000000000007f .LASF65
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3381   .debug_str:000000000000039d .LASF66
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3439   .debug_str:00000000000004aa .LASF67
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3385   .debug_str:00000000000003ac .LASF68
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3459   .debug_str:000000000000050f .LASF69
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3473   .debug_str:0000000000000547 .LASF70
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3299   .debug_str:000000000000017b .LASF71
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3343   .debug_str:0000000000000252 .LASF72
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3323   .debug_str:00000000000001ea .LASF73
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3447   .debug_str:00000000000004d2 .LASF74
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3245   .debug_str:000000000000005f .LASF75
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3455   .debug_str:00000000000004ee .LASF76
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3451   .debug_str:00000000000004dc .LASF77
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3405   .debug_str:000000000000040b .LASF78
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3453   .debug_str:00000000000004e4 .LASF79
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3373   .debug_str:00000000000002e6 .LASF80
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3331   .debug_str:000000000000020f .LASF81
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3529   .debug_str:000000000000063d .LASF82
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3409   .debug_str:000000000000041d .LASF83
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3347   .debug_str:000000000000025f .LASF84
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3303   .debug_str:000000000000018b .LASF85
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3419   .debug_str:000000000000045b .LASF86
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3365   .debug_str:00000000000002bb .LASF87
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3509   .debug_str:00000000000005e7 .LASF88
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3291   .debug_str:000000000000015b .LASF89
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3285   .debug_str:0000000000000140 .LASF90
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3475   .debug_str:000000000000054e .LASF91
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3433   .debug_str:0000000000000490 .LASF92
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3503   .debug_str:00000000000005cf .LASF93
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3357   .debug_str:0000000000000292 .LASF94
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3431   .debug_str:000000000000048a .LASF95
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3243   .debug_str:0000000000000057 .LASF96
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3461   .debug_str:0000000000000516 .LASF97
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3479   .debug_str:000000000000055c .LASF98
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3489   .debug_str:0000000000000586 .LASF99
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3497   .debug_str:00000000000005b3 .LASF100
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3483   .debug_str:0000000000000568 .LASF101
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3371   .debug_str:00000000000002d9 .LASF102
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3521   .debug_str:0000000000000614 .LASF103
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3327   .debug_str:00000000000001fa .LASF104
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3441   .debug_str:00000000000004b3 .LASF105
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3525   .debug_str:000000000000062a .LASF106
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3445   .debug_str:00000000000004c5 .LASF107
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3527   .debug_str:000000000000062f .LASF108
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3269   .debug_str:00000000000000f0 .LASF109
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3507   .debug_str:00000000000005dd .LASF110
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3369   .debug_str:00000000000002cd .LASF111
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3493   .debug_str:0000000000000593 .LASF112
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3309   .debug_str:00000000000001ac .LASF113
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3267   .debug_str:00000000000000e1 .LASF114
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3307   .debug_str:000000000000019b .LASF115
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3253   .debug_str:0000000000000085 .LASF116
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3255   .debug_str:0000000000000094 .LASF117
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3423   .debug_str:0000000000000466 .LASF118
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3397   .debug_str:00000000000003e9 .LASF119
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3393   .debug_str:00000000000003d4 .LASF120
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3517   .debug_str:0000000000000601 .LASF121
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3265   .debug_str:00000000000000d6 .LASF147
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3469   .debug_str:0000000000000533 .LASF122
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3495   .debug_str:00000000000005a0 .LASF123
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3403   .debug_str:0000000000000401 .LASF124
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3353   .debug_str:000000000000027f .LASF125
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3361   .debug_str:000000000000029e .LASF126
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3273   .debug_str:0000000000000107 .LASF127
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3315   .debug_str:00000000000001c7 .LASF128
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3339   .debug_str:0000000000000239 .LASF129
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3531   .debug_str:0000000000000642 .LASF148
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:313    .text.startup.main:0000000000000000 .LFB6
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:446    .text.startup.main:00000000000000f6 .LFE6
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3511   .debug_str:00000000000005f1 .LASF130
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3075   .debug_loc:0000000000000000 .LLST3
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3513   .debug_str:00000000000005f6 .LASF131
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3106   .debug_loc:000000000000004e .LLST4
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3239   .debug_str:000000000000004a .LASF132
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3118   .debug_loc:000000000000006d .LLST5
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3345   .debug_str:000000000000025a .LASF149
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:388    .text.startup.main:00000000000000a0 .LDL1
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:374    .text.startup.main:0000000000000088 .LBB4
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:385    .text.startup.main:000000000000009c .LBE4
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:375    .text.startup.main:0000000000000088 .LBB5
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:384    .text.startup.main:000000000000009c .LBE5
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:383    .text.startup.main:000000000000009c .LVL38
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:346    .text.startup.main:000000000000002a .LVL33
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:358    .text.startup.main:0000000000000056 .LVL34
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:368    .text.startup.main:0000000000000078 .LVL35
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:373    .text.startup.main:0000000000000088 .LVL36
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:392    .text.startup.main:00000000000000a8 .LVL40
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:400    .text.startup.main:00000000000000ba .LVL42
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:433    .text.startup.main:00000000000000e2 .LVL48
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:443    .text.startup.main:00000000000000f4 .LVL51
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3247   .debug_str:000000000000006a .LASF133
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:239    .text.block_test:0000000000000000 .LFB5
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:306    .text.block_test:0000000000000078 .LFE5
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:253    .text.block_test:0000000000000012 .LVL25
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:259    .text.block_test:0000000000000020 .LVL26
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:265    .text.block_test:000000000000002e .LVL27
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:271    .text.block_test:000000000000003c .LVL28
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:277    .text.block_test:000000000000004a .LVL29
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:283    .text.block_test:0000000000000058 .LVL30
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:289    .text.block_test:0000000000000066 .LVL31
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:304    .text.block_test:0000000000000078 .LVL32
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3383   .debug_str:00000000000003a3 .LASF134
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:96     .text.rgb_test:0000000000000000 .LFB4
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:232    .text.rgb_test:0000000000000102 .LFE4
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3261   .debug_str:00000000000000c5 .LASF135
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3139   .debug_loc:00000000000000a3 .LLST1
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3359   .debug_str:0000000000000299 .LASF136
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3151   .debug_loc:00000000000000c2 .LLST2
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:132    .text.rgb_test:000000000000002e .LVL7
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:138    .text.rgb_test:000000000000003e .LVL8
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:143    .text.rgb_test:000000000000004a .LVL9
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:149    .text.rgb_test:000000000000005a .LVL10
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:155    .text.rgb_test:000000000000006a .LVL11
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:160    .text.rgb_test:0000000000000076 .LVL12
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:166    .text.rgb_test:0000000000000086 .LVL13
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:171    .text.rgb_test:0000000000000092 .LVL14
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:177    .text.rgb_test:00000000000000a2 .LVL15
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:182    .text.rgb_test:00000000000000ae .LVL16
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:188    .text.rgb_test:00000000000000be .LVL17
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:196    .text.rgb_test:00000000000000cc .LVL18
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:227    .text.rgb_test:00000000000000fe .LVL24
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3415   .debug_str:0000000000000443 .LASF137
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:45     .text.gpio_test:0000000000000000 .LFB3
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:89     .text.gpio_test:0000000000000050 .LFE3
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3235   .debug_str:000000000000003d .LASF138
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:72     .text.gpio_test:000000000000002c .LVL3
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:79     .text.gpio_test:000000000000003c .LVL4
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:86     .text.gpio_test:000000000000004e .LVL5
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3367   .debug_str:00000000000002c4 .LASF150
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3413   .debug_str:0000000000000439 .LASF151
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:11     .text.led_blink:0000000000000000 .LFB1
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:18     .text.led_blink:0000000000000002 .LFE1
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:25     .text.ps2_test:0000000000000000 .LFB2
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:38     .text.ps2_test:0000000000000016 .LFE2
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3183   .debug_loc:0000000000000111 .LLST0
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:36     .text.ps2_test:0000000000000016 .LVL1
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3237   .debug_str:0000000000000043 .LASF139
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3387   .debug_str:00000000000003b4 .LASF140
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3263   .debug_str:00000000000000ca .LASF141
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3443   .debug_str:00000000000004be .LASF142
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:3421   .debug_str:0000000000000460 .LASF143
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:410    .text.startup.main:00000000000000c4 .LVL43
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:419    .text.startup.main:00000000000000d2 .LVL45
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:423    .text.startup.main:00000000000000d4 .LVL46
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:430    .text.startup.main:00000000000000da .LVL47
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:389    .text.startup.main:00000000000000a0 .LVL39
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:397    .text.startup.main:00000000000000b2 .LVL41
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:414    .text.startup.main:00000000000000c8 .LVL44
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:440    .text.startup.main:00000000000000ec .LVL50
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:99     .text.rgb_test:0000000000000000 .LVL6
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:207    .text.rgb_test:00000000000000e0 .LVL19
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:213    .text.rgb_test:00000000000000e6 .LVL20
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:216    .text.rgb_test:00000000000000ea .LVL21
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:219    .text.rgb_test:00000000000000ee .LVL22
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:31     .text.ps2_test:0000000000000006 .LVL0
-C:\Users\rana\AppData\Local\Temp\cchdkiD5.s:535    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:255    .rodata.ps2_test.str1.4:0000000000000000 .LC0
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:227    .rodata.draw_point_test.str1.4:0000000000000000 .LC1
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:93     .text.rgb_test:000000000000001a .L5
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:239    .rodata.main.str1.4:0000000000000000 .LC2
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:231    .rodata.main.cst8:0000000000000000 .LC4
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:242    .rodata.main.str1.4:000000000000001c .LC3
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:245    .rodata.main.str1.4:0000000000000024 .LC5
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:234    .rodata.main.cst8:0000000000000008 .LC6
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:248    .rodata.main.str1.4:0000000000000044 .LC7
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:251    .rodata.main.str1.4:0000000000000078 .LC8
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:3342   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4316   .debug_str:00000000000002dc .LASF144
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4282   .debug_str:000000000000022b .LASF145
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4180   .debug_str:000000000000000c .LASF146
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4164   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4176   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4222   .debug_str:000000000000011f .LASF0
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4358   .debug_str:000000000000043b .LASF1
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4366   .debug_str:0000000000000467 .LASF2
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4302   .debug_str:0000000000000290 .LASF3
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4238   .debug_str:0000000000000164 .LASF4
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4264   .debug_str:00000000000001dd .LASF9
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4292   .debug_str:000000000000025d .LASF5
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4220   .debug_str:0000000000000111 .LASF6
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4200   .debug_str:0000000000000094 .LASF7
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4284   .debug_str:0000000000000239 .LASF8
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4404   .debug_str:0000000000000515 .LASF10
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4334   .debug_str:00000000000003bc .LASF11
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4354   .debug_str:000000000000041c .LASF12
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4348   .debug_str:0000000000000405 .LASF13
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4410   .debug_str:0000000000000530 .LASF14
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4452   .debug_str:00000000000005ff .LASF15
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4318   .debug_str:000000000000037e .LASF16
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4314   .debug_str:00000000000002d6 .LASF17
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4286   .debug_str:0000000000000246 .LASF18
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4402   .debug_str:000000000000050d .LASF19
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4426   .debug_str:0000000000000570 .LASF20
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4376   .debug_str:000000000000048f .LASF21
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4268   .debug_str:00000000000001ee .LASF22
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4414   .debug_str:000000000000053f .LASF23
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4432   .debug_str:0000000000000586 .LASF24
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4272   .debug_str:00000000000001ff .LASF29
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4422   .debug_str:000000000000055d .LASF25
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4396   .debug_str:00000000000004f8 .LASF26
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4266   .debug_str:00000000000001e8 .LASF27
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4444   .debug_str:00000000000005da .LASF28
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4280   .debug_str:0000000000000226 .LASF30
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4216   .debug_str:00000000000000ff .LASF31
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4416   .debug_str:0000000000000544 .LASF32
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4228   .debug_str:0000000000000137 .LASF33
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4478   .debug_str:000000000000066e .LASF34
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4340   .debug_str:00000000000003df .LASF35
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4330   .debug_str:00000000000003a9 .LASF36
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4446   .debug_str:00000000000005df .LASF37
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4368   .debug_str:0000000000000471 .LASF38
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4464   .debug_str:0000000000000630 .LASF39
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4232   .debug_str:0000000000000146 .LASF40
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4260   .debug_str:00000000000001d0 .LASF41
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4178   .debug_str:0000000000000000 .LASF42
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4428   .debug_str:0000000000000578 .LASF43
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4242   .debug_str:0000000000000174 .LASF44
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4342   .debug_str:00000000000003e8 .LASF45
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4388   .debug_str:00000000000004c8 .LASF46
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4262   .debug_str:00000000000001d8 .LASF47
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4370   .debug_str:000000000000047b .LASF48
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4226   .debug_str:0000000000000131 .LASF49
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4186   .debug_str:000000000000004b .LASF50
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4378   .debug_str:000000000000049a .LASF51
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4240   .debug_str:000000000000016d .LASF52
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4294   .debug_str:000000000000026f .LASF53
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4204   .debug_str:00000000000000ba .LASF54
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4234   .debug_str:0000000000000154 .LASF55
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4276   .debug_str:0000000000000216 .LASF56
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4328   .debug_str:00000000000003a2 .LASF57
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4406   .debug_str:000000000000051e .LASF58
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4468   .debug_str:000000000000064a .LASF59
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4224   .debug_str:000000000000012b .LASF60
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4460   .debug_str:0000000000000622 .LASF61
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4248   .debug_str:0000000000000191 .LASF62
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4254   .debug_str:00000000000001a9 .LASF63
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4194   .debug_str:000000000000006e .LASF64
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4320   .debug_str:0000000000000385 .LASF65
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4380   .debug_str:00000000000004a2 .LASF66
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4324   .debug_str:0000000000000394 .LASF67
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4398   .debug_str:0000000000000500 .LASF68
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4412   .debug_str:0000000000000538 .LASF69
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4244   .debug_str:000000000000017c .LASF70
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4288   .debug_str:000000000000024d .LASF71
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4270   .debug_str:00000000000001f7 .LASF72
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4386   .debug_str:00000000000004c3 .LASF73
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4190   .debug_str:0000000000000059 .LASF74
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4394   .debug_str:00000000000004df .LASF75
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4390   .debug_str:00000000000004cd .LASF76
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4346   .debug_str:00000000000003fa .LASF77
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4392   .debug_str:00000000000004d5 .LASF78
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4312   .debug_str:00000000000002ce .LASF79
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4278   .debug_str:000000000000021c .LASF80
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4474   .debug_str:0000000000000664 .LASF81
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4352   .debug_str:0000000000000412 .LASF82
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4290   .debug_str:0000000000000255 .LASF83
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4252   .debug_str:00000000000001a1 .LASF84
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4362   .debug_str:0000000000000459 .LASF85
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4304   .debug_str:00000000000002a3 .LASF86
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4456   .debug_str:0000000000000612 .LASF87
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4236   .debug_str:000000000000015c .LASF88
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4230   .debug_str:0000000000000141 .LASF89
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4374   .debug_str:0000000000000488 .LASF90
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4448   .debug_str:00000000000005e9 .LASF91
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4298   .debug_str:000000000000027f .LASF92
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4372   .debug_str:0000000000000482 .LASF93
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4188   .debug_str:0000000000000051 .LASF94
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4400   .debug_str:0000000000000507 .LASF95
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4420   .debug_str:0000000000000557 .LASF96
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4430   .debug_str:0000000000000581 .LASF97
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4442   .debug_str:00000000000005cd .LASF98
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4424   .debug_str:0000000000000563 .LASF99
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4310   .debug_str:00000000000002c1 .LASF100
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4466   .debug_str:000000000000063b .LASF101
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4274   .debug_str:0000000000000207 .LASF102
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4382   .debug_str:00000000000004ab .LASF103
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4470   .debug_str:0000000000000651 .LASF104
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4384   .debug_str:00000000000004b6 .LASF105
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4472   .debug_str:0000000000000656 .LASF106
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4214   .debug_str:00000000000000f1 .LASF107
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4454   .debug_str:0000000000000608 .LASF108
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4308   .debug_str:00000000000002b5 .LASF109
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4434   .debug_str:000000000000058e .LASF110
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4258   .debug_str:00000000000001c2 .LASF111
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4212   .debug_str:00000000000000e2 .LASF112
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4256   .debug_str:00000000000001b1 .LASF113
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4196   .debug_str:0000000000000074 .LASF114
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4198   .debug_str:0000000000000083 .LASF115
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4364   .debug_str:000000000000045e .LASF116
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4336   .debug_str:00000000000003c8 .LASF117
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4332   .debug_str:00000000000003b3 .LASF118
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4462   .debug_str:0000000000000628 .LASF119
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4208   .debug_str:00000000000000c8 .LASF147
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4408   .debug_str:0000000000000524 .LASF120
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4438   .debug_str:00000000000005ac .LASF121
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4344   .debug_str:00000000000003f0 .LASF122
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4356   .debug_str:000000000000042e .LASF123
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4458   .debug_str:000000000000061c .LASF124
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4250   .debug_str:000000000000019a .LASF125
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4350   .debug_str:000000000000040c .LASF126
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4436   .debug_str:000000000000059b .LASF148
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4440   .debug_str:00000000000005bf .LASF127
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4246   .debug_str:0000000000000183 .LASF128
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4210   .debug_str:00000000000000d3 .LASF129
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4202   .debug_str:00000000000000ab .LASF130
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4450   .debug_str:00000000000005ef .LASF131
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4300   .debug_str:0000000000000286 .LASF132
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4218   .debug_str:0000000000000108 .LASF133
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4476   .debug_str:0000000000000669 .LASF149
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:162    .text.startup.main:0000000000000000 .LFB4
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:221    .text.startup.main:000000000000008c .LFE4
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:182    .text.startup.main:000000000000001e .LVL17
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:194    .text.startup.main:000000000000004a .LVL18
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:204    .text.startup.main:000000000000006c .LVL19
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:209    .text.startup.main:000000000000007c .LVL20
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:212    .text.startup.main:0000000000000084 .LVL21
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4322   .debug_str:000000000000038b .LASF138
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:71     .text.rgb_test:0000000000000000 .LFB3
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:155    .text.rgb_test:000000000000008e .LFE3
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4206   .debug_str:00000000000000c3 .LASF134
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4326   .debug_str:000000000000039c .LASF135
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4072   .debug_loc:0000000000000000 .LLST4
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:126    .text.rgb_test:000000000000005a .LVL13
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:132    .text.rgb_test:000000000000006a .LVL14
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:138    .text.rgb_test:000000000000007a .LVL15
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:153    .text.rgb_test:000000000000008e .LVL16
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4338   .debug_str:00000000000003cf .LASF150
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:32     .text.draw_point_test:0000000000000000 .LFB2
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:64     .text.draw_point_test:0000000000000028 .LFE2
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4084   .debug_loc:000000000000001f .LLST1
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4098   .debug_loc:0000000000000040 .LLST2
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4192   .debug_str:0000000000000064 .LASF136
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4112   .debug_loc:0000000000000061 .LLST3
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4296   .debug_str:0000000000000275 .LASF137
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:62     .text.draw_point_test:0000000000000028 .LVL8
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4306   .debug_str:00000000000002ac .LASF139
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:11     .text.ps2_test:0000000000000000 .LFB1
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:25     .text.ps2_test:0000000000000016 .LFE1
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4184   .debug_str:0000000000000044 .LASF140
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4138   .debug_loc:000000000000008e .LLST0
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:23     .text.ps2_test:0000000000000016 .LVL1
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4182   .debug_str:000000000000003d .LASF141
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4418   .debug_str:000000000000054d .LASF142
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:4360   .debug_str:0000000000000449 .LASF143
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:74     .text.rgb_test:0000000000000000 .LVL9
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:92     .text.rgb_test:000000000000001a .LVL10
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:106    .text.rgb_test:000000000000002c .LVL12
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:35     .text.draw_point_test:0000000000000000 .LVL2
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:53     .text.draw_point_test:0000000000000018 .LVL5
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:39     .text.draw_point_test:0000000000000006 .LVL3
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:42     .text.draw_point_test:000000000000000a .LVL4
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:59     .text.draw_point_test:000000000000001c .LVL7
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:18     .text.ps2_test:0000000000000006 .LVL0
+C:\Users\rana\AppData\Local\Temp\ccuR8FAw.s:284    .debug_info:0000000000000000 .Ldebug_info0
 
 UNDEFINED SYMBOLS
 printk
-delay
-clear_point
-draw_c
-SnakeGameStart
+hdmi_draw_point
+GameStart

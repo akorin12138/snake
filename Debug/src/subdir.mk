@@ -4,28 +4,28 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../src/hdmidraw.c \
 ../src/main.c \
-../src/snake.c \
-../src/test.c \
+../src/newsnake.c \
 ../src/uart.c 
 
 S_UPPER_SRCS += \
 ../src/start.S 
 
 OBJS += \
+./src/hdmidraw.o \
 ./src/main.o \
-./src/snake.o \
+./src/newsnake.o \
 ./src/start.o \
-./src/test.o \
 ./src/uart.o 
 
 S_UPPER_DEPS += \
 ./src/start.d 
 
 C_DEPS += \
+./src/hdmidraw.d \
 ./src/main.d \
-./src/snake.d \
-./src/test.d \
+./src/newsnake.d \
 ./src/uart.d 
 
 
