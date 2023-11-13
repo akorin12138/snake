@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../src/Tetris.c \
 ../src/hdmidraw.c \
 ../src/main.c \
 ../src/newsnake.c \
@@ -13,6 +14,7 @@ S_UPPER_SRCS += \
 ../src/start.S 
 
 OBJS += \
+./src/Tetris.o \
 ./src/hdmidraw.o \
 ./src/main.o \
 ./src/newsnake.o \
@@ -23,6 +25,7 @@ S_UPPER_DEPS += \
 ./src/start.d 
 
 C_DEPS += \
+./src/Tetris.d \
 ./src/hdmidraw.d \
 ./src/main.d \
 ./src/newsnake.d \

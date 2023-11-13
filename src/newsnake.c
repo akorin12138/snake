@@ -205,6 +205,7 @@ void dead(){
 	snake.life=0;
 	hdmi_draw_string(80,50,"You dead!!!",20);
 	hdmi_draw_string(50,70,"Press 'B'to restart",20);
+	hdmi_draw_string(40,70,"Press 'X'to quit",20);
 	hdmi_draw_string(250,70,"Score:",22);
 	hdmi_draw_num(260,90,score,2,23);
 	getps2 = 0;

@@ -13,7 +13,7 @@ d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4
 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(_clz.o)
                               d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(_clzsi2.o) (__clz_tab)
 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/../../../../riscv-none-embed/lib/rv32im/ilp32\libg.a(lib_a-rand.o)
-                              ./src/newsnake.o (rand)
+                              ./src/Tetris.o (srand)
 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/../../../../riscv-none-embed/lib/rv32im/ilp32\libg.a(lib_a-impure.o)
                               d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/../../../../riscv-none-embed/lib/rv32im/ilp32\libg.a(lib_a-rand.o) (_impure_ptr)
 
@@ -28,6 +28,7 @@ RAM              0x0000000000000000 0x0000000000001000 xrw
 
 Linker script and memory map
 
+LOAD ./src/Tetris.o
 LOAD ./src/hdmidraw.o
 LOAD ./src/main.o
 LOAD ./src/newsnake.o
@@ -41,208 +42,286 @@ LOAD d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.
 END GROUP
 LOAD d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a
 
-.text           0x0000000000001000     0x2a8c
+.text           0x0000000000001000     0x3974
                 0x0000000000001000                . = ALIGN (0x4)
  *(.text)
+ .text          0x0000000000001000        0x0 ./src/Tetris.o
  .text          0x0000000000001000        0x0 ./src/hdmidraw.o
  .text          0x0000000000001000        0x0 ./src/main.o
  .text          0x0000000000001000        0x0 ./src/newsnake.o
- .text          0x0000000000001000       0xc0 ./src/start.o
- .text          0x00000000000010c0        0x0 ./src/uart.o
- .text          0x00000000000010c0        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(muldf3.o)
- .text          0x00000000000010c0        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(subdf3.o)
- .text          0x00000000000010c0        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(fixdfsi.o)
- .text          0x00000000000010c0        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(floatunsidf.o)
- .text          0x00000000000010c0        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(_clzsi2.o)
- .text          0x00000000000010c0        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(_clz.o)
- .text          0x00000000000010c0        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/../../../../riscv-none-embed/lib/rv32im/ilp32\libg.a(lib_a-rand.o)
- .text          0x00000000000010c0        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/../../../../riscv-none-embed/lib/rv32im/ilp32\libg.a(lib_a-impure.o)
+ .text          0x0000000000001000       0xc4 ./src/start.o
+ .text          0x00000000000010c4        0x0 ./src/uart.o
+ .text          0x00000000000010c4        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(muldf3.o)
+ .text          0x00000000000010c4        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(subdf3.o)
+ .text          0x00000000000010c4        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(fixdfsi.o)
+ .text          0x00000000000010c4        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(floatunsidf.o)
+ .text          0x00000000000010c4        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(_clzsi2.o)
+ .text          0x00000000000010c4        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(_clz.o)
+ .text          0x00000000000010c4        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/../../../../riscv-none-embed/lib/rv32im/ilp32\libg.a(lib_a-rand.o)
+ .text          0x00000000000010c4        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/../../../../riscv-none-embed/lib/rv32im/ilp32\libg.a(lib_a-impure.o)
  *(.text*)
+ .text.CursorJump
+                0x00000000000010c4       0x10 ./src/Tetris.o
+                0x00000000000010c4                CursorJump
+ .text.InitInterface
+                0x00000000000010d4      0x146 ./src/Tetris.o
+                0x00000000000010d4                InitInterface
+ .text.InitBlockInfo
+                0x000000000000121a       0xe2 ./src/Tetris.o
+                0x000000000000121a                InitBlockInfo
+ .text.color    0x00000000000012fc        0x2 ./src/Tetris.o
+                0x00000000000012fc                color
+ .text.DrawBlock
+                0x00000000000012fe       0xd6 ./src/Tetris.o
+                0x00000000000012fe                DrawBlock
+ .text.DrawSpace
+                0x00000000000013d4       0x90 ./src/Tetris.o
+                0x00000000000013d4                DrawSpace
+ .text.IsLegal  0x0000000000001464       0x56 ./src/Tetris.o
+                0x0000000000001464                IsLegal
+ .text.JudeFunc
+                0x00000000000014ba      0x214 ./src/Tetris.o
+                0x00000000000014ba                JudeFunc
+ .text.TetrisDelay
+                0x00000000000016ce       0x10 ./src/Tetris.o
+                0x00000000000016ce                TetrisDelay
+ .text.StartGame
+                0x00000000000016de      0x442 ./src/Tetris.o
+                0x00000000000016de                StartGame
+ .text.Tetris   0x0000000000001b20       0x24 ./src/Tetris.o
+                0x0000000000001b20                Tetris
  .text.hdmi_draw_test
-                0x00000000000010c0       0x94 ./src/hdmidraw.o
-                0x00000000000010c0                hdmi_draw_test
+                0x0000000000001b44       0x94 ./src/hdmidraw.o
+                0x0000000000001b44                hdmi_draw_test
  .text.hdmi_draw_point
-                0x0000000000001154       0x18 ./src/hdmidraw.o
-                0x0000000000001154                hdmi_draw_point
+                0x0000000000001bd8       0x18 ./src/hdmidraw.o
+                0x0000000000001bd8                hdmi_draw_point
+ .text.hdmi_draw_point_vertical
+                0x0000000000001bf0       0x1c ./src/hdmidraw.o
+                0x0000000000001bf0                hdmi_draw_point_vertical
  .text.hdmi_draw_char
-                0x000000000000116c       0x7a ./src/hdmidraw.o
-                0x000000000000116c                hdmi_draw_char
+                0x0000000000001c0c       0x7a ./src/hdmidraw.o
+                0x0000000000001c0c                hdmi_draw_char
+ .text.hdmi_draw_char_back_vertical
+                0x0000000000001c86       0x96 ./src/hdmidraw.o
+                0x0000000000001c86                hdmi_draw_char_back_vertical
  .text.hdmi_draw_string
-                0x00000000000011e6       0x80 ./src/hdmidraw.o
-                0x00000000000011e6                hdmi_draw_string
+                0x0000000000001d1c       0x80 ./src/hdmidraw.o
+                0x0000000000001d1c                hdmi_draw_string
+ .text.hdmi_draw_string_back_verticlal
+                0x0000000000001d9c       0x74 ./src/hdmidraw.o
+                0x0000000000001d9c                hdmi_draw_string_back_verticlal
+ .text.hdmi_draw_clear
+                0x0000000000001e10       0x1c ./src/hdmidraw.o
+                0x0000000000001e10                hdmi_draw_clear
  .text.hdmi_draw_num
-                0x0000000000001266       0x70 ./src/hdmidraw.o
-                0x0000000000001266                hdmi_draw_num
+                0x0000000000001e2c       0x70 ./src/hdmidraw.o
+                0x0000000000001e2c                hdmi_draw_num
+ .text.hdmi_draw_num_back_vertical
+                0x0000000000001e9c       0x78 ./src/hdmidraw.o
+                0x0000000000001e9c                hdmi_draw_num_back_vertical
  .text.hdmi_draw_fill
-                0x00000000000012d6       0x52 ./src/hdmidraw.o
-                0x00000000000012d6                hdmi_draw_fill
+                0x0000000000001f14       0x52 ./src/hdmidraw.o
+                0x0000000000001f14                hdmi_draw_fill
+ .text.hdmi_draw_square_vertical
+                0x0000000000001f66       0x4c ./src/hdmidraw.o
+                0x0000000000001f66                hdmi_draw_square_vertical
  .text.hdmi_drawLine
-                0x0000000000001328       0x92 ./src/hdmidraw.o
-                0x0000000000001328                hdmi_drawLine
+                0x0000000000001fb2       0x92 ./src/hdmidraw.o
+                0x0000000000001fb2                hdmi_drawLine
+ .text.hdmi_drawLine_vertical
+                0x0000000000002044       0xa2 ./src/hdmidraw.o
+                0x0000000000002044                hdmi_drawLine_vertical
+ .text.hdmi_draw_dircle_solid_vertical
+                0x00000000000020e6      0x10c ./src/hdmidraw.o
+                0x00000000000020e6                hdmi_draw_dircle_solid_vertical
  .text.hdmi_draw_dircle_solid
-                0x00000000000013ba      0x10c ./src/hdmidraw.o
-                0x00000000000013ba                hdmi_draw_dircle_solid
+                0x00000000000021f2      0x10c ./src/hdmidraw.o
+                0x00000000000021f2                hdmi_draw_dircle_solid
  .text.hdmi_drawrectangle
-                0x00000000000014c6       0x4e ./src/hdmidraw.o
-                0x00000000000014c6                hdmi_drawrectangle
+                0x00000000000022fe       0x4e ./src/hdmidraw.o
+                0x00000000000022fe                hdmi_drawrectangle
  .text.ps2_test
-                0x0000000000001514       0x12 ./src/main.o
-                0x0000000000001514                ps2_test
+                0x000000000000234c       0x12 ./src/main.o
+                0x000000000000234c                ps2_test
  .text.draw_point_test
-                0x0000000000001526       0x24 ./src/main.o
-                0x0000000000001526                draw_point_test
+                0x000000000000235e       0x24 ./src/main.o
+                0x000000000000235e                draw_point_test
  .text.rgb_test
-                0x000000000000154a       0x76 ./src/main.o
-                0x000000000000154a                rgb_test
+                0x0000000000002382       0x7e ./src/main.o
+                0x0000000000002382                rgb_test
  .text.startup.main
-                0x00000000000015c0       0x76 ./src/main.o
-                0x00000000000015c0                main
+                0x0000000000002400       0x7a ./src/main.o
+                0x0000000000002400                main
  .text.refresh.part.0
-                0x0000000000001636       0x84 ./src/newsnake.o
+                0x000000000000247a       0x8c ./src/newsnake.o
  .text.snakeDelay
-                0x00000000000016ba       0x36 ./src/newsnake.o
-                0x00000000000016ba                snakeDelay
- .text.refresh  0x00000000000016f0        0xe ./src/newsnake.o
-                0x00000000000016f0                refresh
- .text.isCover  0x00000000000016fe       0x36 ./src/newsnake.o
-                0x00000000000016fe                isCover
+                0x0000000000002506       0x3a ./src/newsnake.o
+                0x0000000000002506                snakeDelay
+ .text.refresh  0x0000000000002540       0x10 ./src/newsnake.o
+                0x0000000000002540                refresh
+ .text.isCover  0x0000000000002550       0x38 ./src/newsnake.o
+                0x0000000000002550                isCover
  .text.isNearSelf
-                0x0000000000001734       0x44 ./src/newsnake.o
-                0x0000000000001734                isNearSelf
+                0x0000000000002588       0x46 ./src/newsnake.o
+                0x0000000000002588                isNearSelf
  .text.generateFood
-                0x0000000000001778       0xc6 ./src/newsnake.o
-                0x0000000000001778                generateFood
+                0x00000000000025ce       0xc8 ./src/newsnake.o
+                0x00000000000025ce                generateFood
  .text.snakeInit
-                0x000000000000183e       0x66 ./src/newsnake.o
-                0x000000000000183e                snakeInit
- .text.dead     0x00000000000018a4       0xd0 ./src/newsnake.o
-                0x00000000000018a4                dead
- .text.snakeGo  0x0000000000001974      0x1a8 ./src/newsnake.o
-                0x0000000000001974                snakeGo
+                0x0000000000002696       0x68 ./src/newsnake.o
+                0x0000000000002696                snakeInit
+ .text.dead     0x00000000000026fe       0xf4 ./src/newsnake.o
+                0x00000000000026fe                dead
+ .text.snakeGo  0x00000000000027f2      0x1ac ./src/newsnake.o
+                0x00000000000027f2                snakeGo
  .text.GameStart
-                0x0000000000001b1c       0xe6 ./src/newsnake.o
-                0x0000000000001b1c                GameStart
+                0x000000000000299e       0xf0 ./src/newsnake.o
+                0x000000000000299e                GameStart
  .text.print_num
-                0x0000000000001c02        0x6 ./src/uart.o
-                0x0000000000001c02                print_num
+                0x0000000000002a8e        0x6 ./src/uart.o
+                0x0000000000002a8e                print_num
  .text.print_num.part.0
-                0x0000000000001c08       0x4c ./src/uart.o
+                0x0000000000002a94       0x4c ./src/uart.o
  .text.put_char
-                0x0000000000001c54       0x20 ./src/uart.o
-                0x0000000000001c54                put_char
+                0x0000000000002ae0       0x20 ./src/uart.o
+                0x0000000000002ae0                put_char
  .text.print_str
-                0x0000000000001c74       0x28 ./src/uart.o
-                0x0000000000001c74                print_str
+                0x0000000000002b00       0x28 ./src/uart.o
+                0x0000000000002b00                print_str
  .text.print_hex
-                0x0000000000001c9c       0x4c ./src/uart.o
-                0x0000000000001c9c                print_hex
+                0x0000000000002b28       0x4c ./src/uart.o
+                0x0000000000002b28                print_hex
  .text.print_hex2
-                0x0000000000001ce8       0x10 ./src/uart.o
-                0x0000000000001ce8                print_hex2
+                0x0000000000002b74       0x10 ./src/uart.o
+                0x0000000000002b74                print_hex2
  .text.print_dec
-                0x0000000000001cf8       0x10 ./src/uart.o
-                0x0000000000001cf8                print_dec
+                0x0000000000002b84       0x10 ./src/uart.o
+                0x0000000000002b84                print_dec
  .text.print_flt
-                0x0000000000001d08       0x78 ./src/uart.o
-                0x0000000000001d08                print_flt
- .text.printk   0x0000000000001d80      0x134 ./src/uart.o
-                0x0000000000001d80                printk
+                0x0000000000002b94       0x78 ./src/uart.o
+                0x0000000000002b94                print_flt
+ .text.printk   0x0000000000002c0c      0x134 ./src/uart.o
+                0x0000000000002c0c                printk
  .text.getchar_prompt
-                0x0000000000001eb4       0x84 ./src/uart.o
-                0x0000000000001eb4                getchar_prompt
+                0x0000000000002d40       0x84 ./src/uart.o
+                0x0000000000002d40                getchar_prompt
  .text.get_char
-                0x0000000000001f38       0x2a ./src/uart.o
-                0x0000000000001f38                get_char
- *fill*         0x0000000000001f62        0x2 
+                0x0000000000002dc4       0x2a ./src/uart.o
+                0x0000000000002dc4                get_char
+ *fill*         0x0000000000002dee        0x2 
  .text.__muldf3
-                0x0000000000001f64      0x68c d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(muldf3.o)
-                0x0000000000001f64                __muldf3
+                0x0000000000002df0      0x68c d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(muldf3.o)
+                0x0000000000002df0                __muldf3
  .text.__subdf3
-                0x00000000000025f0      0x880 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(subdf3.o)
-                0x00000000000025f0                __subdf3
+                0x000000000000347c      0x880 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(subdf3.o)
+                0x000000000000347c                __subdf3
  .text.__fixdfsi
-                0x0000000000002e70       0x84 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(fixdfsi.o)
-                0x0000000000002e70                __fixdfsi
+                0x0000000000003cfc       0x84 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(fixdfsi.o)
+                0x0000000000003cfc                __fixdfsi
  .text.__floatunsidf
-                0x0000000000002ef4       0xc0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(floatunsidf.o)
-                0x0000000000002ef4                __floatunsidf
+                0x0000000000003d80       0xc0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(floatunsidf.o)
+                0x0000000000003d80                __floatunsidf
  .text.__clzsi2
-                0x0000000000002fb4       0x94 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(_clzsi2.o)
-                0x0000000000002fb4                __clzsi2
- .text.srand    0x0000000000003048       0x14 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/../../../../riscv-none-embed/lib/rv32im/ilp32\libg.a(lib_a-rand.o)
-                0x0000000000003048                srand
- .text.rand     0x000000000000305c       0x5c d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/../../../../riscv-none-embed/lib/rv32im/ilp32\libg.a(lib_a-rand.o)
-                0x000000000000305c                rand
+                0x0000000000003e40       0x94 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(_clzsi2.o)
+                0x0000000000003e40                __clzsi2
+ .text.srand    0x0000000000003ed4       0x14 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/../../../../riscv-none-embed/lib/rv32im/ilp32\libg.a(lib_a-rand.o)
+                0x0000000000003ed4                srand
+ .text.rand     0x0000000000003ee8       0x5c d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/../../../../riscv-none-embed/lib/rv32im/ilp32\libg.a(lib_a-rand.o)
+                0x0000000000003ee8                rand
  *(.rodata)
  *(.rodata*)
- .rodata.F8X16  0x00000000000030b8      0x5f0 ./src/hdmidraw.o
+ .rodata.InitInterface.str1.4
+                0x0000000000003f44        0x7 ./src/Tetris.o
+ *fill*         0x0000000000003f4b        0x1 
+ .rodata.JudeFunc.str1.4
+                0x0000000000003f4c       0x30 ./src/Tetris.o
+ .rodata.StartGame.str1.4
+                0x0000000000003f7c        0x9 ./src/Tetris.o
+ *fill*         0x0000000000003f85        0x3 
+ .rodata.F8X16  0x0000000000003f88      0x5f0 ./src/hdmidraw.o
  .rodata.bitmap_bytes
-                0x00000000000036a8       0x60 ./src/hdmidraw.o
+                0x0000000000004578       0x60 ./src/hdmidraw.o
  .rodata.draw_point_test.str1.4
-                0x0000000000003708        0xc ./src/main.o
- *fill*         0x0000000000003714        0x4 
+                0x00000000000045d8        0xc ./src/main.o
+ *fill*         0x00000000000045e4        0x4 
  .rodata.main.cst8
-                0x0000000000003718       0x10 ./src/main.o
+                0x00000000000045e8       0x10 ./src/main.o
  .rodata.main.str1.4
-                0x0000000000003728       0x7e ./src/main.o
- *fill*         0x00000000000037a6        0x2 
+                0x00000000000045f8       0x7e ./src/main.o
+ *fill*         0x0000000000004676        0x2 
  .rodata.ps2_test.str1.4
-                0x00000000000037a8        0xd ./src/main.o
- *fill*         0x00000000000037b5        0x3 
+                0x0000000000004678        0xd ./src/main.o
+ *fill*         0x0000000000004685        0x3 
  .rodata.dead.str1.4
-                0x00000000000037b8       0x20 ./src/newsnake.o
+                0x0000000000004688       0x31 ./src/newsnake.o
+ *fill*         0x00000000000046b9        0x3 
  .rodata.refresh.part.0.str1.4
-                0x00000000000037d8        0x7 ./src/newsnake.o
- *fill*         0x00000000000037df        0x1 
+                0x00000000000046bc        0x7 ./src/newsnake.o
+ *fill*         0x00000000000046c3        0x1 
  .rodata.printk
-                0x00000000000037e0      0x150 ./src/uart.o
+                0x00000000000046c4      0x150 ./src/uart.o
+ *fill*         0x0000000000004814        0x4 
  .rodata.print_flt.cst8
-                0x0000000000003930        0x8 ./src/uart.o
+                0x0000000000004818        0x8 ./src/uart.o
  .rodata.print_num.part.0.str1.4
-                0x0000000000003938       0x14 ./src/uart.o
+                0x0000000000004820       0x14 ./src/uart.o
                                          0x11 (size before relaxing)
  .rodata.__muldf3
-                0x000000000000394c       0x40 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(muldf3.o)
+                0x0000000000004834       0x40 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(muldf3.o)
  .rodata.__clz_tab
-                0x000000000000398c      0x100 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(_clz.o)
-                0x000000000000398c                __clz_tab
+                0x0000000000004874      0x100 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(_clz.o)
+                0x0000000000004874                __clz_tab
  *(.srodata)
  *(.srodata*)
-                0x0000000000003a8c                . = ALIGN (0x4)
-                0x0000000000003a8c                _etext = .
-                0x0000000000003a8c                _sidata = _etext
+                0x0000000000004974                . = ALIGN (0x4)
+                0x0000000000004974                _etext = .
+                0x0000000000004974                _sidata = _etext
 
-.rela.dyn       0x0000000000003a8c        0x0
+.rela.dyn       0x0000000000004974        0x0
+ .rela.text.InitInterface
+                0x0000000000004974        0x0 ./src/Tetris.o
+ .rela.text.DrawBlock
+                0x0000000000004974        0x0 ./src/Tetris.o
+ .rela.text.DrawSpace
+                0x0000000000004974        0x0 ./src/Tetris.o
+ .rela.text.JudeFunc
+                0x0000000000004974        0x0 ./src/Tetris.o
+ .rela.text.StartGame
+                0x0000000000004974        0x0 ./src/Tetris.o
+ .rela.text.Tetris
+                0x0000000000004974        0x0 ./src/Tetris.o
  .rela.text.ps2_test
-                0x0000000000003a8c        0x0 ./src/hdmidraw.o
+                0x0000000000004974        0x0 ./src/Tetris.o
  .rela.text.draw_point_test
-                0x0000000000003a8c        0x0 ./src/hdmidraw.o
+                0x0000000000004974        0x0 ./src/Tetris.o
  .rela.text.startup.main
-                0x0000000000003a8c        0x0 ./src/hdmidraw.o
+                0x0000000000004974        0x0 ./src/Tetris.o
  .rela.text.generateFood
-                0x0000000000003a8c        0x0 ./src/hdmidraw.o
- .rela.text     0x0000000000003a8c        0x0 ./src/hdmidraw.o
+                0x0000000000004974        0x0 ./src/Tetris.o
+ .rela.text     0x0000000000004974        0x0 ./src/Tetris.o
  .rela.text.print_flt
-                0x0000000000003a8c        0x0 ./src/hdmidraw.o
+                0x0000000000004974        0x0 ./src/Tetris.o
  .rela.text.__muldf3
-                0x0000000000003a8c        0x0 ./src/hdmidraw.o
+                0x0000000000004974        0x0 ./src/Tetris.o
  .rela.text.__subdf3
-                0x0000000000003a8c        0x0 ./src/hdmidraw.o
+                0x0000000000004974        0x0 ./src/Tetris.o
  .rela.text.__floatunsidf
-                0x0000000000003a8c        0x0 ./src/hdmidraw.o
+                0x0000000000004974        0x0 ./src/Tetris.o
  .rela.text.__clzsi2
-                0x0000000000003a8c        0x0 ./src/hdmidraw.o
+                0x0000000000004974        0x0 ./src/Tetris.o
  .rela.text.srand
-                0x0000000000003a8c        0x0 ./src/hdmidraw.o
+                0x0000000000004974        0x0 ./src/Tetris.o
  .rela.text.rand
-                0x0000000000003a8c        0x0 ./src/hdmidraw.o
+                0x0000000000004974        0x0 ./src/Tetris.o
 
-.data           0x0000000000000000      0x430 load address 0x0000000000003a8c
+.data           0x0000000000000000      0x430 load address 0x0000000000004974
                 0x0000000000000000                . = ALIGN (0x4)
                 0x0000000000000000                _sdata = .
                 0x0000000000000000                _ram_start = .
                 0x0000000000000000                . = ALIGN (0x4)
  *(.data)
+ .data          0x0000000000000000        0x0 ./src/Tetris.o
  .data          0x0000000000000000        0x0 ./src/hdmidraw.o
  .data          0x0000000000000000        0x0 ./src/main.o
  .data          0x0000000000000000        0x0 ./src/newsnake.o
@@ -270,10 +349,11 @@ LOAD d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.
                 0x0000000000000430                . = ALIGN (0x4)
                 0x0000000000000430                _edata = .
 
-.bss            0x0000000000000430      0x274 load address 0x0000000000003ebc
+.bss            0x0000000000000430      0xb14 load address 0x0000000000004da4
                 0x0000000000000430                . = ALIGN (0x4)
                 0x0000000000000430                _sbss = .
  *(.bss)
+ .bss           0x0000000000000430        0x0 ./src/Tetris.o
  .bss           0x0000000000000430        0x0 ./src/hdmidraw.o
  .bss           0x0000000000000430        0x0 ./src/main.o
  .bss           0x0000000000000430        0x0 ./src/newsnake.o
@@ -288,103 +368,131 @@ LOAD d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.
  .bss           0x0000000000000430        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/../../../../riscv-none-embed/lib/rv32im/ilp32\libg.a(lib_a-rand.o)
  .bss           0x0000000000000430        0x0 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/../../../../riscv-none-embed/lib/rv32im/ilp32\libg.a(lib_a-impure.o)
  *(.bss*)
- .bss.snake     0x0000000000000430      0x268 ./src/newsnake.o
-                0x0000000000000430                snake
+ .bss.block     0x0000000000000430      0x1c0 ./src/Tetris.o
+                0x0000000000000430                block
+ .bss.face      0x00000000000005f0      0x6cc ./src/Tetris.o
+                0x00000000000005f0                face
+ .bss.snake     0x0000000000000cbc      0x268 ./src/newsnake.o
+                0x0000000000000cbc                snake
  *(.sbss)
  *(.sbss*)
+ .sbss.end      0x0000000000000f24        0x1 ./src/Tetris.o
+                0x0000000000000f24                end
+ *fill*         0x0000000000000f25        0x3 
+ .sbss.grade    0x0000000000000f28        0x4 ./src/Tetris.o
+                0x0000000000000f28                grade
+ .sbss.max      0x0000000000000f2c        0x4 ./src/Tetris.o
+                0x0000000000000f2c                max
+ .sbss.pos      0x0000000000000f30        0x4 ./src/Tetris.o
+                0x0000000000000f30                pos
+ .sbss.tetriskey
+                0x0000000000000f34        0x1 ./src/Tetris.o
+                0x0000000000000f34                tetriskey
+ *fill*         0x0000000000000f35        0x3 
  .sbss.delaycnt
-                0x0000000000000698        0x4 ./src/main.o
-                0x0000000000000698                delaycnt
+                0x0000000000000f38        0x4 ./src/main.o
+                0x0000000000000f38                delaycnt
  .sbss.uart_data
-                0x000000000000069c        0x4 ./src/main.o
-                0x000000000000069c                uart_data
- .sbss.getps2   0x00000000000006a0        0x1 ./src/newsnake.o
-                0x00000000000006a0                getps2
- .sbss.key_val  0x00000000000006a1        0x1 ./src/newsnake.o
-                0x00000000000006a1                key_val
- .sbss.score    0x00000000000006a2        0x2 ./src/newsnake.o
-                0x00000000000006a2                score
+                0x0000000000000f3c        0x4 ./src/main.o
+                0x0000000000000f3c                uart_data
+ .sbss.getps2   0x0000000000000f40        0x1 ./src/newsnake.o
+                0x0000000000000f40                getps2
+ .sbss.key_val  0x0000000000000f41        0x1 ./src/newsnake.o
+                0x0000000000000f41                key_val
+ .sbss.score    0x0000000000000f42        0x2 ./src/newsnake.o
+                0x0000000000000f42                score
  *(COMMON)
-                0x00000000000006a4                . = ALIGN (0x4)
-                0x00000000000006a4                _ebss = .
+                0x0000000000000f44                . = ALIGN (0x4)
+                0x0000000000000f44                _ebss = .
 
-.heap           0x00000000000006a4        0x0
-                0x00000000000006a4                . = ALIGN (0x4)
-                0x00000000000006a4                _heap_start = .
+.heap           0x0000000000000f44        0x0
+                0x0000000000000f44                . = ALIGN (0x4)
+                0x0000000000000f44                _heap_start = .
 OUTPUT(pico_test_1.elf elf32-littleriscv)
 
-.debug_info     0x0000000000000000     0x49c8
- .debug_info    0x0000000000000000     0x11c3 ./src/hdmidraw.o
- .debug_info    0x00000000000011c3     0x11dc ./src/main.o
- .debug_info    0x000000000000239f     0x15c4 ./src/newsnake.o
- .debug_info    0x0000000000003963       0x26 ./src/start.o
- .debug_info    0x0000000000003989     0x103f ./src/uart.o
+.debug_info     0x0000000000000000     0x6dcc
+ .debug_info    0x0000000000000000     0x1d72 ./src/Tetris.o
+ .debug_info    0x0000000000001d72     0x1819 ./src/hdmidraw.o
+ .debug_info    0x000000000000358b     0x11f0 ./src/main.o
+ .debug_info    0x000000000000477b     0x15ec ./src/newsnake.o
+ .debug_info    0x0000000000005d67       0x26 ./src/start.o
+ .debug_info    0x0000000000005d8d     0x103f ./src/uart.o
 
-.debug_abbrev   0x0000000000000000      0xd09
- .debug_abbrev  0x0000000000000000      0x34c ./src/hdmidraw.o
- .debug_abbrev  0x000000000000034c      0x2e4 ./src/main.o
- .debug_abbrev  0x0000000000000630      0x361 ./src/newsnake.o
- .debug_abbrev  0x0000000000000991       0x14 ./src/start.o
- .debug_abbrev  0x00000000000009a5      0x364 ./src/uart.o
+.debug_abbrev   0x0000000000000000     0x11cf
+ .debug_abbrev  0x0000000000000000      0x449 ./src/Tetris.o
+ .debug_abbrev  0x0000000000000449      0x3c9 ./src/hdmidraw.o
+ .debug_abbrev  0x0000000000000812      0x2e4 ./src/main.o
+ .debug_abbrev  0x0000000000000af6      0x361 ./src/newsnake.o
+ .debug_abbrev  0x0000000000000e57       0x14 ./src/start.o
+ .debug_abbrev  0x0000000000000e6b      0x364 ./src/uart.o
 
-.debug_loc      0x0000000000000000     0x15cf
- .debug_loc     0x0000000000000000      0xb97 ./src/hdmidraw.o
- .debug_loc     0x0000000000000b97       0xa1 ./src/main.o
- .debug_loc     0x0000000000000c38      0x2a0 ./src/newsnake.o
- .debug_loc     0x0000000000000ed8      0x6f7 ./src/uart.o
+.debug_loc      0x0000000000000000     0x2a42
+ .debug_loc     0x0000000000000000      0xaef ./src/Tetris.o
+ .debug_loc     0x0000000000000aef     0x151b ./src/hdmidraw.o
+ .debug_loc     0x000000000000200a       0xa1 ./src/main.o
+ .debug_loc     0x00000000000020ab      0x2a0 ./src/newsnake.o
+ .debug_loc     0x000000000000234b      0x6f7 ./src/uart.o
 
-.debug_aranges  0x0000000000000000      0x190
+.debug_aranges  0x0000000000000000      0x240
  .debug_aranges
-                0x0000000000000000       0x60 ./src/hdmidraw.o
+                0x0000000000000000       0x70 ./src/Tetris.o
  .debug_aranges
-                0x0000000000000060       0x38 ./src/main.o
+                0x0000000000000070       0xa0 ./src/hdmidraw.o
  .debug_aranges
-                0x0000000000000098       0x68 ./src/newsnake.o
+                0x0000000000000110       0x38 ./src/main.o
  .debug_aranges
-                0x0000000000000100       0x20 ./src/start.o
+                0x0000000000000148       0x68 ./src/newsnake.o
  .debug_aranges
-                0x0000000000000120       0x70 ./src/uart.o
+                0x00000000000001b0       0x20 ./src/start.o
+ .debug_aranges
+                0x00000000000001d0       0x70 ./src/uart.o
 
-.debug_ranges   0x0000000000000000      0x500
- .debug_ranges  0x0000000000000000      0x100 ./src/hdmidraw.o
- .debug_ranges  0x0000000000000100       0x28 ./src/main.o
- .debug_ranges  0x0000000000000128       0xf0 ./src/newsnake.o
- .debug_ranges  0x0000000000000218      0x2e8 ./src/uart.o
+.debug_ranges   0x0000000000000000      0xaf8
+ .debug_ranges  0x0000000000000000      0x528 ./src/Tetris.o
+ .debug_ranges  0x0000000000000528      0x1d0 ./src/hdmidraw.o
+ .debug_ranges  0x00000000000006f8       0x28 ./src/main.o
+ .debug_ranges  0x0000000000000720       0xf0 ./src/newsnake.o
+ .debug_ranges  0x0000000000000810      0x2e8 ./src/uart.o
 
-.debug_line     0x0000000000000000     0x1be3
- .debug_line    0x0000000000000000      0x786 ./src/hdmidraw.o
- .debug_line    0x0000000000000786      0x419 ./src/main.o
- .debug_line    0x0000000000000b9f      0x802 ./src/newsnake.o
- .debug_line    0x00000000000013a1      0x16f ./src/start.o
- .debug_line    0x0000000000001510      0x6d3 ./src/uart.o
+.debug_line     0x0000000000000000     0x2b34
+ .debug_line    0x0000000000000000      0xb56 ./src/Tetris.o
+ .debug_line    0x0000000000000b56      0xb69 ./src/hdmidraw.o
+ .debug_line    0x00000000000016bf      0x42b ./src/main.o
+ .debug_line    0x0000000000001aea      0x808 ./src/newsnake.o
+ .debug_line    0x00000000000022f2      0x16f ./src/start.o
+ .debug_line    0x0000000000002461      0x6d3 ./src/uart.o
 
-.debug_str      0x0000000000000000      0x8d0
- .debug_str     0x0000000000000000      0x6b9 ./src/hdmidraw.o
+.debug_str      0x0000000000000000      0xa80
+ .debug_str     0x0000000000000000      0x6e7 ./src/Tetris.o
+                                        0x780 (size before relaxing)
+ .debug_str     0x00000000000006e7      0x182 ./src/hdmidraw.o
+                                        0x806 (size before relaxing)
+ .debug_str     0x0000000000000869       0x79 ./src/main.o
+                                        0x67f (size before relaxing)
+ .debug_str     0x00000000000008e2       0xb5 ./src/newsnake.o
                                         0x73b (size before relaxing)
- .debug_str     0x00000000000006b9       0x79 ./src/main.o
-                                        0x678 (size before relaxing)
- .debug_str     0x0000000000000732       0xb5 ./src/newsnake.o
-                                        0x73b (size before relaxing)
- .debug_str     0x00000000000007e7       0x1b ./src/start.o
+ .debug_str     0x0000000000000997       0x1b ./src/start.o
                                          0x4c (size before relaxing)
- .debug_str     0x0000000000000802       0xce ./src/uart.o
+ .debug_str     0x00000000000009b2       0xce ./src/uart.o
                                         0x65c (size before relaxing)
 
 .comment        0x0000000000000000       0x3a
- .comment       0x0000000000000000       0x3a ./src/hdmidraw.o
+ .comment       0x0000000000000000       0x3a ./src/Tetris.o
                                          0x3b (size before relaxing)
+ .comment       0x000000000000003a       0x3b ./src/hdmidraw.o
  .comment       0x000000000000003a       0x3b ./src/main.o
  .comment       0x000000000000003a       0x3b ./src/newsnake.o
  .comment       0x000000000000003a       0x3b ./src/uart.o
 
-.debug_frame    0x0000000000000000      0x61c
- .debug_frame   0x0000000000000000      0x184 ./src/hdmidraw.o
- .debug_frame   0x0000000000000184       0x68 ./src/main.o
- .debug_frame   0x00000000000001ec      0x180 ./src/newsnake.o
- .debug_frame   0x000000000000036c      0x178 ./src/uart.o
- .debug_frame   0x00000000000004e4       0x54 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(muldf3.o)
- .debug_frame   0x0000000000000538       0x40 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(subdf3.o)
- .debug_frame   0x0000000000000578       0x20 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(fixdfsi.o)
- .debug_frame   0x0000000000000598       0x34 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(floatunsidf.o)
- .debug_frame   0x00000000000005cc       0x20 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(_clzsi2.o)
- .debug_frame   0x00000000000005ec       0x30 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/../../../../riscv-none-embed/lib/rv32im/ilp32\libg.a(lib_a-rand.o)
+.debug_frame    0x0000000000000000      0x9a4
+ .debug_frame   0x0000000000000000      0x228 ./src/Tetris.o
+ .debug_frame   0x0000000000000228      0x2e4 ./src/hdmidraw.o
+ .debug_frame   0x000000000000050c       0x68 ./src/main.o
+ .debug_frame   0x0000000000000574      0x180 ./src/newsnake.o
+ .debug_frame   0x00000000000006f4      0x178 ./src/uart.o
+ .debug_frame   0x000000000000086c       0x54 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(muldf3.o)
+ .debug_frame   0x00000000000008c0       0x40 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(subdf3.o)
+ .debug_frame   0x0000000000000900       0x20 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(fixdfsi.o)
+ .debug_frame   0x0000000000000920       0x34 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(floatunsidf.o)
+ .debug_frame   0x0000000000000954       0x20 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/rv32im/ilp32\libgcc.a(_clzsi2.o)
+ .debug_frame   0x0000000000000974       0x30 d:/hummingbird/hbird-eclipse_2018_09/gnu mcu eclipse/risc-v embedded gcc/7.2.0-4-20180606-1631/bin/../lib/gcc/riscv-none-embed/7.2.0/../../../../riscv-none-embed/lib/rv32im/ilp32\libg.a(lib_a-rand.o)

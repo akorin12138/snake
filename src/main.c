@@ -69,15 +69,13 @@ int main(void)
 	printk("test data = %d,%f,%s,0x = %x\n", 100,33.456,"2019",100);
 	printk("simple compute : 50*10 = %d,100/3 = %f,100%3 = %d\n", 50*10,(double)100/3,(int)100%3);
 	printk("test\n");
+
+	Tetris();
 	GameStart();
 //loop:
-//	SnakeGameStart();
 //	while(getps2 != 0b00000010){
 //		getps2 = *ps2ctrl_point;
 //		if(getps2 == 0b00000010){
-//			for(cuty = 0;cuty<30;cuty++){
-//				for(cutx = 0;cutx<40;cutx++)
-//					clear_point(cutx,cuty);
 //			}
 //			break;
 //		}
