@@ -280,7 +280,6 @@ int JudeFunc()
 			hdmi_draw_string_back_verticlal(20,120,"GAME OVER",RED,255);
 			while (1)
 			{//游戏结束等待键值返回
-				hdmi_draw_string_back_verticlal(20,140,"PRESS'B'TO RESTART",PURPLE,255);
 				hdmi_draw_string_back_verticlal(20,160,"PRESS'X'TO QUIT",PURPLE,255);
 				u8 overkey = 0;
 				tetriskey = *ps2ctrl_point;

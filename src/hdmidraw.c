@@ -82,6 +82,32 @@ void hdmi_draw_char(u16 x, u16 y, u8 c, u8 color){
 	}
 }
 /***************************************************************************
+ ** 作用：显示字母，符号
+ ** 参数：x:屏幕x坐标,y:屏幕y坐标,c:要显示的字母或符号,color:颜色索引
+ ** 注:c仅出现ascii码里的
+****************************************************************************/
+void hdmi_draw_char_back(u16 x, u16 y, u8 c, u8 color,u8 back){
+	u8 i;u8 j;
+	u8 ch = c - 32;
+	u8 cursor;
+	u16 x0 = x; u16 y0 = y;
+	for(i = 0; i < 16; i++){
+		cursor = F8X16[16*ch+i];
+		for(j = 0; j< 8; j++){
+			if(((cursor>>(7-j))&0x01)){
+				hdmi_draw_point(x0,y0,color);
+			}else{
+				hdmi_draw_point(x0,y0,back);
+			}
+//			printk("x0:%d,y0:%d\n",x0,y0);
+			x0++;
+			if(x0>319 || x0>7+x){
+				x0 = x;y0++;
+			}
+		}
+	}
+}
+/***************************************************************************
  ** 作用：显示字母，符号(垂直)
  ** 参数：x:屏幕x坐标,y:屏幕y坐标,c:要显示的字母或符号,color:颜色索引,back:背景颜色索引
  ** 注:用于垂直显示
@@ -116,6 +142,24 @@ void hdmi_draw_string(u16 x, u16 y, u8 *str, u8 color){
 	u16 x0 = x;u16 y0 = y;
 	while((*str<='~')&&(*str>=' ')){
 		hdmi_draw_char(x0,y0,*str,color);
+		str = str + 1;
+		x0 = x0 + 8;
+		if(x0>319){
+			x0 = x;
+			y0 = y0+16;
+		}
+	}
+}
+/***************************************************************************
+ ** 作用：显示字符串
+ ** 参数：x:屏幕x坐标,y:屏幕y坐标,*str:要显示的字母或符号,color:颜色索引,back:背景颜色索引
+ ** 注:str仅出现ascii码里的
+****************************************************************************/
+void hdmi_draw_string_back(u16 x, u16 y, u8 *str, u8 color,u8 back){
+	u8 i;u8 j;
+	u16 x0 = x;u16 y0 = y;
+	while((*str<='~')&&(*str>=' ')){
+		hdmi_draw_char_back(x0,y0,*str,color,back);
 		str = str + 1;
 		x0 = x0 + 8;
 		if(x0>319){
@@ -377,4 +421,28 @@ void hdmi_drawrectangle(u16 x1, u16 y1, u16 x2, u16 y2,u8 color)
 	hdmi_drawLine(x1,y1,x1,y2,color);
 	hdmi_drawLine(x1,y2,x2,y2,color);
 	hdmi_drawLine(x2,y1,x2,y2,color);
+}
+/***************************************************************************
+ ** 作用：画矩形
+ ** 参数：x1:x坐标,y1:y坐标
+ ** 注:
+****************************************************************************/
+void hdmi_drawtriangle(u16 x, u16 y,u8 color,u8 back){
+	u8 i;u8 j;
+	u8 cursor;
+	u16 x0 = x; u16 y0 = y;
+	for(i = 0; i < 16; i++){
+		cursor = triangle[i];
+		for(j = 0; j< 8; j++){
+			if(((cursor>>(7-j))&0x01)){
+				hdmi_draw_point(x0,y0,color);
+			}else{
+				hdmi_draw_point(x0,y0,back);
+			}
+			x0++;
+			if(x0>319 || x0>7+x){
+				x0 = x;y0++;
+			}
+		}
+	}
 }

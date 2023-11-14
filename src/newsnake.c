@@ -10,6 +10,7 @@
 u8 getps2 = 0;
 u8 key_val = 0;
 u16 score = 0;
+u8 quit =0;
 void snakeDelay(){
 	u32 delaycnt = DELAY_CUT;
 	while(delaycnt--){
@@ -23,6 +24,7 @@ Snake snake;
 初始化蛇
 */
 void snakeInit(){
+	score=0;
 	snake.length=3;           //初始长度为3
 
 	snake.snakeX[0]=55;
@@ -49,6 +51,7 @@ void snakeInit(){
 */
 void snakeGo(int direct){
 	u8 i;
+	printk("snake.life:%d",snake.life);
 	if(snake.life==1){
 		if(abs(direct)!=abs(snake.dir) && direct != 0){	//如果按下的方向不是和运动的方向相同或相反
 			snake.dir=direct; //将蛇运动的方向改变为按下的方向
@@ -108,8 +111,9 @@ void refresh(){
 			hdmi_draw_dircle_solid(snake.snakeX[i],snake.snakeY[i],5,snakecolor);  //以算的蛇的坐标画半径为5的实心圆
 		}
 		hdmi_draw_dircle_solid(snake.foodX,snake.foodY,5,36);//画食物
-		hdmi_draw_string(250,70,"Score:",22);
+		hdmi_draw_string(250,70,"Score:",17);
 		hdmi_draw_num(260,90,score,2,23);
+		hdmi_drawrectangle(10,10,230,230,25);
 	}
 }
 /*
@@ -123,7 +127,7 @@ void refresh(){
  *********************************************/
 void GameStart(){
 	hdmi_drawrectangle(10,10,230,230,25);
-	hdmi_draw_string(250,70,"Score:",22);
+	hdmi_draw_string(250,70,"Score:",17);
 	hdmi_draw_num(260,90,score,2,23);
 	snakeInit();
 	while(1){
@@ -137,6 +141,10 @@ void GameStart(){
 			case 8:snake.tpdir = -2;break;//右
 		}
 		snakeGo(snake.tpdir);
+		if(quit){
+			quit = 0;
+			break;
+		}
 		refresh();
 	}
 }
@@ -204,17 +212,15 @@ void dead(){
 
 	snake.life=0;
 	hdmi_draw_string(80,50,"You dead!!!",20);
-	hdmi_draw_string(50,70,"Press 'B'to restart",20);
-	hdmi_draw_string(40,70,"Press 'X'to quit",20);
-	hdmi_draw_string(250,70,"Score:",22);
+	hdmi_draw_string(50,90,"Press any key to quit",24);
+	hdmi_draw_string(250,70,"Score:",17);
 	hdmi_draw_num(260,90,score,2,23);
 	getps2 = 0;
 	score = 0;
 	while(getps2 == 0){
 		getps2 = *ps2ctrl_point;
-		if(getps2  == 0b00000010){
-			snake.life=1;  //死了之后点击重新开始
-			snakeInit();
+		if(getps2!=0){
+			quit =1;
 		}
 	}
 }
