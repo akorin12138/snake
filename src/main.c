@@ -18,12 +18,17 @@ int main(void)
 	printk("simple compute : 50*10 = %d,100/3 = %f,100%3 = %d\n", 50*10,(double)100/3,(int)100%3);
 	printk("test\n");
 	hdmi_draw_clear(255);
-	hdmi_draw_string_back(60,120,"Snake Go!",ORANGE,255);
-	hdmi_draw_string_back(60,136,"Tetris Go!",ORANGE,255);
-	hdmi_drawtriangle(49,120,PURPLE,255);
-
+	hdmi_drawziguang(120,20,PURPLE,255);
+	sound_address = 0b1111111;
+	u8 temp;
+	temp = sound_address;
+	printk("%d",temp);
+	hdmi_draw_string_back(60,180,"Snake Go!",ORANGE,255);
+	hdmi_draw_string_back(60,196,"Tetris Go!",ORANGE,255);
+	hdmi_drawtriangle(49,180,PURPLE,255);
+	hdmi_drawquwei(100,100,PINK,255);
 	u8 Oldkey,Newkey =0;
-	u16 Oldy,Newy =120;
+	u16 Oldy,Newy =180;
 	u8 choose_val=0;
 	while(1){
 		Oldkey=Newkey;
@@ -31,6 +36,7 @@ int main(void)
 		if(Newkey != Oldkey){
 			if(Newkey == 0b00010000){//上
 				if(choose_val!=0){
+					rgb_address = 0b0000010;
 					Oldy = Newy;
 					Newy = Newy-16;
 					choose_val--;
@@ -38,6 +44,7 @@ int main(void)
 				}
 				else if(Newkey == 0b00100000){
 					if(choose_val<1){//修改1来增加选择项
+						rgb_address = 0b0000001;
 						Oldy = Newy;
 						Newy = Newy+16;
 						choose_val++;
@@ -50,21 +57,21 @@ int main(void)
 			if(choose_val == 0){
 				GameStart();
 				hdmi_draw_clear(255);
-				hdmi_draw_string_back(60,120,"Snake Go!",ORANGE,255);
-				hdmi_draw_string_back(60,136,"Tetris Go!",ORANGE,255);
+				hdmi_draw_string_back(60,180,"Snake Go!",ORANGE,255);
+				hdmi_draw_string_back(60,196,"Tetris Go!",ORANGE,255);
+				hdmi_drawtriangle(49,180,PURPLE,255);
+				hdmi_drawziguang(120,20,PURPLE,255);
+				hdmi_drawquwei(100,100,PINK,255);
 			}else if(choose_val == 1){
 				Tetris();
 				hdmi_draw_clear(255);
-				hdmi_draw_string_back(60,120,"Snake Go!",ORANGE,255);
-				hdmi_draw_string_back(60,136,"Tetris Go!",ORANGE,255);
+				hdmi_draw_string_back(60,180,"Snake Go!",ORANGE,255);
+				hdmi_draw_string_back(60,196,"Tetris Go!",ORANGE,255);
+				hdmi_drawtriangle(49,180,PURPLE,255);
+				hdmi_drawziguang(120,20,PURPLE,255);
+				hdmi_drawquwei(100,100,PINK,255);
 			}
 		}
 	}
 	return 0;
 }
-
-
-
-
-
-

@@ -237,6 +237,7 @@ int JudeFunc()
 			break; //跳出循环
 		if (sum == COL - 2) //该行全是方块，可得分
 		{
+			sound_address=0b1101111;
 			grade += 10; //满一行加10分
 			for (int j = 1; j < COL - 1; j++) //清除得分行的方块信息
 			{
@@ -277,9 +278,12 @@ int JudeFunc()
 	{
 		if (face.data[1][j] == 1) //顶层有方块存在（以第1行为顶层，不是第0行）
 		{
+			sound_address = 0b1011111;
+			rgb_address = 0b0000100;
 			hdmi_draw_string_back_verticlal(20,120,"GAME OVER",RED,255);
 			while (1)
 			{//游戏结束等待键值返回
+				hdmi_draw_string_back_verticlal(20,70,"Press'B'to restart",24,255);
 				hdmi_draw_string_back_verticlal(20,160,"PRESS'X'TO QUIT",PURPLE,255);
 				u8 overkey = 0;
 				tetriskey = *ps2ctrl_point;
@@ -325,6 +329,7 @@ void StartGame()
 				if(tetriskey!=0)
 					tetriskeyval = tetriskey;
 			}
+			sound_address = 0b1111111;
 			switch(tetriskeyval){
 				case 0:key = 0;break;
 				case 0b00100000:key = DOWN;break;//下
@@ -337,6 +342,7 @@ void StartGame()
 			{
 				if (IsLegal(shape, form, x, y + 1) == 0) //方块再下落就不合法了（已经到达底部）
 				{
+					sound_address = 0b1110111;
 					//将当前方块的信息录入face当中
 					//face:记录界面的每个位置是否有方块，若有方块还需记录该位置方块的颜色。
 					for (u8 i = 0; i < 4; i++)
@@ -390,15 +396,13 @@ void StartGame()
 				case SPACE: //空格键
 					if (IsLegal(shape, (form + 1) % 4, x, y + 1) == 1) //判断方块旋转后是否合法
 					{
+						sound_address = 0b1111101;
 						//方块旋转后合法才进行以下操作
 						DrawSpace(shape, form, x, y); //用空格覆盖当前方块所在位置
 						y++; //纵坐标自增（总不能原地旋转吧）
 						form = (form + 1) % 4; //方块的形态自增（下一次显示方块时就相当于旋转了）
 					}
 					break;
-				case ESC: //Esc键
-					hdmi_draw_string_back_verticlal(pos.X,pos.Y,"GAME END",255,0);
-					CursorJump(COL, ROW / 2 + 2);break;
 				}
 			}
 			DrawBlock(shape, form, x, y);
@@ -409,6 +413,8 @@ void StartGame()
 				}
 		else if(end == 2){
 			end = 0;
+
+			rgb_address = 0b0000001;
 			for (int i = 0; i < ROW - 1; i++){
 				for (int j = 1; j < COL - 1; j++){
 					face.data[i][j] = 0;

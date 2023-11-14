@@ -446,3 +446,51 @@ void hdmi_drawtriangle(u16 x, u16 y,u8 color,u8 back){
 		}
 	}
 }
+/***************************************************************************
+ ** 作用：画紫光
+ ** 参数：x1:x坐标,y1:y坐标
+ ** 注:
+****************************************************************************/
+void hdmi_drawziguang(u16 x,u16 y,u8 color,u8 back){
+	u16 i;u8 j;
+	u64 cursor;
+	u16 x0 = x; u16 y0 = y;
+	for(i = 0;i< 512; i++){
+		cursor = ziguang[i];//春日影
+		for(j = 0; j< 8; j++){
+			if(((cursor>>(7-j))&0x01)){
+				hdmi_draw_point(x0,y0,color);
+			}else{
+				hdmi_draw_point(x0,y0,back);
+			}
+			x0++;
+			if(x0>319 || x0>63+x){
+				x0 = x;y0++;
+			}
+		}
+	}
+}
+/***************************************************************************
+ ** 作用：画趣味游戏
+ ** 参数：x1:x坐标,y1:y坐标
+ ** 注:
+****************************************************************************/
+void hdmi_drawquwei(u16 x,u16 y,u8 color,u8 back){
+	u16 i;u8 j;
+	u64 cursor;
+	u16 x0 = x; u16 y0 = y;
+	for(i = 0;i< 192; i++){
+		cursor = quwei[i];
+		for(j = 0; j< 8; j++){
+			if(((cursor>>(7-j))&0x01)){
+				hdmi_draw_point(x0,y0,color);
+			}else{
+				hdmi_draw_point(x0,y0,back);
+			}
+			x0++;
+			if(x0>319 || x0>95+x){
+				x0 = x;y0++;
+			}
+		}
+	}
+}

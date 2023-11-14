@@ -11,6 +11,11 @@ u8 getps2 = 0;
 u8 key_val = 0;
 u16 score = 0;
 u8 quit =0;
+void soundDelay(u16 cnt){
+	u16 count = cnt;
+	while(count--)
+		led_address = 0;
+}
 void snakeDelay(){
 	u32 delaycnt = DELAY_CUT;
 	while(delaycnt--){
@@ -73,6 +78,7 @@ void snakeGo(int direct){
 			break;
 		}
 		if(snake.headX==snake.foodX&&snake.headY==snake.foodY){ //如果吃到了食物
+			sound_address = 0b1111011;
 			snake.length++;  //长度加1
 			score++;
 			for(i=1;i<snake.length;i++){ //除头部以外的坐标前移
@@ -129,11 +135,13 @@ void GameStart(){
 	hdmi_drawrectangle(10,10,230,230,25);
 	hdmi_draw_string(250,70,"Score:",17);
 	hdmi_draw_num(260,90,score,2,23);
+	rgb_address = 0b0000010;
 	snakeInit();
 	while(1){
 //		getps2 = *ps2ctrl_point;//手柄键值接收
 //		key_val = (getps2>>4);//取有效键值
 		snakeDelay();
+		sound_address = 0b1111111;
 		switch(key_val){
 			case 1:snake.tpdir = 1;break;//上
 			case 2:snake.tpdir = -1;break;//下
@@ -196,6 +204,8 @@ void generateFood(){
 在头部撞到墙之后执行死亡程序
 */
 void dead(){
+	rgb_address = 0b0000101;
+	sound_address = 0b1011111;
 	snake.length=0;
 
 	snake.snakeX[0]=0;
@@ -212,7 +222,8 @@ void dead(){
 
 	snake.life=0;
 	hdmi_draw_string(80,50,"You dead!!!",20);
-	hdmi_draw_string(50,90,"Press any key to quit",24);
+	hdmi_draw_string(50,70,"Press'B'to restart",24);
+	hdmi_draw_string(50,90,"Press'X'to quit",24);
 	hdmi_draw_string(250,70,"Score:",17);
 	hdmi_draw_num(260,90,score,2,23);
 	getps2 = 0;
@@ -223,4 +234,5 @@ void dead(){
 			quit =1;
 		}
 	}
+	sound_address = 0b1111111;
 }

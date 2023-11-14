@@ -30,6 +30,7 @@ typedef struct
 	u8 foodY;
 
 }Snake;
+#define EAT 0b1111101
 
 void snakeDelay(void);
 

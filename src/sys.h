@@ -21,20 +21,23 @@ typedef   uint32_t   u32;   ///32位
 typedef   uint16_t   u16;   ///16位
 typedef   uint8_t     u8;   ///8位
 
-#define led_address 			(*(volatile uint32_t*)0x00010020)
-#define gpio_address 			(*(volatile uint32_t*)0x00010030)
-#define gpio_point   			(volatile uint32_t*)0x00010030
+#define led_address 			(*(volatile uint32_t*)0x00018020)
+#define gpio_address 			(*(volatile uint32_t*)0x00018030)
+#define gpio_point   			(volatile uint32_t*)0x00018030
 
-#define rgb_out_address				(*(volatile uint32_t*)0x00010040)
-#define rgb_in_address				(*(volatile uint32_t*)0x00010050)
-#define rgb_point				    (volatile uint32_t*)0x00010050
+#define rgb_address					(*(volatile uint32_t*)0x00018110)
+#define sound_address				(*(volatile uint32_t*)0x00018120)
+
+#define rgb_out_address				(*(volatile uint32_t*)0x00018040)
+#define rgb_in_address				(*(volatile uint32_t*)0x00018050)
+#define rgb_point				    (volatile uint32_t*)0x00018050
 //
 #define user_block_u_address		(*(volatile uint32_t*)0x00018080)
-#define user_block_d_address		(*(volatile uint32_t*)0x00010090)
-#define ps2ctrl_address				(*(volatile uint32_t*)0x00010100)
-#define ps2ctrl_point				(volatile uint32_t*)0x00010100
-#define ram_address					(*(volatile uint32_t*)0x00010060)
-#define ram_data_address			(*(volatile uint32_t*)0x00010070)
+#define user_block_d_address		(*(volatile uint32_t*)0x00018090)
+#define ps2ctrl_address				(*(volatile uint32_t*)0x00018100)
+#define ps2ctrl_point				(volatile uint32_t*)0x00018100
+#define ram_address					(*(volatile uint32_t*)0x00018060)
+#define ram_data_address			(*(volatile uint32_t*)0x00018070)
 //
 //#define rgb_r_out				(*(volatile uint32_t*)0x00008090)
 //#define rgb_g_out				(*(volatile uint32_t*)0x000080A0)
