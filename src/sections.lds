@@ -1,7 +1,7 @@
 MEMORY
 {
-    SMEM (rx)      : ORIGIN = 0x00001000, LENGTH = 0x010000 /* entire smem,  16KB*/
-    RAM (xrw)      : ORIGIN = 0x00000000, LENGTH = 0x001000 /* 1 KB */
+    SMEM (rx)      : ORIGIN = 0x00004000, LENGTH = 0x014000 /* entire smem,  16KB*/
+    RAM (xrw)      : ORIGIN = 0x00000000, LENGTH = 0x004000 /* 1 KB */
     
     //FLASH (rx)      : ORIGIN = 0x00100000, LENGTH = 0x400000 /* entire flash, 4 MiB */
     //RAM (xrw)       : ORIGIN = 0x00000000, LENGTH = 0x000400 /* 1 KB */
