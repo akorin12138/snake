@@ -494,3 +494,30 @@ void hdmi_drawquwei(u16 x,u16 y,u8 color,u8 back){
 		}
 	}
 }
+
+
+void hdmi_drawrectangle_vertical(u16 x1, u16 y1, u16 x2, u16 y2,u8 color)
+{
+	hdmi_drawLine_vertical(x1,y1,x2,y1,color);
+	hdmi_drawLine_vertical(x1,y1,x1,y2,color);
+	hdmi_drawLine_vertical(x1,y2,x2,y2,color);
+	hdmi_drawLine_vertical(x2,y1,x2,y2,color);
+}
+
+void hdmi_draw_fill_vertical(u16 sx,u16 sy,u16 ex,u16 ey,u16 color)
+{
+	u16 i,j;
+	u16 x0 = sx;u16 y0 = sy;
+	u16 xlen=0;
+	xlen=ex-sx+1;
+	for(i=sy;i<=ey;i++)
+	{
+		for(j=0;j<xlen;j++){
+			hdmi_draw_point_vertical(x0,y0,color);
+			x0++;
+		}
+		x0 = sx;
+		y0++;
+	}
+}
+

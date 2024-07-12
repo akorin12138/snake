@@ -33,7 +33,9 @@ void hdmi_drawLine_vertical(u16 x3, u16 y3, u16 x4, u16 y4,u8 color);
 void hdmi_draw_string_back_verticlal(u16 x, u16 y, u8 *str, u8 color,u8 back);
 void hdmi_draw_num_back_vertical(u16 x, u16 y, u16 num,u8 len ,u8 color,u8 back);
 void hdmi_draw_square_vertical(u16 x,u16 y,u16 len,u8 color);
-
+void hdmi_drawrectangle_vertical(u16 x1, u16 y1, u16 x2, u16 y2,u8 color);
+void hdmi_draw_fill_vertical(u16 sx,u16 sy,u16 ex,u16 ey,u16 color);
+void hdmi_draw_dircle_solid_vertical(u16 x0,u16 y0,u8 r,u8 color);
 void hdmi_drawquwei(u16 x,u16 y,u8 color,u8 back);
 void hdmi_drawziguang(u16 x,u16 y,u8 color,u8 back);
 #endif /* HDMIDRAW_H_ */

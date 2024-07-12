@@ -51,788 +51,1044 @@
   14:../src/main.c **** {
   40              		.loc 1 14 0
   41              		.cfi_startproc
-  42 0000 7971     		addi	sp,sp,-48
-  43              		.cfi_def_cfa_offset 48
+  42 0000 3971     		addi	sp,sp,-64
+  43              		.cfi_def_cfa_offset 64
   15:../src/main.c **** 	reg_uart_clkdiv = BAUND_9600;
   44              		.loc 1 15 0
   45 0002 8567     		li	a5,4096
   14:../src/main.c **** 	reg_uart_clkdiv = BAUND_9600;
   46              		.loc 1 14 0
-  47 0004 06D6     		sw	ra,44(sp)
-  48 0006 22D4     		sw	s0,40(sp)
-  49 0008 26D2     		sw	s1,36(sp)
-  50 000a 4AD0     		sw	s2,32(sp)
-  51 000c 4ECE     		sw	s3,28(sp)
-  52 000e 52CC     		sw	s4,24(sp)
-  53 0010 5AC8     		sw	s6,16(sp)
-  54 0012 5EC6     		sw	s7,12(sp)
-  55 0014 62C4     		sw	s8,8(sp)
-  56 0016 66C2     		sw	s9,4(sp)
-  57 0018 6AC0     		sw	s10,0(sp)
-  58              		.cfi_offset 1, -4
-  59              		.cfi_offset 8, -8
-  60              		.cfi_offset 9, -12
-  61              		.cfi_offset 18, -16
-  62              		.cfi_offset 19, -20
-  63              		.cfi_offset 20, -24
-  64              		.cfi_offset 22, -32
-  65              		.cfi_offset 23, -36
-  66              		.cfi_offset 24, -40
-  67              		.cfi_offset 25, -44
-  68              		.cfi_offset 26, -48
-  69              		.loc 1 15 0
-  70 001a 6164     		li	s0,98304
-  71 001c 93878745 		addi	a5,a5,1112
+  47 0004 06DE     		sw	ra,60(sp)
+  48 0006 22DC     		sw	s0,56(sp)
+  49 0008 26DA     		sw	s1,52(sp)
+  50 000a 4AD8     		sw	s2,48(sp)
+  51 000c 4ED6     		sw	s3,44(sp)
+  52 000e 56D2     		sw	s5,36(sp)
+  53 0010 5AD0     		sw	s6,32(sp)
+  54 0012 5ECE     		sw	s7,28(sp)
+  55 0014 62CC     		sw	s8,24(sp)
+  56 0016 66CA     		sw	s9,20(sp)
+  57 0018 6AC8     		sw	s10,16(sp)
+  58 001a 6EC6     		sw	s11,12(sp)
+  59              		.cfi_offset 1, -4
+  60              		.cfi_offset 8, -8
+  61              		.cfi_offset 9, -12
+  62              		.cfi_offset 18, -16
+  63              		.cfi_offset 19, -20
+  64              		.cfi_offset 21, -28
+  65              		.cfi_offset 22, -32
+  66              		.cfi_offset 23, -36
+  67              		.cfi_offset 24, -40
+  68              		.cfi_offset 25, -44
+  69              		.cfi_offset 26, -48
+  70              		.cfi_offset 27, -52
+  71              		.loc 1 15 0
+  72 001c 6164     		li	s0,98304
+  73 001e 93878745 		addi	a5,a5,1112
   14:../src/main.c **** 	reg_uart_clkdiv = BAUND_9600;
-  72              		.loc 1 14 0
-  73 0020 56CA     		sw	s5,20(sp)
-  74              		.cfi_offset 21, -28
+  74              		.loc 1 14 0
+  75 0022 52D4     		sw	s4,40(sp)
+  76              		.cfi_offset 20, -24
   16:../src/main.c **** 	printk("Hello Risc-V Pango 2019\n");
-  75              		.loc 1 16 0
-  76 0022 37050000 		lui	a0,%hi(.LC0)
-  77 0026 13050500 		addi	a0,a0,%lo(.LC0)
+  77              		.loc 1 16 0
+  78 0024 37050000 		lui	a0,%hi(.LC0)
+  79 0028 13050500 		addi	a0,a0,%lo(.LC0)
   15:../src/main.c **** 	reg_uart_clkdiv = BAUND_9600;
-  78              		.loc 1 15 0
-  79 002a 1CC0     		sw	a5,0(s0)
-  80              		.loc 1 16 0
-  81 002c 97000000 		call	printk
-  81      E7800000 
-  82              	.LVL3:
+  80              		.loc 1 15 0
+  81 002c 1CC0     		sw	a5,0(s0)
+  82              		.loc 1 16 0
+  83 002e 97000000 		call	printk
+  83      E7800000 
+  84              	.LVL3:
   17:../src/main.c **** 	printk("test data = %d,%f,%s,0x = %x\n", 100,33.456,"2019",100);
-  83              		.loc 1 17 0
-  84 0034 B7070000 		lui	a5,%hi(.LC2)
-  85 0038 03A60700 		lw	a2,%lo(.LC2)(a5)
-  86 003c 83A64700 		lw	a3,%lo(.LC2+4)(a5)
-  87 0040 37070000 		lui	a4,%hi(.LC1)
-  88 0044 37050000 		lui	a0,%hi(.LC3)
-  89 0048 93074006 		li	a5,100
-  90 004c 13070700 		addi	a4,a4,%lo(.LC1)
-  91 0050 93054006 		li	a1,100
-  92 0054 13050500 		addi	a0,a0,%lo(.LC3)
-  93 0058 97000000 		call	printk
-  93      E7800000 
-  94              	.LVL4:
+  85              		.loc 1 17 0
+  86 0036 B7070000 		lui	a5,%hi(.LC2)
+  87 003a 03A60700 		lw	a2,%lo(.LC2)(a5)
+  88 003e 83A64700 		lw	a3,%lo(.LC2+4)(a5)
+  89 0042 37070000 		lui	a4,%hi(.LC1)
+  90 0046 37050000 		lui	a0,%hi(.LC3)
+  91 004a 93074006 		li	a5,100
+  92 004e 13070700 		addi	a4,a4,%lo(.LC1)
+  93 0052 93054006 		li	a1,100
+  94 0056 13050500 		addi	a0,a0,%lo(.LC3)
+  95 005a 97000000 		call	printk
+  95      E7800000 
+  96              	.LVL4:
   18:../src/main.c **** 	printk("simple compute : 50*10 = %d,100/3 = %f,100%3 = %d\n", 50*10,(double)100/3,(int)100%3);
-  95              		.loc 1 18 0
-  96 0060 B7070000 		lui	a5,%hi(.LC4)
-  97 0064 03A60700 		lw	a2,%lo(.LC4)(a5)
-  98 0068 83A64700 		lw	a3,%lo(.LC4+4)(a5)
-  99 006c 37050000 		lui	a0,%hi(.LC5)
- 100 0070 0547     		li	a4,1
- 101 0072 9305401F 		li	a1,500
- 102 0076 13050500 		addi	a0,a0,%lo(.LC5)
- 103 007a 97000000 		call	printk
- 103      E7800000 
- 104              	.LVL5:
+  97              		.loc 1 18 0
+  98 0062 B7070000 		lui	a5,%hi(.LC4)
+  99 0066 03A60700 		lw	a2,%lo(.LC4)(a5)
+ 100 006a 83A64700 		lw	a3,%lo(.LC4+4)(a5)
+ 101 006e 37050000 		lui	a0,%hi(.LC5)
+ 102 0072 0547     		li	a4,1
+ 103 0074 9305401F 		li	a1,500
+ 104 0078 13050500 		addi	a0,a0,%lo(.LC5)
+ 105 007c 97000000 		call	printk
+ 105      E7800000 
+ 106              	.LVL5:
   19:../src/main.c **** 	printk("test\n");
- 105              		.loc 1 19 0
- 106 0082 37050000 		lui	a0,%hi(.LC6)
- 107 0086 13050500 		addi	a0,a0,%lo(.LC6)
- 108 008a 97000000 		call	printk
- 108      E7800000 
- 109              	.LVL6:
+ 107              		.loc 1 19 0
+ 108 0084 37050000 		lui	a0,%hi(.LC6)
+ 109 0088 13050500 		addi	a0,a0,%lo(.LC6)
+ 110 008c 97000000 		call	printk
+ 110      E7800000 
+ 111              	.LVL6:
   20:../src/main.c **** 	hdmi_draw_clear(255);
- 110              		.loc 1 20 0
- 111 0092 1305F00F 		li	a0,255
- 112 0096 97000000 		call	hdmi_draw_clear
- 112      E7800000 
- 113              	.LVL7:
+ 112              		.loc 1 20 0
+ 113 0094 1305F00F 		li	a0,255
+ 114 0098 97000000 		call	hdmi_draw_clear
+ 114      E7800000 
+ 115              	.LVL7:
   21:../src/main.c **** 	hdmi_drawziguang(120,20,PURPLE,255);
- 114              		.loc 1 21 0
- 115 009e 9306F00F 		li	a3,255
- 116 00a2 13069006 		li	a2,105
- 117 00a6 D145     		li	a1,20
- 118 00a8 13058007 		li	a0,120
- 119 00ac 97000000 		call	hdmi_drawziguang
- 119      E7800000 
- 120              	.LVL8:
-  22:../src/main.c **** 	sound_address = 0b1111111;
- 121              		.loc 1 22 0
- 122 00b4 9307F007 		li	a5,127
- 123 00b8 2320F412 		sw	a5,288(s0)
-  23:../src/main.c **** 	u8 temp;
-  24:../src/main.c **** 	temp = sound_address;
- 124              		.loc 1 24 0
- 125 00bc 83250412 		lw	a1,288(s0)
- 126              	.LVL9:
-  25:../src/main.c **** 	printk("%d",temp);
- 127              		.loc 1 25 0
- 128 00c0 37050000 		lui	a0,%hi(.LC7)
- 129 00c4 13050500 		addi	a0,a0,%lo(.LC7)
- 130 00c8 93F5F50F 		andi	a1,a1,0xff
- 131 00cc 97000000 		call	printk
- 131      E7800000 
- 132              	.LVL10:
-  26:../src/main.c **** 	hdmi_draw_string_back(60,180,"Snake Go!",ORANGE,255);
- 133              		.loc 1 26 0
- 134 00d4 B70C0000 		lui	s9,%hi(.LC8)
- 135 00d8 1307F00F 		li	a4,255
- 136 00dc 93065006 		li	a3,101
- 137 00e0 13860C00 		addi	a2,s9,%lo(.LC8)
- 138 00e4 9305400B 		li	a1,180
- 139 00e8 1305C003 		li	a0,60
- 140 00ec 97000000 		call	hdmi_draw_string_back
- 140      E7800000 
- 141              	.LVL11:
-  27:../src/main.c **** 	hdmi_draw_string_back(60,196,"Tetris Go!",ORANGE,255);
- 142              		.loc 1 27 0
- 143 00f4 370C0000 		lui	s8,%hi(.LC9)
- 144 00f8 1307F00F 		li	a4,255
- 145 00fc 93065006 		li	a3,101
- 146 0100 13060C00 		addi	a2,s8,%lo(.LC9)
- 147 0104 9305400C 		li	a1,196
- 148 0108 1305C003 		li	a0,60
- 149 010c 97000000 		call	hdmi_draw_string_back
- 149      E7800000 
- 150              	.LVL12:
+ 116              		.loc 1 21 0
+ 117 00a0 9306F00F 		li	a3,255
+ 118 00a4 13069006 		li	a2,105
+ 119 00a8 D145     		li	a1,20
+ 120 00aa 13058007 		li	a0,120
+ 121 00ae 97000000 		call	hdmi_drawziguang
+ 121      E7800000 
+ 122              	.LVL8:
+  22:../src/main.c **** 	u8 temp;
+  23:../src/main.c **** 	temp = sound_address;
+ 123              		.loc 1 23 0
+ 124 00b6 83250412 		lw	a1,288(s0)
+ 125              	.LVL9:
+  24:../src/main.c **** 	printk("%d",temp);
+ 126              		.loc 1 24 0
+ 127 00ba 37050000 		lui	a0,%hi(.LC7)
+ 128 00be 13050500 		addi	a0,a0,%lo(.LC7)
+ 129 00c2 93F5F50F 		andi	a1,a1,0xff
+ 130 00c6 97000000 		call	printk
+ 130      E7800000 
+ 131              	.LVL10:
+  25:../src/main.c **** 	hdmi_draw_string_back(60,180,"Snake Go!",ORANGE,255);
+ 132              		.loc 1 25 0
+ 133 00ce 370D0000 		lui	s10,%hi(.LC8)
+ 134 00d2 1307F00F 		li	a4,255
+ 135 00d6 93065006 		li	a3,101
+ 136 00da 13060D00 		addi	a2,s10,%lo(.LC8)
+ 137 00de 9305400B 		li	a1,180
+ 138 00e2 1305C003 		li	a0,60
+ 139 00e6 97000000 		call	hdmi_draw_string_back
+ 139      E7800000 
+ 140              	.LVL11:
+  26:../src/main.c **** 	hdmi_draw_string_back(60,196,"Tetris Go!",ORANGE,255);
+ 141              		.loc 1 26 0
+ 142 00ee B70C0000 		lui	s9,%hi(.LC9)
+ 143 00f2 1307F00F 		li	a4,255
+ 144 00f6 93065006 		li	a3,101
+ 145 00fa 13860C00 		addi	a2,s9,%lo(.LC9)
+ 146 00fe 9305400C 		li	a1,196
+ 147 0102 1305C003 		li	a0,60
+ 148 0106 97000000 		call	hdmi_draw_string_back
+ 148      E7800000 
+ 149              	.LVL12:
+  27:../src/main.c **** 	hdmi_draw_string_back(60,212,"Board Go!",ORANGE,255);
+ 150              		.loc 1 27 0
+ 151 010e 370C0000 		lui	s8,%hi(.LC10)
+ 152 0112 1307F00F 		li	a4,255
+ 153 0116 93065006 		li	a3,101
+ 154 011a 13060C00 		addi	a2,s8,%lo(.LC10)
+ 155 011e 9305400D 		li	a1,212
+ 156 0122 1305C003 		li	a0,60
+ 157 0126 97000000 		call	hdmi_draw_string_back
+ 157      E7800000 
+ 158              	.LVL13:
   28:../src/main.c **** 	hdmi_drawtriangle(49,180,PURPLE,255);
- 151              		.loc 1 28 0
- 152 0114 9306F00F 		li	a3,255
- 153 0118 13069006 		li	a2,105
- 154 011c 9305400B 		li	a1,180
- 155 0120 13051003 		li	a0,49
- 156 0124 97000000 		call	hdmi_drawtriangle
- 156      E7800000 
- 157              	.LVL13:
+ 159              		.loc 1 28 0
+ 160 012e 9306F00F 		li	a3,255
+ 161 0132 13069006 		li	a2,105
+ 162 0136 9305400B 		li	a1,180
+ 163 013a 13051003 		li	a0,49
+ 164 013e 97000000 		call	hdmi_drawtriangle
+ 164      E7800000 
+ 165              	.LVL14:
   29:../src/main.c **** 	hdmi_drawquwei(100,100,PINK,255);
- 158              		.loc 1 29 0
- 159 012c 9306F00F 		li	a3,255
- 160 0130 1306A006 		li	a2,106
- 161 0134 93054006 		li	a1,100
- 162 0138 13054006 		li	a0,100
- 163 013c 97000000 		call	hdmi_drawquwei
- 163      E7800000 
- 164              	.LVL14:
+ 166              		.loc 1 29 0
+ 167 0146 9306F00F 		li	a3,255
+ 168 014a 1306A006 		li	a2,106
+ 169 014e 93054006 		li	a1,100
+ 170 0152 13054006 		li	a0,100
+ 171 0156 97000000 		call	hdmi_drawquwei
+ 171      E7800000 
+ 172              	.LVL15:
   30:../src/main.c **** 	u8 Oldkey,Newkey =0;
   31:../src/main.c **** 	u16 Oldy,Newy =180;
   32:../src/main.c **** 	u8 choose_val=0;
- 165              		.loc 1 32 0
- 166 0144 014A     		li	s4,0
+  33:../src/main.c **** 	sound_address = 0b1111111;
+ 173              		.loc 1 33 0
+ 174 015e 9307F007 		li	a5,127
+ 175 0162 2320F412 		sw	a5,288(s0)
+  32:../src/main.c **** 	sound_address = 0b1111111;
+ 176              		.loc 1 32 0
+ 177 0166 8144     		li	s1,0
   31:../src/main.c **** 	u8 choose_val=0;
- 167              		.loc 1 31 0
- 168 0146 9304400B 		li	s1,180
+ 178              		.loc 1 31 0
+ 179 0168 9309400B 		li	s3,180
   30:../src/main.c **** 	u8 Oldkey,Newkey =0;
- 169              		.loc 1 30 0
- 170 014a 8147     		li	a5,0
-  33:../src/main.c **** 	while(1){
-  34:../src/main.c **** 		Oldkey=Newkey;
-  35:../src/main.c **** 		Newkey = *ps2ctrl_point;
- 171              		.loc 1 35 0
- 172 014c 6169     		li	s2,98304
-  36:../src/main.c **** 		if(Newkey != Oldkey){
-  37:../src/main.c **** 			if(Newkey == 0b00010000){//上
- 173              		.loc 1 37 0
- 174 014e 414B     		li	s6,16
-  38:../src/main.c **** 				if(choose_val!=0){
-  39:../src/main.c **** 					rgb_address = 0b0000010;
+ 180              		.loc 1 30 0
+ 181 016c 8147     		li	a5,0
+  34:../src/main.c **** 	while(1){
+  35:../src/main.c **** 		Oldkey=Newkey;
+  36:../src/main.c **** 		Newkey = *ps2ctrl_point;
+ 182              		.loc 1 36 0
+ 183 016e E16D     		li	s11,98304
+  37:../src/main.c **** 		if(Newkey != Oldkey){
+  38:../src/main.c **** 			if(Newkey == 0b00010000){//上
+ 184              		.loc 1 38 0
+ 185 0170 C14A     		li	s5,16
+  39:../src/main.c **** 				if(choose_val!=0){
   40:../src/main.c **** 					Oldy = Newy;
   41:../src/main.c **** 					Newy = Newy-16;
   42:../src/main.c **** 					choose_val--;
   43:../src/main.c **** 					}
   44:../src/main.c **** 				}
   45:../src/main.c **** 				else if(Newkey == 0b00100000){
- 175              		.loc 1 45 0
- 176 0150 930B0002 		li	s7,32
-  46:../src/main.c **** 					if(choose_val<1){//修改1来增加选择项
-  47:../src/main.c **** 						rgb_address = 0b0000001;
- 177              		.loc 1 47 0
- 178 0154 054D     		li	s10,1
-  39:../src/main.c **** 					Oldy = Newy;
- 179              		.loc 1 39 0
- 180 0156 8949     		li	s3,2
- 181              	.LVL15:
- 182              	.L6:
-  35:../src/main.c **** 		if(Newkey != Oldkey){
- 183              		.loc 1 35 0
- 184 0158 03240910 		lw	s0,256(s2)
- 185 015c 1374F40F 		andi	s0,s0,0xff
- 186              	.LVL16:
-  36:../src/main.c **** 			if(Newkey == 0b00010000){//上
- 187              		.loc 1 36 0
- 188 0160 638C8702 		beq	a5,s0,.L7
-  37:../src/main.c **** 				if(choose_val!=0){
- 189              		.loc 1 37 0
- 190 0164 630B640D 		beq	s0,s6,.L17
-  45:../src/main.c **** 					if(choose_val<1){//修改1来增加选择项
- 191              		.loc 1 45 0
- 192 0168 6305740F 		beq	s0,s7,.L18
- 193              	.LVL17:
- 194              	.L9:
-  48:../src/main.c **** 						Oldy = Newy;
-  49:../src/main.c **** 						Newy = Newy+16;
-  50:../src/main.c **** 						choose_val++;
-  51:../src/main.c **** 					}
-  52:../src/main.c **** 				}
-  53:../src/main.c **** 				hdmi_drawtriangle(49,Newy,PURPLE,255);
- 195              		.loc 1 53 0
- 196 016c 9306F00F 		li	a3,255
- 197 0170 13069006 		li	a2,105
- 198 0174 A685     		mv	a1,s1
- 199 0176 13051003 		li	a0,49
- 200 017a 97000000 		call	hdmi_drawtriangle
- 200      E7800000 
- 201              	.LVL18:
-  54:../src/main.c **** 				hdmi_drawtriangle(49,Oldy,255,255);
- 202              		.loc 1 54 0
- 203 0182 9306F00F 		li	a3,255
- 204 0186 1306F00F 		li	a2,255
- 205 018a D685     		mv	a1,s5
- 206 018c 13051003 		li	a0,49
- 207 0190 97000000 		call	hdmi_drawtriangle
- 207      E7800000 
- 208              	.LVL19:
- 209              	.L7:
-  55:../src/main.c **** 			}
-  56:../src/main.c **** 		if(Newkey == 0b00000010){
- 210              		.loc 1 56 0
- 211 0198 63043401 		beq	s0,s3,.L19
-  14:../src/main.c **** 	reg_uart_clkdiv = BAUND_9600;
- 212              		.loc 1 14 0
- 213 019c A287     		mv	a5,s0
- 214 019e 6DBF     		j	.L6
- 215              	.L19:
-  57:../src/main.c **** 			if(choose_val == 0){
- 216              		.loc 1 57 0
- 217 01a0 63050A0C 		beqz	s4,.L20
-  58:../src/main.c **** 				GameStart();
-  59:../src/main.c **** 				hdmi_draw_clear(255);
-  60:../src/main.c **** 				hdmi_draw_string_back(60,180,"Snake Go!",ORANGE,255);
-  61:../src/main.c **** 				hdmi_draw_string_back(60,196,"Tetris Go!",ORANGE,255);
-  62:../src/main.c **** 				hdmi_drawtriangle(49,180,PURPLE,255);
-  63:../src/main.c **** 				hdmi_drawziguang(120,20,PURPLE,255);
-  64:../src/main.c **** 				hdmi_drawquwei(100,100,PINK,255);
-  65:../src/main.c **** 			}else if(choose_val == 1){
-  66:../src/main.c **** 				Tetris();
- 218              		.loc 1 66 0
- 219 01a4 97000000 		call	Tetris
- 219      E7800000 
- 220              	.LVL20:
- 221              	.L16:
-  67:../src/main.c **** 				hdmi_draw_clear(255);
- 222              		.loc 1 67 0
- 223 01ac 1305F00F 		li	a0,255
- 224 01b0 97000000 		call	hdmi_draw_clear
- 224      E7800000 
- 225              	.LVL21:
-  68:../src/main.c **** 				hdmi_draw_string_back(60,180,"Snake Go!",ORANGE,255);
- 226              		.loc 1 68 0
- 227 01b8 13860C00 		addi	a2,s9,%lo(.LC8)
- 228 01bc 1307F00F 		li	a4,255
- 229 01c0 93065006 		li	a3,101
- 230 01c4 9305400B 		li	a1,180
- 231 01c8 1305C003 		li	a0,60
- 232 01cc 97000000 		call	hdmi_draw_string_back
- 232      E7800000 
- 233              	.LVL22:
-  69:../src/main.c **** 				hdmi_draw_string_back(60,196,"Tetris Go!",ORANGE,255);
- 234              		.loc 1 69 0
- 235 01d4 1307F00F 		li	a4,255
- 236 01d8 13060C00 		addi	a2,s8,%lo(.LC9)
- 237 01dc 93065006 		li	a3,101
- 238 01e0 9305400C 		li	a1,196
- 239 01e4 1305C003 		li	a0,60
- 240 01e8 97000000 		call	hdmi_draw_string_back
- 240      E7800000 
- 241              	.LVL23:
-  70:../src/main.c **** 				hdmi_drawtriangle(49,180,PURPLE,255);
- 242              		.loc 1 70 0
- 243 01f0 9306F00F 		li	a3,255
- 244 01f4 13069006 		li	a2,105
- 245 01f8 9305400B 		li	a1,180
- 246 01fc 13051003 		li	a0,49
- 247 0200 97000000 		call	hdmi_drawtriangle
- 247      E7800000 
- 248              	.LVL24:
-  71:../src/main.c **** 				hdmi_drawziguang(120,20,PURPLE,255);
- 249              		.loc 1 71 0
- 250 0208 9306F00F 		li	a3,255
- 251 020c 13069006 		li	a2,105
- 252 0210 D145     		li	a1,20
- 253 0212 13058007 		li	a0,120
- 254 0216 97000000 		call	hdmi_drawziguang
- 254      E7800000 
- 255              	.LVL25:
-  72:../src/main.c **** 				hdmi_drawquwei(100,100,PINK,255);
- 256              		.loc 1 72 0
- 257 021e 9306F00F 		li	a3,255
- 258 0222 1306A006 		li	a2,106
- 259 0226 93054006 		li	a1,100
- 260 022a 13054006 		li	a0,100
- 261 022e 97000000 		call	hdmi_drawquwei
- 261      E7800000 
- 262              	.LVL26:
-  14:../src/main.c **** 	reg_uart_clkdiv = BAUND_9600;
- 263              		.loc 1 14 0
- 264 0236 A287     		mv	a5,s0
- 265 0238 05B7     		j	.L6
- 266              	.LVL27:
- 267              	.L17:
-  38:../src/main.c **** 					rgb_address = 0b0000010;
- 268              		.loc 1 38 0
- 269 023a E3090AF2 		beqz	s4,.L9
-  41:../src/main.c **** 					choose_val--;
- 270              		.loc 1 41 0
- 271 023e 938704FF 		addi	a5,s1,-16
- 272              	.LVL28:
-  40:../src/main.c **** 					Newy = Newy-16;
- 273              		.loc 1 40 0
- 274 0242 A68A     		mv	s5,s1
- 275              	.LVL29:
-  41:../src/main.c **** 					choose_val--;
- 276              		.loc 1 41 0
- 277 0244 93940701 		slli	s1,a5,16
- 278              	.LVL30:
-  39:../src/main.c **** 					Oldy = Newy;
- 279              		.loc 1 39 0
- 280 0248 23283911 		sw	s3,272(s2)
- 281              	.LVL31:
-  41:../src/main.c **** 					choose_val--;
- 282              		.loc 1 41 0
- 283 024c C180     		srli	s1,s1,16
-  42:../src/main.c **** 					}
- 284              		.loc 1 42 0
- 285 024e 014A     		li	s4,0
- 286 0250 31BF     		j	.L9
- 287              	.LVL32:
- 288              	.L18:
-  46:../src/main.c **** 						rgb_address = 0b0000001;
- 289              		.loc 1 46 0
- 290 0252 E31D0AF0 		bnez	s4,.L9
-  49:../src/main.c **** 						choose_val++;
- 291              		.loc 1 49 0
- 292 0256 93870401 		addi	a5,s1,16
- 293              	.LVL33:
-  48:../src/main.c **** 						Newy = Newy+16;
- 294              		.loc 1 48 0
- 295 025a A68A     		mv	s5,s1
- 296              	.LVL34:
-  49:../src/main.c **** 						choose_val++;
- 297              		.loc 1 49 0
- 298 025c 93940701 		slli	s1,a5,16
- 299              	.LVL35:
+ 186              		.loc 1 45 0
+ 187 0172 930B0002 		li	s7,32
+  46:../src/main.c **** 					if(choose_val<2){//修改1来增加选择项
+ 188              		.loc 1 46 0
+ 189 0176 054B     		li	s6,1
   47:../src/main.c **** 						Oldy = Newy;
- 300              		.loc 1 47 0
- 301 0260 2328A911 		sw	s10,272(s2)
- 302              	.LVL36:
+  48:../src/main.c **** 						Newy = Newy+16;
   49:../src/main.c **** 						choose_val++;
- 303              		.loc 1 49 0
- 304 0264 C180     		srli	s1,s1,16
   50:../src/main.c **** 					}
- 305              		.loc 1 50 0
- 306 0266 054A     		li	s4,1
- 307 0268 11B7     		j	.L9
- 308              	.LVL37:
- 309              	.L20:
-  58:../src/main.c **** 				hdmi_draw_clear(255);
- 310              		.loc 1 58 0
- 311 026a 97000000 		call	GameStart
- 311      E7800000 
- 312              	.LVL38:
- 313 0272 2DBF     		j	.L16
- 314              		.cfi_endproc
- 315              	.LFE2:
- 317              		.globl	delaycnt
- 318              		.globl	uart_data
- 319              		.section	.rodata.main.cst8,"aM",@progbits,8
- 320              		.align	3
- 321              	.LC2:
- 322 0000 EE7C3F35 		.word	893353198
- 323 0004 5EBA4040 		.word	1077983838
- 324              	.LC4:
- 325 0008 ABAAAAAA 		.word	-1431655765
- 326 000c AAAA4040 		.word	1077979818
- 327              		.section	.rodata.main.str1.4,"aMS",@progbits,1
- 328              		.align	2
- 329              	.LC0:
- 330 0000 48656C6C 		.string	"Hello Risc-V Pango 2019\n"
- 330      6F205269 
- 330      73632D56 
- 330      2050616E 
- 330      676F2032 
- 331 0019 000000   		.zero	3
- 332              	.LC1:
- 333 001c 32303139 		.string	"2019"
- 333      00
- 334 0021 000000   		.zero	3
- 335              	.LC3:
- 336 0024 74657374 		.string	"test data = %d,%f,%s,0x = %x\n"
- 336      20646174 
- 336      61203D20 
- 336      25642C25 
- 336      662C2573 
- 337 0042 0000     		.zero	2
- 338              	.LC5:
- 339 0044 73696D70 		.string	"simple compute : 50*10 = %d,100/3 = %f,100%3 = %d\n"
- 339      6C652063 
- 339      6F6D7075 
- 339      7465203A 
- 339      2035302A 
- 340 0077 00       		.zero	1
- 341              	.LC6:
- 342 0078 74657374 		.string	"test\n"
- 342      0A00
- 343 007e 0000     		.zero	2
- 344              	.LC7:
- 345 0080 256400   		.string	"%d"
- 346 0083 00       		.zero	1
- 347              	.LC8:
- 348 0084 536E616B 		.string	"Snake Go!"
- 348      6520476F 
- 348      2100
- 349 008e 0000     		.zero	2
- 350              	.LC9:
- 351 0090 54657472 		.string	"Tetris Go!"
- 351      69732047 
- 351      6F2100
- 352              		.section	.sbss.delaycnt,"aw",@nobits
- 353              		.align	2
- 356              	delaycnt:
- 357 0000 00000000 		.zero	4
- 358              		.section	.sbss.uart_data,"aw",@nobits
- 359              		.align	2
- 362              	uart_data:
- 363 0000 00000000 		.zero	4
- 364              		.text
- 365              	.Letext0:
- 366              		.file 2 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
- 367              		.file 3 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
- 368              		.file 4 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
- 369              		.file 5 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
- 370              		.file 6 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
- 371              		.file 7 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
- 372              		.file 8 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
- 373              		.file 9 "../src/bitmap.h"
- 374              		.file 10 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-20
- 375              		.file 11 "../src/hdmidraw.h"
- 376              		.file 12 "../src/uart.h"
- 377              		.file 13 "../src/Tetris.h"
- 378              		.file 14 "../src/newsnake.h"
+  51:../src/main.c **** 				}
+  52:../src/main.c **** 				hdmi_drawtriangle(49,Newy,PURPLE,255);
+  53:../src/main.c **** 				hdmi_drawtriangle(49,Oldy,255,255);
+  54:../src/main.c **** 			}
+  55:../src/main.c **** 		if(choose_val == 0) rgb_address = 0b0000010;
+  56:../src/main.c **** 		else if(choose_val == 1)  rgb_address = 0b0000001;
+  57:../src/main.c **** 		else if(choose_val == 2)  rgb_address = 0b0000000;
+ 190              		.loc 1 57 0
+ 191 0178 0949     		li	s2,2
+ 192              	.LVL16:
+ 193              	.L6:
+  36:../src/main.c **** 		if(Newkey != Oldkey){
+ 194              		.loc 1 36 0
+ 195 017a 03A40D10 		lw	s0,256(s11)
+ 196 017e 1374F40F 		andi	s0,s0,0xff
+ 197              	.LVL17:
+  37:../src/main.c **** 			if(Newkey == 0b00010000){//上
+ 198              		.loc 1 37 0
+ 199 0182 638C8702 		beq	a5,s0,.L7
+  38:../src/main.c **** 				if(choose_val!=0){
+ 200              		.loc 1 38 0
+ 201 0186 630C541B 		beq	s0,s5,.L21
+  45:../src/main.c **** 					if(choose_val<2){//修改1来增加选择项
+ 202              		.loc 1 45 0
+ 203 018a 63067425 		beq	s0,s7,.L22
+ 204              	.LVL18:
+ 205              	.L9:
+  52:../src/main.c **** 				hdmi_drawtriangle(49,Oldy,255,255);
+ 206              		.loc 1 52 0
+ 207 018e 9306F00F 		li	a3,255
+ 208 0192 13069006 		li	a2,105
+ 209 0196 CE85     		mv	a1,s3
+ 210 0198 13051003 		li	a0,49
+ 211 019c 97000000 		call	hdmi_drawtriangle
+ 211      E7800000 
+ 212              	.LVL19:
+  53:../src/main.c **** 			}
+ 213              		.loc 1 53 0
+ 214 01a4 9306F00F 		li	a3,255
+ 215 01a8 1306F00F 		li	a2,255
+ 216 01ac D285     		mv	a1,s4
+ 217 01ae 13051003 		li	a0,49
+ 218 01b2 97000000 		call	hdmi_drawtriangle
+ 218      E7800000 
+ 219              	.LVL20:
+ 220              	.L7:
+  55:../src/main.c **** 		else if(choose_val == 1)  rgb_address = 0b0000001;
+ 221              		.loc 1 55 0
+ 222 01ba E1E0     		bnez	s1,.L10
+ 223              	.LVL21:
+  55:../src/main.c **** 		else if(choose_val == 1)  rgb_address = 0b0000001;
+ 224              		.loc 1 55 0 is_stmt 0 discriminator 1
+ 225 01bc 23A82D11 		sw	s2,272(s11)
+  58:../src/main.c **** 
+  59:../src/main.c **** 		if(Newkey == 0b00000010){
+ 226              		.loc 1 59 0 is_stmt 1 discriminator 1
+ 227 01c0 63042401 		beq	s0,s2,.L23
+ 228              	.LVL22:
+ 229              	.L12:
+ 230              	.LBB2:
+  60:../src/main.c **** 			if(choose_val == 0){
+  61:../src/main.c **** 				GameStart();
+  62:../src/main.c **** 				hdmi_draw_clear(255);
+  63:../src/main.c **** 				hdmi_draw_string_back(60,180,"Snake Go!",ORANGE,255);
+  64:../src/main.c **** 				hdmi_draw_string_back(60,196,"Tetris Go!",ORANGE,255);
+  65:../src/main.c **** 				hdmi_draw_string_back(60,212,"Board Go!",ORANGE,255);
+  66:../src/main.c **** 				hdmi_drawtriangle(49,180,PURPLE,255);
+  67:../src/main.c **** 				hdmi_drawziguang(120,20,PURPLE,255);
+  68:../src/main.c **** 				hdmi_drawquwei(100,100,PINK,255);
+  69:../src/main.c **** 			}else if(choose_val == 1){
+  70:../src/main.c **** 				Tetris();
+  71:../src/main.c **** 				hdmi_draw_clear(255);
+  72:../src/main.c **** 				hdmi_draw_string_back(60,180,"Snake Go!",ORANGE,255);
+  73:../src/main.c **** 				hdmi_draw_string_back(60,196,"Tetris Go!",ORANGE,255);
+  74:../src/main.c **** 				hdmi_draw_string_back(60,212,"Board Go!",ORANGE,255);
+  75:../src/main.c **** 				hdmi_drawtriangle(49,196,PURPLE,255);
+  76:../src/main.c **** 				hdmi_drawziguang(120,20,PURPLE,255);
+  77:../src/main.c **** 				hdmi_drawquwei(100,100,PINK,255);
+  78:../src/main.c **** 			}
+  79:../src/main.c **** 			else if(choose_val == 2){
+  80:../src/main.c **** 				app_demo();
+  81:../src/main.c **** 				hdmi_draw_clear(255);
+  82:../src/main.c **** 				hdmi_draw_string_back(60,180,"Snake Go!",ORANGE,255);
+  83:../src/main.c **** 				hdmi_draw_string_back(60,196,"Tetris Go!",ORANGE,255);
+  84:../src/main.c **** 				hdmi_draw_string_back(60,212,"Board Go!",ORANGE,255);
+  85:../src/main.c **** 				hdmi_drawtriangle(49,212,PURPLE,255);
+  86:../src/main.c **** 				hdmi_drawziguang(120,20,PURPLE,255);
+  87:../src/main.c **** 				hdmi_drawquwei(100,100,PINK,255);
+ 231              		.loc 1 87 0
+ 232 01c4 A287     		mv	a5,s0
+ 233 01c6 55BF     		j	.L6
+ 234              	.LVL23:
+ 235              	.L23:
+ 236              	.LBE2:
+  61:../src/main.c **** 				hdmi_draw_clear(255);
+ 237              		.loc 1 61 0
+ 238 01c8 97000000 		call	GameStart
+ 238      E7800000 
+ 239              	.LVL24:
+  62:../src/main.c **** 				hdmi_draw_string_back(60,180,"Snake Go!",ORANGE,255);
+ 240              		.loc 1 62 0
+ 241 01d0 1305F00F 		li	a0,255
+ 242 01d4 97000000 		call	hdmi_draw_clear
+ 242      E7800000 
+ 243              	.LVL25:
+  63:../src/main.c **** 				hdmi_draw_string_back(60,196,"Tetris Go!",ORANGE,255);
+ 244              		.loc 1 63 0
+ 245 01dc 13060D00 		addi	a2,s10,%lo(.LC8)
+ 246 01e0 1307F00F 		li	a4,255
+ 247 01e4 93065006 		li	a3,101
+ 248 01e8 9305400B 		li	a1,180
+ 249 01ec 1305C003 		li	a0,60
+ 250 01f0 97000000 		call	hdmi_draw_string_back
+ 250      E7800000 
+ 251              	.LVL26:
+  64:../src/main.c **** 				hdmi_draw_string_back(60,212,"Board Go!",ORANGE,255);
+ 252              		.loc 1 64 0
+ 253 01f8 13860C00 		addi	a2,s9,%lo(.LC9)
+ 254 01fc 1307F00F 		li	a4,255
+ 255 0200 93065006 		li	a3,101
+ 256 0204 9305400C 		li	a1,196
+ 257 0208 1305C003 		li	a0,60
+ 258 020c 97000000 		call	hdmi_draw_string_back
+ 258      E7800000 
+ 259              	.LVL27:
+  65:../src/main.c **** 				hdmi_drawtriangle(49,180,PURPLE,255);
+ 260              		.loc 1 65 0
+ 261 0214 13060C00 		addi	a2,s8,%lo(.LC10)
+ 262 0218 93065006 		li	a3,101
+ 263 021c 9305400D 		li	a1,212
+ 264 0220 1307F00F 		li	a4,255
+ 265 0224 1305C003 		li	a0,60
+ 266 0228 97000000 		call	hdmi_draw_string_back
+ 266      E7800000 
+ 267              	.LVL28:
+  66:../src/main.c **** 				hdmi_drawziguang(120,20,PURPLE,255);
+ 268              		.loc 1 66 0
+ 269 0230 9306F00F 		li	a3,255
+ 270 0234 13069006 		li	a2,105
+ 271 0238 9305400B 		li	a1,180
+ 272              	.LVL29:
+ 273              	.L20:
+  75:../src/main.c **** 				hdmi_drawziguang(120,20,PURPLE,255);
+ 274              		.loc 1 75 0
+ 275 023c 13051003 		li	a0,49
+ 276 0240 97000000 		call	hdmi_drawtriangle
+ 276      E7800000 
+ 277              	.LVL30:
+  76:../src/main.c **** 				hdmi_drawquwei(100,100,PINK,255);
+ 278              		.loc 1 76 0
+ 279 0248 9306F00F 		li	a3,255
+ 280 024c 13069006 		li	a2,105
+ 281 0250 D145     		li	a1,20
+ 282 0252 13058007 		li	a0,120
+ 283 0256 97000000 		call	hdmi_drawziguang
+ 283      E7800000 
+ 284              	.LVL31:
+  77:../src/main.c **** 			}
+ 285              		.loc 1 77 0
+ 286 025e 9306F00F 		li	a3,255
+ 287 0262 1306A006 		li	a2,106
+ 288 0266 93054006 		li	a1,100
+ 289 026a 13054006 		li	a0,100
+ 290 026e 97000000 		call	hdmi_drawquwei
+ 290      E7800000 
+ 291              	.LVL32:
+ 292              	.LBB3:
+ 293              		.loc 1 87 0
+ 294 0276 A287     		mv	a5,s0
+ 295 0278 09B7     		j	.L6
+ 296              	.LVL33:
+ 297              	.L10:
+ 298              	.LBE3:
+  56:../src/main.c **** 		else if(choose_val == 2)  rgb_address = 0b0000000;
+ 299              		.loc 1 56 0
+ 300 027a 638F640D 		beq	s1,s6,.L24
+  57:../src/main.c **** 
+ 301              		.loc 1 57 0
+ 302 027e E39324F5 		bne	s1,s2,.L12
+  57:../src/main.c **** 
+ 303              		.loc 1 57 0 is_stmt 0 discriminator 1
+ 304 0282 23A80D10 		sw	zero,272(s11)
+  59:../src/main.c **** 			if(choose_val == 0){
+ 305              		.loc 1 59 0 is_stmt 1 discriminator 1
+ 306 0286 E31F94F2 		bne	s0,s1,.L12
+ 307              	.LBB4:
+  80:../src/main.c **** 				hdmi_draw_clear(255);
+ 308              		.loc 1 80 0
+ 309 028a 97000000 		call	app_demo
+ 309      E7800000 
+ 310              	.LVL34:
+  81:../src/main.c **** 				hdmi_draw_string_back(60,180,"Snake Go!",ORANGE,255);
+ 311              		.loc 1 81 0
+ 312 0292 1305F00F 		li	a0,255
+ 313 0296 97000000 		call	hdmi_draw_clear
+ 313      E7800000 
+ 314              	.LVL35:
+  82:../src/main.c **** 				hdmi_draw_string_back(60,196,"Tetris Go!",ORANGE,255);
+ 315              		.loc 1 82 0
+ 316 029e 1307F00F 		li	a4,255
+ 317 02a2 93065006 		li	a3,101
+ 318 02a6 13060D00 		addi	a2,s10,%lo(.LC8)
+ 319 02aa 9305400B 		li	a1,180
+ 320 02ae 1305C003 		li	a0,60
+ 321 02b2 97000000 		call	hdmi_draw_string_back
+ 321      E7800000 
+ 322              	.LVL36:
+  83:../src/main.c **** 				hdmi_draw_string_back(60,212,"Board Go!",ORANGE,255);
+ 323              		.loc 1 83 0
+ 324 02ba 1307F00F 		li	a4,255
+ 325 02be 93065006 		li	a3,101
+ 326 02c2 13860C00 		addi	a2,s9,%lo(.LC9)
+ 327 02c6 9305400C 		li	a1,196
+ 328 02ca 1305C003 		li	a0,60
+ 329 02ce 97000000 		call	hdmi_draw_string_back
+ 329      E7800000 
+ 330              	.LVL37:
+  84:../src/main.c **** 				hdmi_drawtriangle(49,212,PURPLE,255);
+ 331              		.loc 1 84 0
+ 332 02d6 1307F00F 		li	a4,255
+ 333 02da 93065006 		li	a3,101
+ 334 02de 13060C00 		addi	a2,s8,%lo(.LC10)
+ 335 02e2 9305400D 		li	a1,212
+ 336 02e6 1305C003 		li	a0,60
+ 337 02ea 97000000 		call	hdmi_draw_string_back
+ 337      E7800000 
+ 338              	.LVL38:
+  85:../src/main.c **** 				hdmi_drawziguang(120,20,PURPLE,255);
+ 339              		.loc 1 85 0
+ 340 02f2 9306F00F 		li	a3,255
+ 341 02f6 13069006 		li	a2,105
+ 342 02fa 9305400D 		li	a1,212
+ 343 02fe 13051003 		li	a0,49
+ 344 0302 97000000 		call	hdmi_drawtriangle
+ 344      E7800000 
+ 345              	.LVL39:
+  86:../src/main.c **** 				hdmi_drawquwei(100,100,PINK,255);
+ 346              		.loc 1 86 0
+ 347 030a 9306F00F 		li	a3,255
+ 348 030e 13069006 		li	a2,105
+ 349 0312 D145     		li	a1,20
+ 350 0314 13058007 		li	a0,120
+ 351 0318 97000000 		call	hdmi_drawziguang
+ 351      E7800000 
+ 352              	.LVL40:
+ 353              		.loc 1 87 0
+ 354 0320 9306F00F 		li	a3,255
+ 355 0324 1306A006 		li	a2,106
+ 356 0328 93054006 		li	a1,100
+ 357 032c 13054006 		li	a0,100
+ 358 0330 97000000 		call	hdmi_drawquwei
+ 358      E7800000 
+ 359              	.LVL41:
+ 360 0338 8944     		li	s1,2
+ 361              	.LVL42:
+ 362 033a A287     		mv	a5,s0
+ 363 033c 3DBD     		j	.L6
+ 364              	.LVL43:
+ 365              	.L21:
+ 366              	.LBE4:
+  39:../src/main.c **** 					Oldy = Newy;
+ 367              		.loc 1 39 0
+ 368 033e E38804E4 		beqz	s1,.L9
+ 369              	.LVL44:
+  41:../src/main.c **** 					choose_val--;
+ 370              		.loc 1 41 0
+ 371 0342 938709FF 		addi	a5,s3,-16
+ 372              	.LVL45:
+  42:../src/main.c **** 					}
+ 373              		.loc 1 42 0
+ 374 0346 FD14     		addi	s1,s1,-1
+ 375              	.LVL46:
+  40:../src/main.c **** 					Newy = Newy-16;
+ 376              		.loc 1 40 0
+ 377 0348 4E8A     		mv	s4,s3
+  41:../src/main.c **** 					choose_val--;
+ 378              		.loc 1 41 0
+ 379 034a 93990701 		slli	s3,a5,16
+ 380              	.LVL47:
+  42:../src/main.c **** 					}
+ 381              		.loc 1 42 0
+ 382 034e 93F4F40F 		andi	s1,s1,0xff
+ 383              	.LVL48:
+  41:../src/main.c **** 					choose_val--;
+ 384              		.loc 1 41 0
+ 385 0352 93D90901 		srli	s3,s3,16
+ 386 0356 25BD     		j	.L9
+ 387              	.LVL49:
+ 388              	.L24:
+  56:../src/main.c **** 		else if(choose_val == 2)  rgb_address = 0b0000000;
+ 389              		.loc 1 56 0 discriminator 1
+ 390 0358 23A89D10 		sw	s1,272(s11)
+  59:../src/main.c **** 			if(choose_val == 0){
+ 391              		.loc 1 59 0 discriminator 1
+ 392 035c E31424E7 		bne	s0,s2,.L12
+  70:../src/main.c **** 				hdmi_draw_clear(255);
+ 393              		.loc 1 70 0
+ 394 0360 97000000 		call	Tetris
+ 394      E7800000 
+ 395              	.LVL50:
+  71:../src/main.c **** 				hdmi_draw_string_back(60,180,"Snake Go!",ORANGE,255);
+ 396              		.loc 1 71 0
+ 397 0368 1305F00F 		li	a0,255
+ 398 036c 97000000 		call	hdmi_draw_clear
+ 398      E7800000 
+ 399              	.LVL51:
+  72:../src/main.c **** 				hdmi_draw_string_back(60,196,"Tetris Go!",ORANGE,255);
+ 400              		.loc 1 72 0
+ 401 0374 13060D00 		addi	a2,s10,%lo(.LC8)
+ 402 0378 1307F00F 		li	a4,255
+ 403 037c 93065006 		li	a3,101
+ 404 0380 9305400B 		li	a1,180
+ 405 0384 1305C003 		li	a0,60
+ 406 0388 97000000 		call	hdmi_draw_string_back
+ 406      E7800000 
+ 407              	.LVL52:
+  73:../src/main.c **** 				hdmi_draw_string_back(60,212,"Board Go!",ORANGE,255);
+ 408              		.loc 1 73 0
+ 409 0390 13860C00 		addi	a2,s9,%lo(.LC9)
+ 410 0394 1307F00F 		li	a4,255
+ 411 0398 93065006 		li	a3,101
+ 412 039c 9305400C 		li	a1,196
+ 413 03a0 1305C003 		li	a0,60
+ 414 03a4 97000000 		call	hdmi_draw_string_back
+ 414      E7800000 
+ 415              	.LVL53:
+  74:../src/main.c **** 				hdmi_drawtriangle(49,196,PURPLE,255);
+ 416              		.loc 1 74 0
+ 417 03ac 13060C00 		addi	a2,s8,%lo(.LC10)
+ 418 03b0 93065006 		li	a3,101
+ 419 03b4 9305400D 		li	a1,212
+ 420 03b8 1307F00F 		li	a4,255
+ 421 03bc 1305C003 		li	a0,60
+ 422 03c0 97000000 		call	hdmi_draw_string_back
+ 422      E7800000 
+ 423              	.LVL54:
+  75:../src/main.c **** 				hdmi_drawziguang(120,20,PURPLE,255);
+ 424              		.loc 1 75 0
+ 425 03c8 9306F00F 		li	a3,255
+ 426 03cc 13069006 		li	a2,105
+ 427 03d0 9305400C 		li	a1,196
+ 428 03d4 A5B5     		j	.L20
+ 429              	.LVL55:
+ 430              	.L22:
+  46:../src/main.c **** 						Oldy = Newy;
+ 431              		.loc 1 46 0
+ 432 03d6 E36C9BDA 		bgtu	s1,s6,.L9
+ 433              	.LVL56:
+  48:../src/main.c **** 						choose_val++;
+ 434              		.loc 1 48 0
+ 435 03da 93870901 		addi	a5,s3,16
+ 436              	.LVL57:
+  49:../src/main.c **** 					}
+ 437              		.loc 1 49 0
+ 438 03de 8504     		addi	s1,s1,1
+ 439              	.LVL58:
+  47:../src/main.c **** 						Newy = Newy+16;
+ 440              		.loc 1 47 0
+ 441 03e0 4E8A     		mv	s4,s3
+  48:../src/main.c **** 						choose_val++;
+ 442              		.loc 1 48 0
+ 443 03e2 93990701 		slli	s3,a5,16
+ 444              	.LVL59:
+  49:../src/main.c **** 					}
+ 445              		.loc 1 49 0
+ 446 03e6 93F4F40F 		andi	s1,s1,0xff
+ 447              	.LVL60:
+  48:../src/main.c **** 						choose_val++;
+ 448              		.loc 1 48 0
+ 449 03ea 93D90901 		srli	s3,s3,16
+ 450 03ee 45B3     		j	.L9
+ 451              		.cfi_endproc
+ 452              	.LFE2:
+ 454              		.globl	delaycnt
+ 455              		.globl	uart_data
+ 456              		.section	.rodata.main.cst8,"aM",@progbits,8
+ 457              		.align	3
+ 458              	.LC2:
+ 459 0000 EE7C3F35 		.word	893353198
+ 460 0004 5EBA4040 		.word	1077983838
+ 461              	.LC4:
+ 462 0008 ABAAAAAA 		.word	-1431655765
+ 463 000c AAAA4040 		.word	1077979818
+ 464              		.section	.rodata.main.str1.4,"aMS",@progbits,1
+ 465              		.align	2
+ 466              	.LC0:
+ 467 0000 48656C6C 		.string	"Hello Risc-V Pango 2019\n"
+ 467      6F205269 
+ 467      73632D56 
+ 467      2050616E 
+ 467      676F2032 
+ 468 0019 000000   		.zero	3
+ 469              	.LC1:
+ 470 001c 32303139 		.string	"2019"
+ 470      00
+ 471 0021 000000   		.zero	3
+ 472              	.LC3:
+ 473 0024 74657374 		.string	"test data = %d,%f,%s,0x = %x\n"
+ 473      20646174 
+ 473      61203D20 
+ 473      25642C25 
+ 473      662C2573 
+ 474 0042 0000     		.zero	2
+ 475              	.LC5:
+ 476 0044 73696D70 		.string	"simple compute : 50*10 = %d,100/3 = %f,100%3 = %d\n"
+ 476      6C652063 
+ 476      6F6D7075 
+ 476      7465203A 
+ 476      2035302A 
+ 477 0077 00       		.zero	1
+ 478              	.LC6:
+ 479 0078 74657374 		.string	"test\n"
+ 479      0A00
+ 480 007e 0000     		.zero	2
+ 481              	.LC7:
+ 482 0080 256400   		.string	"%d"
+ 483 0083 00       		.zero	1
+ 484              	.LC8:
+ 485 0084 536E616B 		.string	"Snake Go!"
+ 485      6520476F 
+ 485      2100
+ 486 008e 0000     		.zero	2
+ 487              	.LC9:
+ 488 0090 54657472 		.string	"Tetris Go!"
+ 488      69732047 
+ 488      6F2100
+ 489 009b 00       		.zero	1
+ 490              	.LC10:
+ 491 009c 426F6172 		.string	"Board Go!"
+ 491      6420476F 
+ 491      2100
+ 492              		.section	.sbss.delaycnt,"aw",@nobits
+ 493              		.align	2
+ 496              	delaycnt:
+ 497 0000 00000000 		.zero	4
+ 498              		.section	.sbss.uart_data,"aw",@nobits
+ 499              		.align	2
+ 502              	uart_data:
+ 503 0000 00000000 		.zero	4
+ 504              		.text
+ 505              	.Letext0:
+ 506              		.file 2 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 507              		.file 3 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 508              		.file 4 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 509              		.file 5 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 510              		.file 6 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 511              		.file 7 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 512              		.file 8 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-201
+ 513              		.file 9 "../src/bitmap.h"
+ 514              		.file 10 "d:\\hummingbird\\hbird-eclipse_2018_09\\gnu mcu eclipse\\risc-v embedded gcc\\7.2.0-4-20
+ 515              		.file 11 "../src/hdmidraw.h"
+ 516              		.file 12 "../src/uart.h"
+ 517              		.file 13 "../src/newsnake.h"
+ 518              		.file 14 "../src/Tetris.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 main.c
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:10     .text.delay:0000000000000000 delay
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:14     .text.delay:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:16     .text.delay:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:17     .text.delay:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:19     .text.delay:0000000000000004 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:28     .text.delay:0000000000000010 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:30     .text.delay:0000000000000012 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:31     .text.delay:0000000000000014 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:38     .text.startup.main:0000000000000000 main
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:41     .text.startup.main:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:42     .text.startup.main:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:43     .text.startup.main:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:45     .text.startup.main:0000000000000002 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:47     .text.startup.main:0000000000000004 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:58     .text.startup.main:000000000000001a .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:59     .text.startup.main:000000000000001a .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:60     .text.startup.main:000000000000001a .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:61     .text.startup.main:000000000000001a .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:62     .text.startup.main:000000000000001a .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:63     .text.startup.main:000000000000001a .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:64     .text.startup.main:000000000000001a .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:65     .text.startup.main:000000000000001a .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:66     .text.startup.main:000000000000001a .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:67     .text.startup.main:000000000000001a .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:68     .text.startup.main:000000000000001a .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:70     .text.startup.main:000000000000001a .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:73     .text.startup.main:0000000000000020 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:74     .text.startup.main:0000000000000022 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:76     .text.startup.main:0000000000000022 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:79     .text.startup.main:000000000000002a .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:81     .text.startup.main:000000000000002c .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:84     .text.startup.main:0000000000000034 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:96     .text.startup.main:0000000000000060 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:106    .text.startup.main:0000000000000082 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:111    .text.startup.main:0000000000000092 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:115    .text.startup.main:000000000000009e .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:122    .text.startup.main:00000000000000b4 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:125    .text.startup.main:00000000000000bc .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:128    .text.startup.main:00000000000000c0 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:134    .text.startup.main:00000000000000d4 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:143    .text.startup.main:00000000000000f4 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:152    .text.startup.main:0000000000000114 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:159    .text.startup.main:000000000000012c .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:166    .text.startup.main:0000000000000144 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:168    .text.startup.main:0000000000000146 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:170    .text.startup.main:000000000000014a .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:172    .text.startup.main:000000000000014c .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:174    .text.startup.main:000000000000014e .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:176    .text.startup.main:0000000000000150 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:178    .text.startup.main:0000000000000154 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:180    .text.startup.main:0000000000000156 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:184    .text.startup.main:0000000000000158 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:188    .text.startup.main:0000000000000160 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:190    .text.startup.main:0000000000000164 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:192    .text.startup.main:0000000000000168 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:196    .text.startup.main:000000000000016c .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:203    .text.startup.main:0000000000000182 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:211    .text.startup.main:0000000000000198 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:213    .text.startup.main:000000000000019c .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:217    .text.startup.main:00000000000001a0 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:219    .text.startup.main:00000000000001a4 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:223    .text.startup.main:00000000000001ac .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:227    .text.startup.main:00000000000001b8 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:235    .text.startup.main:00000000000001d4 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:243    .text.startup.main:00000000000001f0 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:250    .text.startup.main:0000000000000208 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:257    .text.startup.main:000000000000021e .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:264    .text.startup.main:0000000000000236 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:269    .text.startup.main:000000000000023a .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:271    .text.startup.main:000000000000023e .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:274    .text.startup.main:0000000000000242 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:277    .text.startup.main:0000000000000244 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:280    .text.startup.main:0000000000000248 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:283    .text.startup.main:000000000000024c .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:285    .text.startup.main:000000000000024e .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:290    .text.startup.main:0000000000000252 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:292    .text.startup.main:0000000000000256 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:295    .text.startup.main:000000000000025a .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:298    .text.startup.main:000000000000025c .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:301    .text.startup.main:0000000000000260 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:304    .text.startup.main:0000000000000264 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:306    .text.startup.main:0000000000000266 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:311    .text.startup.main:000000000000026a .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:314    .text.startup.main:0000000000000274 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:356    .sbss.delaycnt:0000000000000000 delaycnt
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:362    .sbss.uart_data:0000000000000000 uart_data
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:34     .text.delay:0000000000000014 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:319    .text.startup.main:0000000000000274 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:10     .text.delay:0000000000000000 delay
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:14     .text.delay:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:16     .text.delay:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:17     .text.delay:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:19     .text.delay:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:28     .text.delay:0000000000000010 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:30     .text.delay:0000000000000012 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:31     .text.delay:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:38     .text.startup.main:0000000000000000 main
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:41     .text.startup.main:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:42     .text.startup.main:0000000000000000 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:43     .text.startup.main:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:45     .text.startup.main:0000000000000002 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:47     .text.startup.main:0000000000000004 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:59     .text.startup.main:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:60     .text.startup.main:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:61     .text.startup.main:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:62     .text.startup.main:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:63     .text.startup.main:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:64     .text.startup.main:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:65     .text.startup.main:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:66     .text.startup.main:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:67     .text.startup.main:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:68     .text.startup.main:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:69     .text.startup.main:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:70     .text.startup.main:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:72     .text.startup.main:000000000000001c .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:75     .text.startup.main:0000000000000022 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:76     .text.startup.main:0000000000000024 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:78     .text.startup.main:0000000000000024 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:81     .text.startup.main:000000000000002c .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:83     .text.startup.main:000000000000002e .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:86     .text.startup.main:0000000000000036 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:98     .text.startup.main:0000000000000062 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:108    .text.startup.main:0000000000000084 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:113    .text.startup.main:0000000000000094 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:117    .text.startup.main:00000000000000a0 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:124    .text.startup.main:00000000000000b6 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:127    .text.startup.main:00000000000000ba .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:133    .text.startup.main:00000000000000ce .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:142    .text.startup.main:00000000000000ee .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:151    .text.startup.main:000000000000010e .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:160    .text.startup.main:000000000000012e .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:167    .text.startup.main:0000000000000146 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:174    .text.startup.main:000000000000015e .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:177    .text.startup.main:0000000000000166 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:179    .text.startup.main:0000000000000168 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:181    .text.startup.main:000000000000016c .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:183    .text.startup.main:000000000000016e .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:185    .text.startup.main:0000000000000170 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:187    .text.startup.main:0000000000000172 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:189    .text.startup.main:0000000000000176 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:191    .text.startup.main:0000000000000178 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:195    .text.startup.main:000000000000017a .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:199    .text.startup.main:0000000000000182 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:201    .text.startup.main:0000000000000186 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:203    .text.startup.main:000000000000018a .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:207    .text.startup.main:000000000000018e .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:214    .text.startup.main:00000000000001a4 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:222    .text.startup.main:00000000000001ba .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:225    .text.startup.main:00000000000001bc .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:227    .text.startup.main:00000000000001c0 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:232    .text.startup.main:00000000000001c4 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:238    .text.startup.main:00000000000001c8 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:241    .text.startup.main:00000000000001d0 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:245    .text.startup.main:00000000000001dc .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:253    .text.startup.main:00000000000001f8 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:261    .text.startup.main:0000000000000214 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:269    .text.startup.main:0000000000000230 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:275    .text.startup.main:000000000000023c .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:279    .text.startup.main:0000000000000248 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:286    .text.startup.main:000000000000025e .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:294    .text.startup.main:0000000000000276 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:300    .text.startup.main:000000000000027a .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:302    .text.startup.main:000000000000027e .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:304    .text.startup.main:0000000000000282 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:306    .text.startup.main:0000000000000286 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:309    .text.startup.main:000000000000028a .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:312    .text.startup.main:0000000000000292 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:316    .text.startup.main:000000000000029e .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:324    .text.startup.main:00000000000002ba .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:332    .text.startup.main:00000000000002d6 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:340    .text.startup.main:00000000000002f2 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:347    .text.startup.main:000000000000030a .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:354    .text.startup.main:0000000000000320 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:368    .text.startup.main:000000000000033e .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:371    .text.startup.main:0000000000000342 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:374    .text.startup.main:0000000000000346 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:377    .text.startup.main:0000000000000348 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:379    .text.startup.main:000000000000034a .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:382    .text.startup.main:000000000000034e .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:385    .text.startup.main:0000000000000352 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:390    .text.startup.main:0000000000000358 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:392    .text.startup.main:000000000000035c .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:394    .text.startup.main:0000000000000360 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:397    .text.startup.main:0000000000000368 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:401    .text.startup.main:0000000000000374 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:409    .text.startup.main:0000000000000390 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:417    .text.startup.main:00000000000003ac .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:425    .text.startup.main:00000000000003c8 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:432    .text.startup.main:00000000000003d6 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:435    .text.startup.main:00000000000003da .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:438    .text.startup.main:00000000000003de .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:441    .text.startup.main:00000000000003e0 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:443    .text.startup.main:00000000000003e2 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:446    .text.startup.main:00000000000003e6 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:449    .text.startup.main:00000000000003ea .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:451    .text.startup.main:00000000000003f0 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:496    .sbss.delaycnt:0000000000000000 delaycnt
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:502    .sbss.uart_data:0000000000000000 uart_data
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:34     .text.delay:0000000000000014 .L0 
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:456    .text.startup.main:00000000000003f0 .L0 
                      .debug_frame:0000000000000000 .L0 
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:21     .text.delay:0000000000000006 .L2
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:329    .rodata.main.str1.4:0000000000000000 .LC0
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:321    .rodata.main.cst8:0000000000000000 .LC2
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:332    .rodata.main.str1.4:000000000000001c .LC1
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:335    .rodata.main.str1.4:0000000000000024 .LC3
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:324    .rodata.main.cst8:0000000000000008 .LC4
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:338    .rodata.main.str1.4:0000000000000044 .LC5
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:341    .rodata.main.str1.4:0000000000000078 .LC6
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:344    .rodata.main.str1.4:0000000000000080 .LC7
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:347    .rodata.main.str1.4:0000000000000084 .LC8
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:350    .rodata.main.str1.4:0000000000000090 .LC9
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:209    .text.startup.main:0000000000000198 .L7
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:267    .text.startup.main:000000000000023a .L17
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:288    .text.startup.main:0000000000000252 .L18
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:215    .text.startup.main:00000000000001a0 .L19
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:182    .text.startup.main:0000000000000158 .L6
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:309    .text.startup.main:000000000000026a .L20
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:194    .text.startup.main:000000000000016c .L9
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:221    .text.startup.main:00000000000001ac .L16
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:4519   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5455   .debug_str:000000000000032c .LASF155
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5415   .debug_str:000000000000025a .LASF156
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5307   .debug_str:000000000000000c .LASF157
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5295   .debug_ranges:0000000000000000 .Ldebug_ranges0
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5303   .debug_line:0000000000000000 .Ldebug_line0
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5345   .debug_str:0000000000000113 .LASF0
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5317   .debug_str:000000000000005d .LASF3
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5501   .debug_str:00000000000004a2 .LASF1
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5511   .debug_str:00000000000004c9 .LASF2
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5565   .debug_str:00000000000005b9 .LASF4
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5439   .debug_str:00000000000002d7 .LASF5
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5365   .debug_str:0000000000000164 .LASF6
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5395   .debug_str:00000000000001f6 .LASF7
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5425   .debug_str:000000000000028c .LASF8
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5343   .debug_str:0000000000000105 .LASF9
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5325   .debug_str:000000000000008d .LASF10
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5417   .debug_str:0000000000000268 .LASF11
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5601   .debug_str:0000000000000672 .LASF12
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5377   .debug_str:000000000000019a .LASF13
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5549   .debug_str:0000000000000577 .LASF14
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5473   .debug_str:0000000000000416 .LASF15
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5497   .debug_str:0000000000000483 .LASF16
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5489   .debug_str:000000000000045d .LASF17
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5555   .debug_str:0000000000000592 .LASF18
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5433   .debug_str:00000000000002bd .LASF19
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5457   .debug_str:00000000000003ce .LASF20
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5451   .debug_str:000000000000031f .LASF21
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5419   .debug_str:0000000000000275 .LASF22
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5547   .debug_str:000000000000056f .LASF23
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5573   .debug_str:00000000000005dd .LASF24
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5521   .debug_str:00000000000004f1 .LASF25
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5399   .debug_str:0000000000000207 .LASF26
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5559   .debug_str:00000000000005a1 .LASF27
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5579   .debug_str:00000000000005f3 .LASF28
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5403   .debug_str:0000000000000218 .LASF33
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5569   .debug_str:00000000000005ca .LASF29
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5541   .debug_str:000000000000055a .LASF30
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5397   .debug_str:0000000000000201 .LASF31
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5593   .debug_str:000000000000064d .LASF32
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5413   .debug_str:0000000000000255 .LASF34
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5339   .debug_str:00000000000000f3 .LASF35
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5561   .debug_str:00000000000005a6 .LASF36
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5353   .debug_str:0000000000000132 .LASF37
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5627   .debug_str:00000000000006e0 .LASF38
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5481   .debug_str:0000000000000437 .LASF39
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5465   .debug_str:00000000000003ea .LASF40
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5595   .debug_str:0000000000000652 .LASF41
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5513   .debug_str:00000000000004d3 .LASF42
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5613   .debug_str:00000000000006a2 .LASF43
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5357   .debug_str:0000000000000141 .LASF44
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5391   .debug_str:00000000000001e9 .LASF45
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5305   .debug_str:0000000000000000 .LASF46
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5575   .debug_str:00000000000005e5 .LASF47
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5369   .debug_str:0000000000000174 .LASF48
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5483   .debug_str:0000000000000440 .LASF49
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5533   .debug_str:000000000000052a .LASF50
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5393   .debug_str:00000000000001f1 .LASF51
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5515   .debug_str:00000000000004dd .LASF52
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5351   .debug_str:000000000000012c .LASF53
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5311   .debug_str:0000000000000044 .LASF54
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5523   .debug_str:00000000000004fc .LASF55
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5367   .debug_str:000000000000016d .LASF56
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5427   .debug_str:000000000000029e .LASF57
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5329   .debug_str:00000000000000b3 .LASF58
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5359   .debug_str:000000000000014f .LASF59
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5409   .debug_str:0000000000000245 .LASF60
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5463   .debug_str:00000000000003e3 .LASF61
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5551   .debug_str:0000000000000580 .LASF62
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5617   .debug_str:00000000000006bc .LASF63
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5349   .debug_str:0000000000000126 .LASF64
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5609   .debug_str:0000000000000694 .LASF65
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5375   .debug_str:0000000000000191 .LASF66
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5383   .debug_str:00000000000001b2 .LASF67
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5319   .debug_str:0000000000000067 .LASF68
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5459   .debug_str:00000000000003d5 .LASF69
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5525   .debug_str:0000000000000504 .LASF70
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5461   .debug_str:00000000000003db .LASF71
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5543   .debug_str:0000000000000562 .LASF72
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5557   .debug_str:000000000000059a .LASF73
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5371   .debug_str:000000000000017c .LASF74
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5421   .debug_str:000000000000027c .LASF75
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5401   .debug_str:0000000000000210 .LASF76
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5531   .debug_str:0000000000000525 .LASF77
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5315   .debug_str:0000000000000052 .LASF78
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5539   .debug_str:0000000000000541 .LASF79
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5535   .debug_str:000000000000052f .LASF80
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5487   .debug_str:0000000000000452 .LASF81
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5537   .debug_str:0000000000000537 .LASF82
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5449   .debug_str:0000000000000317 .LASF83
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5411   .debug_str:000000000000024b .LASF84
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5623   .debug_str:00000000000006d6 .LASF85
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5495   .debug_str:0000000000000479 .LASF86
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5423   .debug_str:0000000000000284 .LASF87
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5381   .debug_str:00000000000001aa .LASF88
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5505   .debug_str:00000000000004b5 .LASF89
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5441   .debug_str:00000000000002ea .LASF90
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5605   .debug_str:0000000000000684 .LASF91
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5361   .debug_str:0000000000000157 .LASF92
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5355   .debug_str:000000000000013c .LASF93
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5519   .debug_str:00000000000004ea .LASF94
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5597   .debug_str:000000000000065c .LASF95
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5435   .debug_str:00000000000002c6 .LASF96
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5517   .debug_str:00000000000004e4 .LASF97
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5313   .debug_str:000000000000004a .LASF98
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5545   .debug_str:0000000000000569 .LASF99
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5567   .debug_str:00000000000005c4 .LASF100
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5577   .debug_str:00000000000005ee .LASF101
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5589   .debug_str:000000000000063a .LASF102
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5571   .debug_str:00000000000005d0 .LASF103
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5445   .debug_str:00000000000002ff .LASF104
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5615   .debug_str:00000000000006ad .LASF105
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5405   .debug_str:0000000000000220 .LASF106
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5527   .debug_str:000000000000050d .LASF107
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5619   .debug_str:00000000000006c3 .LASF108
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5529   .debug_str:0000000000000518 .LASF109
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5621   .debug_str:00000000000006c8 .LASF110
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5337   .debug_str:00000000000000e5 .LASF111
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5603   .debug_str:000000000000067a .LASF112
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5443   .debug_str:00000000000002f3 .LASF113
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5581   .debug_str:00000000000005fb .LASF114
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5389   .debug_str:00000000000001db .LASF115
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5335   .debug_str:00000000000000d6 .LASF116
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5385   .debug_str:00000000000001ba .LASF117
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5321   .debug_str:000000000000006d .LASF118
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5323   .debug_str:000000000000007c .LASF119
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5509   .debug_str:00000000000004c0 .LASF120
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5477   .debug_str:0000000000000427 .LASF121
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5467   .debug_str:00000000000003f4 .LASF122
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5611   .debug_str:000000000000069a .LASF123
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5331   .debug_str:00000000000000bc .LASF158
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5553   .debug_str:0000000000000586 .LASF124
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5585   .debug_str:0000000000000619 .LASF125
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5485   .debug_str:0000000000000448 .LASF126
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5499   .debug_str:0000000000000495 .LASF127
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5607   .debug_str:000000000000068e .LASF128
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5479   .debug_str:000000000000042e .LASF129
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5471   .debug_str:000000000000040e .LASF130
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5591   .debug_str:0000000000000647 .LASF131
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5379   .debug_str:00000000000001a3 .LASF132
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5493   .debug_str:0000000000000473 .LASF133
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5583   .debug_str:0000000000000608 .LASF159
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5587   .debug_str:000000000000062c .LASF134
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5373   .debug_str:0000000000000183 .LASF135
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5333   .debug_str:00000000000000c7 .LASF136
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5327   .debug_str:00000000000000a4 .LASF137
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5599   .debug_str:0000000000000662 .LASF138
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5437   .debug_str:00000000000002cd .LASF139
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5341   .debug_str:00000000000000fc .LASF140
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5625   .debug_str:00000000000006db .LASF160
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:39     .text.startup.main:0000000000000000 .LFB2
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:315    .text.startup.main:0000000000000274 .LFE2
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5363   .debug_str:000000000000015f .LASF141
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5153   .debug_loc:0000000000000000 .LLST1
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5429   .debug_str:00000000000002a4 .LASF142
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5160   .debug_loc:0000000000000013 .LLST2
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5453   .debug_str:0000000000000325 .LASF143
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5175   .debug_loc:000000000000003c .LLST3
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5503   .debug_str:00000000000004b0 .LASF144
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5191   .debug_loc:0000000000000066 .LLST4
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5475   .debug_str:0000000000000422 .LASF145
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5206   .debug_loc:000000000000008f .LLST5
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5447   .debug_str:000000000000030c .LASF146
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5235   .debug_loc:00000000000000db .LLST6
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:82     .text.startup.main:0000000000000034 .LVL3
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:94     .text.startup.main:0000000000000060 .LVL4
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:104    .text.startup.main:0000000000000082 .LVL5
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:109    .text.startup.main:0000000000000092 .LVL6
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:113    .text.startup.main:000000000000009e .LVL7
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:120    .text.startup.main:00000000000000b4 .LVL8
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:132    .text.startup.main:00000000000000d4 .LVL10
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:141    .text.startup.main:00000000000000f4 .LVL11
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:150    .text.startup.main:0000000000000114 .LVL12
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:157    .text.startup.main:000000000000012c .LVL13
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:164    .text.startup.main:0000000000000144 .LVL14
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:201    .text.startup.main:0000000000000182 .LVL18
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:208    .text.startup.main:0000000000000198 .LVL19
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:220    .text.startup.main:00000000000001ac .LVL20
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:225    .text.startup.main:00000000000001b8 .LVL21
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:233    .text.startup.main:00000000000001d4 .LVL22
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:241    .text.startup.main:00000000000001f0 .LVL23
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:248    .text.startup.main:0000000000000208 .LVL24
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:255    .text.startup.main:000000000000021e .LVL25
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:262    .text.startup.main:0000000000000236 .LVL26
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:312    .text.startup.main:0000000000000272 .LVL38
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5507   .debug_str:00000000000004ba .LASF161
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:11     .text.delay:0000000000000000 .LFB1
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:32     .text.delay:0000000000000014 .LFE1
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5265   .debug_loc:0000000000000128 .LLST0
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5309   .debug_str:000000000000003d .LASF147
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5387   .debug_str:00000000000001cb .LASF148
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5469   .debug_str:00000000000003fd .LASF149
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5407   .debug_str:000000000000022f .LASF150
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5431   .debug_str:00000000000002ab .LASF151
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5491   .debug_str:0000000000000464 .LASF152
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5347   .debug_str:000000000000011f .LASF153
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:5563   .debug_str:00000000000005af .LASF154
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:126    .text.startup.main:00000000000000c0 .LVL9
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:181    .text.startup.main:0000000000000158 .LVL15
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:193    .text.startup.main:000000000000016c .LVL17
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:266    .text.startup.main:000000000000023a .LVL27
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:272    .text.startup.main:0000000000000242 .LVL28
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:287    .text.startup.main:0000000000000252 .LVL32
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:293    .text.startup.main:000000000000025a .LVL33
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:186    .text.startup.main:0000000000000160 .LVL16
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:275    .text.startup.main:0000000000000244 .LVL29
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:281    .text.startup.main:000000000000024c .LVL31
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:296    .text.startup.main:000000000000025c .LVL34
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:302    .text.startup.main:0000000000000264 .LVL36
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:278    .text.startup.main:0000000000000248 .LVL30
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:299    .text.startup.main:0000000000000260 .LVL35
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:308    .text.startup.main:000000000000026a .LVL37
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:15     .text.delay:0000000000000000 .LVL0
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:20     .text.delay:0000000000000006 .LVL1
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:23     .text.delay:0000000000000008 .LVL2
-C:\Users\rana\AppData\Local\Temp\ccJncs5R.s:380    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:21     .text.delay:0000000000000006 .L2
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:466    .rodata.main.str1.4:0000000000000000 .LC0
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:458    .rodata.main.cst8:0000000000000000 .LC2
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:469    .rodata.main.str1.4:000000000000001c .LC1
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:472    .rodata.main.str1.4:0000000000000024 .LC3
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:461    .rodata.main.cst8:0000000000000008 .LC4
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:475    .rodata.main.str1.4:0000000000000044 .LC5
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:478    .rodata.main.str1.4:0000000000000078 .LC6
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:481    .rodata.main.str1.4:0000000000000080 .LC7
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:484    .rodata.main.str1.4:0000000000000084 .LC8
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:487    .rodata.main.str1.4:0000000000000090 .LC9
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:490    .rodata.main.str1.4:000000000000009c .LC10
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:220    .text.startup.main:00000000000001ba .L7
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:365    .text.startup.main:000000000000033e .L21
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:430    .text.startup.main:00000000000003d6 .L22
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:297    .text.startup.main:000000000000027a .L10
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:235    .text.startup.main:00000000000001c8 .L23
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:193    .text.startup.main:000000000000017a .L6
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:388    .text.startup.main:0000000000000358 .L24
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:229    .text.startup.main:00000000000001c4 .L12
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:205    .text.startup.main:000000000000018e .L9
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:273    .text.startup.main:000000000000023c .L20
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5047   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6043   .debug_str:0000000000000335 .LASF156
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6003   .debug_str:0000000000000263 .LASF157
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5893   .debug_str:000000000000000c .LASF158
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5873   .debug_ranges:0000000000000000 .Ldebug_ranges0
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5889   .debug_line:0000000000000000 .Ldebug_line0
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5933   .debug_str:000000000000011c .LASF0
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5905   .debug_str:0000000000000066 .LASF3
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6089   .debug_str:00000000000004ab .LASF1
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6099   .debug_str:00000000000004d2 .LASF2
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6153   .debug_str:00000000000005c2 .LASF4
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6027   .debug_str:00000000000002e0 .LASF5
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5953   .debug_str:000000000000016d .LASF6
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5983   .debug_str:00000000000001ff .LASF7
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6013   .debug_str:0000000000000295 .LASF8
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5931   .debug_str:000000000000010e .LASF9
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5913   .debug_str:0000000000000096 .LASF10
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6005   .debug_str:0000000000000271 .LASF11
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6189   .debug_str:000000000000067b .LASF12
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5965   .debug_str:00000000000001a3 .LASF13
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6137   .debug_str:0000000000000580 .LASF14
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6061   .debug_str:000000000000041f .LASF15
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6085   .debug_str:000000000000048c .LASF16
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6077   .debug_str:0000000000000466 .LASF17
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6143   .debug_str:000000000000059b .LASF18
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6021   .debug_str:00000000000002c6 .LASF19
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6045   .debug_str:00000000000003d7 .LASF20
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6039   .debug_str:0000000000000328 .LASF21
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6007   .debug_str:000000000000027e .LASF22
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6135   .debug_str:0000000000000578 .LASF23
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6161   .debug_str:00000000000005e6 .LASF24
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6109   .debug_str:00000000000004fa .LASF25
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5987   .debug_str:0000000000000210 .LASF26
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6147   .debug_str:00000000000005aa .LASF27
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6167   .debug_str:00000000000005fc .LASF28
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5991   .debug_str:0000000000000221 .LASF33
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6157   .debug_str:00000000000005d3 .LASF29
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6129   .debug_str:0000000000000563 .LASF30
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5985   .debug_str:000000000000020a .LASF31
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6181   .debug_str:0000000000000656 .LASF32
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6001   .debug_str:000000000000025e .LASF34
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5927   .debug_str:00000000000000fc .LASF35
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6149   .debug_str:00000000000005af .LASF36
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5941   .debug_str:000000000000013b .LASF37
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6215   .debug_str:00000000000006e9 .LASF38
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6069   .debug_str:0000000000000440 .LASF39
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6053   .debug_str:00000000000003f3 .LASF40
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6183   .debug_str:000000000000065b .LASF41
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6101   .debug_str:00000000000004dc .LASF42
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6201   .debug_str:00000000000006ab .LASF43
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5945   .debug_str:000000000000014a .LASF44
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5979   .debug_str:00000000000001f2 .LASF45
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5891   .debug_str:0000000000000000 .LASF46
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6163   .debug_str:00000000000005ee .LASF47
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5957   .debug_str:000000000000017d .LASF48
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6071   .debug_str:0000000000000449 .LASF49
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6121   .debug_str:0000000000000533 .LASF50
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5981   .debug_str:00000000000001fa .LASF51
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6103   .debug_str:00000000000004e6 .LASF52
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5939   .debug_str:0000000000000135 .LASF53
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5897   .debug_str:0000000000000044 .LASF54
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6111   .debug_str:0000000000000505 .LASF55
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5955   .debug_str:0000000000000176 .LASF56
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6015   .debug_str:00000000000002a7 .LASF57
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5917   .debug_str:00000000000000bc .LASF58
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5947   .debug_str:0000000000000158 .LASF59
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5997   .debug_str:000000000000024e .LASF60
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6051   .debug_str:00000000000003ec .LASF61
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6139   .debug_str:0000000000000589 .LASF62
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6205   .debug_str:00000000000006c5 .LASF63
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5937   .debug_str:000000000000012f .LASF64
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6197   .debug_str:000000000000069d .LASF65
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5963   .debug_str:000000000000019a .LASF66
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5971   .debug_str:00000000000001bb .LASF67
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5907   .debug_str:0000000000000070 .LASF68
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6047   .debug_str:00000000000003de .LASF69
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6113   .debug_str:000000000000050d .LASF70
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6049   .debug_str:00000000000003e4 .LASF71
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6131   .debug_str:000000000000056b .LASF72
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6145   .debug_str:00000000000005a3 .LASF73
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5959   .debug_str:0000000000000185 .LASF74
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6009   .debug_str:0000000000000285 .LASF75
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5989   .debug_str:0000000000000219 .LASF76
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6119   .debug_str:000000000000052e .LASF77
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5901   .debug_str:0000000000000052 .LASF78
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6127   .debug_str:000000000000054a .LASF79
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6123   .debug_str:0000000000000538 .LASF80
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6075   .debug_str:000000000000045b .LASF81
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6125   .debug_str:0000000000000540 .LASF82
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6037   .debug_str:0000000000000320 .LASF83
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5999   .debug_str:0000000000000254 .LASF84
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6211   .debug_str:00000000000006df .LASF85
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6083   .debug_str:0000000000000482 .LASF86
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6011   .debug_str:000000000000028d .LASF87
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5969   .debug_str:00000000000001b3 .LASF88
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6093   .debug_str:00000000000004be .LASF89
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6029   .debug_str:00000000000002f3 .LASF90
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6193   .debug_str:000000000000068d .LASF91
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5949   .debug_str:0000000000000160 .LASF92
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5943   .debug_str:0000000000000145 .LASF93
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6107   .debug_str:00000000000004f3 .LASF94
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6185   .debug_str:0000000000000665 .LASF95
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6023   .debug_str:00000000000002cf .LASF96
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6105   .debug_str:00000000000004ed .LASF97
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5899   .debug_str:000000000000004a .LASF98
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6133   .debug_str:0000000000000572 .LASF99
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6155   .debug_str:00000000000005cd .LASF100
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6165   .debug_str:00000000000005f7 .LASF101
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6177   .debug_str:0000000000000643 .LASF102
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6159   .debug_str:00000000000005d9 .LASF103
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6033   .debug_str:0000000000000308 .LASF104
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6203   .debug_str:00000000000006b6 .LASF105
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5993   .debug_str:0000000000000229 .LASF106
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6115   .debug_str:0000000000000516 .LASF107
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6207   .debug_str:00000000000006cc .LASF108
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6117   .debug_str:0000000000000521 .LASF109
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6209   .debug_str:00000000000006d1 .LASF110
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5925   .debug_str:00000000000000ee .LASF111
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6191   .debug_str:0000000000000683 .LASF112
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6031   .debug_str:00000000000002fc .LASF113
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6169   .debug_str:0000000000000604 .LASF114
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5977   .debug_str:00000000000001e4 .LASF115
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5923   .debug_str:00000000000000df .LASF116
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5973   .debug_str:00000000000001c3 .LASF117
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5909   .debug_str:0000000000000076 .LASF118
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5911   .debug_str:0000000000000085 .LASF119
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6097   .debug_str:00000000000004c9 .LASF120
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6065   .debug_str:0000000000000430 .LASF121
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6055   .debug_str:00000000000003fd .LASF122
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6199   .debug_str:00000000000006a3 .LASF123
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5919   .debug_str:00000000000000c5 .LASF159
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6141   .debug_str:000000000000058f .LASF124
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6173   .debug_str:0000000000000622 .LASF125
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6073   .debug_str:0000000000000451 .LASF126
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6087   .debug_str:000000000000049e .LASF127
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6195   .debug_str:0000000000000697 .LASF128
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6067   .debug_str:0000000000000437 .LASF129
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6059   .debug_str:0000000000000417 .LASF130
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6179   .debug_str:0000000000000650 .LASF131
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5967   .debug_str:00000000000001ac .LASF132
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6081   .debug_str:000000000000047c .LASF133
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6171   .debug_str:0000000000000611 .LASF160
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6175   .debug_str:0000000000000635 .LASF134
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5961   .debug_str:000000000000018c .LASF135
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5921   .debug_str:00000000000000d0 .LASF136
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5915   .debug_str:00000000000000ad .LASF137
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6187   .debug_str:000000000000066b .LASF138
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6025   .debug_str:00000000000002d6 .LASF139
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5929   .debug_str:0000000000000105 .LASF140
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6213   .debug_str:00000000000006e4 .LASF161
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:39     .text.startup.main:0000000000000000 .LFB2
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:452    .text.startup.main:00000000000003f0 .LFE2
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5951   .debug_str:0000000000000168 .LASF141
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5723   .debug_loc:0000000000000000 .LLST1
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6017   .debug_str:00000000000002ad .LASF142
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5730   .debug_loc:0000000000000013 .LLST2
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6041   .debug_str:000000000000032e .LASF143
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5745   .debug_loc:000000000000003c .LLST3
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6091   .debug_str:00000000000004b9 .LASF144
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5761   .debug_loc:0000000000000066 .LLST4
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6063   .debug_str:000000000000042b .LASF145
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5780   .debug_loc:000000000000009a .LLST5
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6035   .debug_str:0000000000000315 .LASF146
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5805   .debug_loc:00000000000000db .LLST6
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5903   .debug_str:000000000000005d .LASF147
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:310    .text.startup.main:0000000000000292 .LVL34
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:314    .text.startup.main:000000000000029e .LVL35
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:322    .text.startup.main:00000000000002ba .LVL36
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:330    .text.startup.main:00000000000002d6 .LVL37
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:338    .text.startup.main:00000000000002f2 .LVL38
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:345    .text.startup.main:000000000000030a .LVL39
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:352    .text.startup.main:0000000000000320 .LVL40
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:359    .text.startup.main:0000000000000338 .LVL41
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:84     .text.startup.main:0000000000000036 .LVL3
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:96     .text.startup.main:0000000000000062 .LVL4
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:106    .text.startup.main:0000000000000084 .LVL5
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:111    .text.startup.main:0000000000000094 .LVL6
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:115    .text.startup.main:00000000000000a0 .LVL7
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:122    .text.startup.main:00000000000000b6 .LVL8
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:131    .text.startup.main:00000000000000ce .LVL10
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:140    .text.startup.main:00000000000000ee .LVL11
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:149    .text.startup.main:000000000000010e .LVL12
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:158    .text.startup.main:000000000000012e .LVL13
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:165    .text.startup.main:0000000000000146 .LVL14
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:172    .text.startup.main:000000000000015e .LVL15
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:212    .text.startup.main:00000000000001a4 .LVL19
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:219    .text.startup.main:00000000000001ba .LVL20
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:239    .text.startup.main:00000000000001d0 .LVL24
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:243    .text.startup.main:00000000000001dc .LVL25
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:251    .text.startup.main:00000000000001f8 .LVL26
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:259    .text.startup.main:0000000000000214 .LVL27
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:267    .text.startup.main:0000000000000230 .LVL28
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:277    .text.startup.main:0000000000000248 .LVL30
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:284    .text.startup.main:000000000000025e .LVL31
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:291    .text.startup.main:0000000000000276 .LVL32
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:395    .text.startup.main:0000000000000368 .LVL50
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:399    .text.startup.main:0000000000000374 .LVL51
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:407    .text.startup.main:0000000000000390 .LVL52
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:415    .text.startup.main:00000000000003ac .LVL53
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:423    .text.startup.main:00000000000003c8 .LVL54
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6095   .debug_str:00000000000004c3 .LASF162
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:11     .text.delay:0000000000000000 .LFB1
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:32     .text.delay:0000000000000014 .LFE1
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5843   .debug_loc:000000000000013e .LLST0
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5975   .debug_str:00000000000001d4 .LASF148
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5995   .debug_str:0000000000000238 .LASF149
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6019   .debug_str:00000000000002b4 .LASF150
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6057   .debug_str:0000000000000406 .LASF151
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6079   .debug_str:000000000000046d .LASF152
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5895   .debug_str:000000000000003d .LASF153
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:6151   .debug_str:00000000000005b8 .LASF154
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:5935   .debug_str:0000000000000128 .LASF155
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:125    .text.startup.main:00000000000000ba .LVL9
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:192    .text.startup.main:000000000000017a .LVL16
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:204    .text.startup.main:000000000000018e .LVL18
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:364    .text.startup.main:000000000000033e .LVL43
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:372    .text.startup.main:0000000000000346 .LVL45
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:429    .text.startup.main:00000000000003d6 .LVL55
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:436    .text.startup.main:00000000000003de .LVL57
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:197    .text.startup.main:0000000000000182 .LVL17
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:369    .text.startup.main:0000000000000342 .LVL44
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:380    .text.startup.main:000000000000034e .LVL47
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:387    .text.startup.main:0000000000000358 .LVL49
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:433    .text.startup.main:00000000000003da .LVL56
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:444    .text.startup.main:00000000000003e6 .LVL59
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:223    .text.startup.main:00000000000001bc .LVL21
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:228    .text.startup.main:00000000000001c4 .LVL22
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:234    .text.startup.main:00000000000001c8 .LVL23
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:272    .text.startup.main:000000000000023c .LVL29
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:296    .text.startup.main:000000000000027a .LVL33
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:361    .text.startup.main:000000000000033a .LVL42
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:375    .text.startup.main:0000000000000348 .LVL46
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:383    .text.startup.main:0000000000000352 .LVL48
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:439    .text.startup.main:00000000000003e0 .LVL58
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:447    .text.startup.main:00000000000003ea .LVL60
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:15     .text.delay:0000000000000000 .LVL0
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:20     .text.delay:0000000000000006 .LVL1
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:23     .text.delay:0000000000000008 .LVL2
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:520    .debug_info:0000000000000000 .Ldebug_info0
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:230    .text.startup.main:00000000000001c4 .LBB2
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:236    .text.startup.main:00000000000001c8 .LBE2
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:292    .text.startup.main:0000000000000276 .LBB3
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:298    .text.startup.main:000000000000027a .LBE3
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:307    .text.startup.main:000000000000028a .LBB4
+C:\Users\rana\AppData\Local\Temp\cc17rJ4K.s:366    .text.startup.main:000000000000033e .LBE4
 
 UNDEFINED SYMBOLS
 printk
@@ -841,5 +1097,6 @@ hdmi_drawziguang
 hdmi_draw_string_back
 hdmi_drawtriangle
 hdmi_drawquwei
-Tetris
 GameStart
+app_demo
+Tetris

@@ -413,8 +413,7 @@ void StartGame()
 				}
 		else if(end == 2){
 			end = 0;
-
-			rgb_address = 0b0000001;
+			rgb_address = 0b0000110;
 			for (int i = 0; i < ROW - 1; i++){
 				for (int j = 1; j < COL - 1; j++){
 					face.data[i][j] = 0;
